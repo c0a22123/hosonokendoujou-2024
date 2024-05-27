@@ -1,0 +1,36 @@
+.card{
+    background-color: bisque;
+    padding: 10px;
+    min-width:100px;
+}
+.outer{
+    display:flex;
+    flex-wrap: wrap;
+}
+  
+.square{
+    box-sizing: border-box;
+    background-color: rgb(55, 255, 0);
+    border:solid 1px black;
+    flex: 0 0 33%;
+    position: relative;
+}
+.outer .gray{
+    background-color: gray;
+}
+  
+.square::before{
+    content: '';
+    display: block;
+    padding-top:100%;
+}
+.square div{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
