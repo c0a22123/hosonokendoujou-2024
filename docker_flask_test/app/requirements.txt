@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 flask
 sqlalchemy
 flask-restful
@@ -8,3 +9,8 @@ pymysql
 gunicorn
 flask_marshmallow
 marshmallow-sqlalchemy
+=======
+Flask==2.0.3
+Werkzeug==2.0.3
+mysql-connector-python==8.3.0
+>>>>>>> bd0dec5e7331eb0af0f09edcbaed1c83e441b341
