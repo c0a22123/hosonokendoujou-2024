@@ -5,6 +5,7 @@ from app.model import User
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
+<<<<<<< HEAD
 # ダミーのユーザーデータベース
 users = {'admin': 'password'}
 
@@ -61,3 +62,10 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
+=======
+@app.route("/")
+# def index():
+#     return render_template("index.html")
+def bingo():
+    return render_template("bingo.html")
+>>>>>>> bd0dec5e7331eb0af0f09edcbaed1c83e441b341
