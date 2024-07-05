@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>特別サービス - GALAXY AIRLINES</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap');
+    
+    body {
+      font-family: 'Amatic SC', cursive;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(140deg, #030f39ee 0%, #000000 100%);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 50px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      animation: fadeInDown 1s ease-out;
+    }
+
+    .content {
+      max-width: 800px;
+      padding: 20px;
+      margin: 20px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 1s ease-out;
+    }
+
+    .service-card {
+      margin: 20px 0;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .service-card h2 {
+      margin-top: 0;
+      font-size: 30px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .service-card p {
+      font-size: 20px;
+    }
+
+    @keyframes fadeInDown {
+      0% {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .btn {
+      padding: 10px 20px;
+      background-color: blueviolet;
+      color: white;
+      text-decoration: none;
+      border-radius: 25px;
+      font-size: 18px;
+      transition: background-color 0.3s ease;
+      animation: fadeIn 1s ease-out;
+      margin-top: 20px;
+    }
+
+    .btn:hover {
+      background-color: #6a0dad;
+    }
+  </style>
+</head>
+<body>
+  <h1>特別サービス</h1>
+
+  <div class="content">
+    <div class="service-card">
+      <h2>ラウンジアクセス</h2>
+      <p>
+        GALAXY AIRLINESの会員メンバーには、世界中の提携ラウンジへのアクセスが提供されます。リラックスできる空間で、フライト前の時間をお楽しみください。
+      </p>
+    </div>
+
+    <div class="service-card">
+      <h2>優先搭乗</h2>
+      <p>
+        GALAXY AIRLINESの会員メンバーは、通常の搭乗よりも早く搭乗手続きを行うことができます。スムーズな旅のスタートをお約束します。
+      </p>
+    </div>
+
+    <div class="service-card">
+      <h2>特別メニュー</h2>
+      <p>
+        機内で提供される特別メニューをお楽しみいただけます。シェフが厳選した食材を使用した料理で、フライト中も贅沢な時間をお過ごしください。
+      </p>
+    </div>
+
+    <a href="../user.php" class="btn">ホームに戻る</a>
+  </div>
+</body>
+</html>

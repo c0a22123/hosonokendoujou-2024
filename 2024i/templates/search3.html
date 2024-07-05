@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>国内検索</title>
+    <!-- <link rel="stylesheet" href="..\templates_c\styles.css">//cssと繋げる -->
+</head>
+
+        <style>
+            body {
+                font-family: 'Amatic SC', cursive;
+                margin: 0;
+                padding: 0;
+                background: url('https://drstoopen.com.mx/img/413745.png') no-repeat center center fixed;
+                background-size: cover;
+                display: flex;
+                flex-direction: column;
+                align-items: center;    
+            }
+
+            .font{
+                text-align: center;
+                margin-top: 30px;
+                color: rgb(255, 255, 255);
+                font-size: 30px;
+                -webkit-text-stroke: 1px #8800ff;
+             text-shadow: 0px 4px 8px #370067a4;
+                animation: fadeInDown 1s ease-out;
+                animation: fadeInDown 1s ease-out;
+            }
+            .h1{
+                text-align: center;
+                margin-top: 30px;
+                color: rgb(255, 255, 255);
+                font-size: 30px;
+             -webkit-text-stroke: 1px #8800ff;
+             text-shadow: 0px 4px 8px #370067a4;
+                animation: fadeInDown 1s ease-out;
+            }
+            .h2{
+                text-align: center;
+                margin-top: 30px;
+                color: rgb(255, 255, 255);
+                font-size: 30px;
+             -webkit-text-stroke: 1px #8800ff;
+             text-shadow: 0px 4px 8px #370067a4;
+                animation: fadeInDown 1s ease-out;
+            }
+            .ken{
+                text-align: center;
+                margin-top: 30px;
+                font-size: 30px;
+                animation: fadeInDown 1s ease-out;
+            }
+
+        </style>
+    <body>
+    <header>
+        <div class ="h1">
+        <h1>国内検索</h1></div>
+    </header>
+    <main>
+        <section>
+            <!-- <h2>フライト検索</h2>
+            <form action="hit.php" method="GET">
+                <label for="arrival_city">到着地:</label>
+                <input type="text" id="arrival_city" name="arrival_city" required>
+
+                <label for="departure_date">出発日:</label>
+                <input type="date" id="departure_date" name="departure_date" required>
+
+                <label for="departure_date">クラス(ランク):</label>
+                <input type="date" id="departure_date" name="departure_date" required>
+                <button type="submit">検索</button>
+            </form> -->
+            <div class="h2">
+            <h2>フライト検索</h2>
+            <p>行きたい場所を入力してください</p></div>
+            <form method="post" action="">
+            <!-- <label for="search">到着地:</label> -->
+            <div class="ken">
+                <input type="text" name="search" value="{$search|escape}">
+                <input type="submit" value="検索"></div>
+                <!-- <form method="post" action="">
+                    <input type="text" name="search" value="{$search|escape}">
+                    <input type="submit" value="検索"> -->
+            </form>
+            {if $search}
+            <div class ="font">
+                <h2>検索結果</h2>
+                {if $results|@count > 0}
+                    <ul>
+                        {foreach from=$results item=article}
+                        <li><a href="yoyaku.php?location={$article[2]|escape}"><strong>{$article[1]|escape}</strong>: {$article[2]|escape} </a></li>
+                        {/foreach}
+                    </ul>
+                {else}
+                    <p>一致する結果が見つかりませんでした。</p></div>
+                {/if}
+            {/if}
+        </section>
+    </main>
+</body>
+</html>
