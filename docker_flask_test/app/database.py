@@ -3,7 +3,7 @@ import mysql.connector
 import pymysql
 from pymysql.cursors import DictCursor
 
-def connect_db(username, password, session):
+def connect_db(username, password):
     """
     MySQLとの接続を行う
     成功した場合はcheck_dbを呼び出し、
@@ -17,15 +17,14 @@ def connect_db(username, password, session):
         conn = mysql.connector.connect(
         host='db',  # Docker Composeでのサービス名を指定
         user='root',
-        password='YES',
-        database='login_sample',
+        password='YES',#　本当のパスワードに変更する
+        database='login_sample',# 本当のデータに変える
         )
             
         cur = conn.cursor()
         query = "SELECT user_name AS name, password FROM User WHERE user_name = %s"
-        cur.execute(query, (username,))
+        cur.execute(query, ((username,),(password,)))
         users = cur.fetchall()
-        print(users)
         cur.close()
         conn.close()
         result = check_db(users, username, password)
@@ -55,3 +54,22 @@ def check_db(users, username, password):
         return True
     else:
         return False
+
+def add_user(username, password):
+    conn = None 
+
+    conn = mysql.connector.connect(
+    host='db',  # Docker Composeでのサービス名を指定
+    user='root',# 本当のユーザに変更する
+    password='YES', #本当のパスワードに変更する
+    database='login_sample', # 本当のデータに変える
+    )
+
+    username = str(username)
+    password = str(password)
+    cur = conn.cursor()
+    query = "INSERT INTO User (user_name, password) VALUES (%s,%s)"
+    cur.execute(query, (username,password))
+    conn.commit()
+    cur.close()
+    conn.close()

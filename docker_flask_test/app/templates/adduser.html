@@ -3,15 +3,13 @@
 <html>
 <body>
     <h2>Login</h2>
-    <form method="post" action="/login">
+    <form method="post" action="/add">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required><br>
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required><br>
-        <input type="submit" value="Login">
-    </form>
-    <p>新規登録はこちら</p>
-    <form action="/add" method="get">
+        <label for="password2">Passwordの確認:</label>
+        <input type="password2" id="password2" name="password2" required><br>
         <input type="submit" value="新規登録">
     </form>
 </body>
