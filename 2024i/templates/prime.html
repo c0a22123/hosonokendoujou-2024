@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>会員ランク - GALAXY AIRLINES</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap');
+    
+    body {
+      font-family: 'Amatic SC', cursive;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(140deg, #030f39ee 0%, #000000 100%);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 50px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      animation: fadeInDown 1s ease-out;
+    }
+
+    
+
+    .content {
+      max-width: 800px;
+      padding: 20px;
+      margin: 20px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 1s ease-out;
+    }
+
+    .rank-card {
+      margin: 20px 0;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .rank-card h2 {
+      margin-top: 0;
+      font-size: 30px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .rank-card p {
+      font-size: 20px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      background-color: blueviolet;
+      color: white;
+      text-decoration: none;
+      border-radius: 25px;
+      font-size: 18px;
+      transition: background-color 0.3s ease;
+      animation: fadeIn 1s ease-out;
+      margin-top: 20px;
+    }
+
+    .btn:hover {
+      background-color: #6a0dad;
+    }
+
+    @keyframes fadeInDown {
+      0% {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>会員ランク</h1>
+
+  <div class="content">
+    <div class="rank-card">
+      <h2>ブロンズ会員</h2>
+      <p>
+        初めてのご利用でもすぐにブロンズ会員に。特別割引やキャンペーン情報をいち早くお届けします。
+      </p>
+    </div>
+
+    <div class="rank-card">
+      <h2>シルバー会員</h2>
+      <p>
+        一定の利用回数を超えるとシルバー会員に昇格。追加の手荷物許容量や優先チェックインなどの特典があります。
+      </p>
+    </div>
+
+    <div class="rank-card">
+      <h2>ゴールド会員</h2>
+      <p>
+        頻繁にご利用いただくお客様にはゴールド会員の特典をご用意。ラウンジアクセスや優先搭乗、特別メニューなどをお楽しみいただけます。
+      </p>
+    </div>
+
+    <div class="rank-card">
+      <h2>プラチナ会員</h2>
+      <p>
+        最上位のプラチナ会員には最高のサービスをご提供。専用カスタマーサポートやファーストクラスへのアップグレードなど、至高の旅をお楽しみください。
+      </p>
+    </div>
+
+    <a href="../user.php" class="btn">ホームに戻る</a>
+  </div>
+</body>
+</html>
