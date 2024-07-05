@@ -1,11 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-# from app.database import init_db,db
-# from app.model import User
-import mysql.connector
-import pymysql
 from pymysql.cursors import DictCursor
-from app.database import connect_db, check_db
-
+from app.database import connect_db, check_db,add_user
+import hashlib
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
@@ -26,6 +22,19 @@ def login():
             session['username'] = username
             return redirect(url_for('index'))
     return render_template('login.html')
+
+@app.route('/add', methods=['GET', 'POST'])
+def add():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        password2 = request.form['password2']
+
+        if(password == password2):
+            add_user(username, password)
+            return redirect(url_for('login'))
+        
+    return render_template('adduser.html')
 
 @app.route('/logout')
 def logout():

@@ -1,4 +1,5 @@
 <!-- templates/login.html -->
+<!DOCTYPE html>
 <html>
 <body>
     <h2>Login</h2>
@@ -8,6 +9,10 @@
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required><br>
         <input type="submit" value="Login">
+    </form>
+    <p>新規登録はこちら</p>
+    <form action="/add" method="get">
+        <input type="submit" value="新規登録">
     </form>
 </body>
 </html>
