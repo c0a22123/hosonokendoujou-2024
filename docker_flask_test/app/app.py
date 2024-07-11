@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from pymysql.cursors import DictCursor
-from app.database import connect_db, check_db,add_user
+from app.database import connect_db, check_db,add_user,del_user
 import hashlib
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -35,6 +35,18 @@ def add():
             return redirect(url_for('login'))
         
     return render_template('adduser.html')
+
+@app.route('/deleate', methods=['GET', 'POST'])
+def deleate():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        result = connect_db(username, password)
+        if(result):
+            del_user(username,password)
+            return redirect(url_for('logout'))
+    return render_template('deleate.html')
 
 @app.route('/logout')
 def logout():

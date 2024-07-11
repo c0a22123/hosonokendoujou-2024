@@ -2,15 +2,18 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <h2>Login</h2>
+    <h2>add_user</h2>
     <form method="post" action="/add">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required><br>
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required><br>
         <label for="password2">Passwordの確認:</label>
-        <input type="password2" id="password2" name="password2" required><br>
-        <input type="submit" value="新規登録">
+        <input type="password" id="password2" name="password2" required><br>
+        <input type="submit" value="登録">
+    </form>
+    <form action="/login" method="get">
+            <input type="submit" value="ログインに進む">
     </form>
 </body>
 </html>
