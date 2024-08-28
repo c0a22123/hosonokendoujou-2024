@@ -8,3 +8,7 @@ gunicorn
 flask_marshmallow
 mysql-connector-python
 pymysql
+opencv-python
+qrcode[pil]
+opencv-python-headless
+Pillow==10.0.0

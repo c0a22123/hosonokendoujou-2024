@@ -1,22 +1,57 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>CSS練習</title>
-  <link rel="stylesheet" href="/static/css/index.css">
+    <meta charset="UTF-8">
+    <title>ビンゴQRコード読み取り</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+    <script>
+        function updateBingoCard() {
+            fetch('/bingo_data')
+                .then(response => response.json())
+                .then(data => {
+                    let table = document.getElementById('bingo-table');
+                    for (let row = 0; row < 3; row++) {
+                        for (let col = 0; col < 3; col++) {
+                            table.rows[row].cells[col].innerText = data[row][col] || '-';
+                        }
+                    }
+                });
+        }
+
+        setInterval(updateBingoCard, 1000);
+    </script>
 </head>
 <body>
-  <div id="headline">
-  <h1>CSS入門</h1>
-  <p>これは段落です。</p>
-  </div>
-  <div class="main">
-  <h2>これは見出しです。</h2>
-  <p>これは<span class="light">例</span>です。</p>
-  <p>
-  <a href="https://saruwakakun.com/">ホームへ</a>
-  戻ります。</p>
-  </div>
+    <h1>ビンゴQRコード読み取り</h1>
+    <p><a href="{{ url_for('scan_camera') }}">カメラでQRコードを読み取る</a></p>
+    <h2>ビンゴカード</h2>
+    <table id="bingo-table">
+        <tr>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+        </tr>
+    </table>
 </body>
 </html>
-
