@@ -1,51 +1,16 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>BINGOカード</title>
-  <link rel="stylesheet" href="/static/css/bingo.css">
+    <meta charset="UTF-8">
+    <title>QRコードスキャナー</title>
 </head>
 <body>
-    <div class="card">
-        BINGOカード<br>
-        クリックするとチェックできます。
-        <div class="outer"  id="outer">
-        </div>
-    </div>
+    <h1>QRコードをスキャンしています...</h1>
+    <p>スキャンが完了するまでお待ちください。</p>
     <script>
-        const COLUMN_LENGTH = 3;
-        const ROW_LENGTH = 3;
-        const MAX_NUMBER = 9;
-        let targetNumber = [];
-        for(let i = 1; i <= MAX_NUMBER; i++){
-          targetNumber.push(i);
-        }
-    
-        let outer = document.getElementById('outer');
-    
-        for(let i = 1; i <= COLUMN_LENGTH * ROW_LENGTH; i++){
-          let divSquare = document.createElement('div');
-          divSquare.classList.add('square');
-          
-          let div = document.createElement('div');
-
-          divSquare.onclick = () => divSquare.classList.toggle('gray');
-          let targetIndex = Math.floor(Math.random() * targetNumber.length) ;     
-          div.textContent = targetNumber[targetIndex];
-          targetNumber.splice(targetIndex, 1);
-
-        //   if(i === Math.round(COLUMN_LENGTH * ROW_LENGTH /2) ){
-        //     divSquare.classList.add('gray');
-        //     div.textContent = 'free';
-        //   }else{
-        //     divSquare.onclick = () => divSquare.classList.toggle('gray');
-        //     let targetIndex = Math.floor(Math.random() * targetNumber.length) ;     
-        //     div.textContent = targetNumber[targetIndex];
-        //     targetNumber.splice(targetIndex, 1);
-        //   }
-          divSquare.appendChild(div)
-          outer.appendChild(divSquare);
-        }
+        setTimeout(function(){
+            window.location.href = "{{ url_for('bingo') }}";
+        }, 5000);  // 5秒待ってビンゴページにリダイレクト
     </script>
 </body>
 </html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>カメラでQRコードを読み取る</title>
+    <style>
+        img {
+            width: 100%;
+            height: auto;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+    <script>
+        function updateBingoCard() {
+            fetch('/bingo_data')
+                .then(response => response.json())
+                .then(data => {
+                    let table = document.getElementById('bingo-table');
+                    for (let row = 0; row < 3; row++) {
+                        for (let col = 0; col < 3; col++) {
+                            table.rows[row].cells[col].innerText = data[row][col] || '-';
+                        }
+                    }
+                });
+        }
+
+        setInterval(updateBingoCard, 1000);
+    </script>
+</head>
+<body>
+    <h1>カメラでQRコードを読み取る</h1>
+    <img src="{{ url_for('video_feed') }}" alt="Video Feed" style="width:100%;" />
+    <h2>ビンゴカード</h2>
+    <table id="bingo-table">
+        <tr>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+        </tr>
+    </table>
+    <p><a href="{{ url_for('index') }}">戻る</a></p>
+</body>
+</html>
