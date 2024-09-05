@@ -1,0 +1,10 @@
+Flask==2.0.3
+Werkzeug==2.0.3
+flask-restful
+flask-migrate
+cryptography
+Flask-MySQLdb
+gunicorn
+flask_marshmallow
+mysql-connector-python
+pymysql==1.1.1
