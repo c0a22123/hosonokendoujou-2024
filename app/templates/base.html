@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <title>ビンゴページ</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <!-- スマホに対応 -->
+  <meta name="viewport" content="width=device-width">
+</head>
+<body>
+  <header class="Header">
+    <a href="/top">
+      <img src="/static/images/tamabingo.png" alt="error" class="resized-image">
+    </a>
+    <button id="popupButton">
+      <img src="/static/images/overlayopen.png" alt="メニュー">
+    </button>
+    <div id="popupWindow" class="dropdown-content">
+      <ul>
+        <li><a href="/top">トップページ</a></li>
+        <li><a href="/bingo">ビンゴページ</a></li>
+        <li><a href="/coupon">クーポン交換ページ</a></li>
+        <li><a href="/account">アカウントページ</a></li>
+      </ul>
+    </div>    
+  </header>
+
+ 
+  
+  <footer class="Footer">
+    <!-- トップボタン -->
+    <a href="/top" class="top-text">
+      <img src="/static/images/top.png" alt="error">
+      <span>トップ</span>
+    </a>
+
+    <!-- スキャンボタン -->
+    <a href="/bingo" class="scan-text">
+      <img src="/static/images/QRsample.png" alt="error">
+      <span>スキャン</span>
+    </a>
+
+    <!-- クーポンボタン -->
+    <a href="/coupon" class="coupon-text">
+      <span>クーポン交換</span>
+    </a>
+</footer>
+
+
+  
+  <div class="main">
+    {% block content %} ここにページごとの内容が入ります。 {% endblock %}
+  </div>
+
+  <script src="/static/js/script.js"></script>
+</body>
+</html>
