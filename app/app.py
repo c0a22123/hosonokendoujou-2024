@@ -1,55 +1,59 @@
-from flask import Flask, render_template, request, redirect, url_for, session, send_from_directory, Response,send_file, jsonify # type: ignore
-import os
-from pymysql.cursors import DictCursor
-import qrcode
-#import cv2 # type: ignore
-from app.database import connect_db,add_user,del_user
-import io
-#from app.qrcode_utils import generate_qr, read_qr_from_camera
+from flask import Flask, render_template, request, redirect, url_for, session
+# import cv2
+# import pyqrcode
+# from pymysql.cursors import DictCursor
+from .database import connect_db, check_db,add_user,del_user
 
-app = Flask(__name__)
+
+
+bingo_list=[[False,False,False],
+            [False,False,False],
+            [False,False,False]]
+
+app = Flask(__name__, static_folder='./static')
 app.secret_key = 'your_secret_key'
+# font = cv2.FONT_HERSHEY_SIMPLEX
+FILE_PNG_AB = 'qrcode_AB.png'
 
-# ビンゴシートの状態を保持するためのリスト
-bingo_sheet = [False] * 9  # 3x3 ビンゴシート
-
-# QRコード生成用関数
-def generate_qr(url):
-    qr = qrcode.QRCode(
-        version=1,
-        error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=10,
-        border=4,
-    )
-    qr.add_data(url)
-    qr.make(fit=True)
-
-    img = qr.make_image(fill='black', back_color='white')
-    return img
+def bingo_check(bingo_list):
+    '''
+    引数：なし
+    出力：ビンゴの数
+    '''
+    ans=0
+    for i in range(3):
+        if all(bingo_list[i]):
+            ans+=1
+            print(1)
+        if all(row[i] for row in bingo_list):
+            ans+=1
+            print(2)
+    if bingo_list[0][0] and bingo_list[1][1] and bingo_list[2][2]:
+        ans+=1
+        # print(3)
+    if bingo_list[2][0] and bingo_list[1][1] and bingo_list[0][2]:
+        ans+=1
+        # print(3)
+    return ans
 
 @app.route('/')
-def index():
-    #　usernameがセッションに登録されていれば、index.htmlへ　そうでなければ、login状態へ
+def login_after():#ログイン済み確認
     if 'username' in session:
         return render_template('index.html', username=session['username'])
     return redirect(url_for('login'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    #　入力されたusername、passwordがデータベースに登録されているのと一致したら、
-    # sessionにusernameを登録し、index状態へ、そうでなければ、login.htmlへ
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-
-        result = connect_db(username, password) # 
+        result = connect_db(username, password)
         if(result):
             session['username'] = username
             return redirect(url_for('index'))
-    return render_template('login.html')
+    return render_template('top')
 
 @app.route('/add', methods=['GET', 'POST'])
-#　passwordとpassword2が一致したら、usernameとpasswordをデータベースに登録する
 def add():
     if request.method == 'POST':
         username = request.form['username']
@@ -79,30 +83,25 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('index'))
 
-@app.route('/bingo')
-def bingo():
-    return render_template('bingo.html')
 
-@app.route('/generate_qr/<int:cell_id>')
-def generate_qr_code(cell_id):
-    # QRコードに埋め込むURLを設定
-    url = str(cell_id)  # QRコードにはセルIDだけを埋め込む
-    img = generate_qr(url)
+    
 
-    # QRコード画像をバイト形式で返す
-    img_io = io.BytesIO()
-    img.save(img_io, 'PNG')
-    img_io.seek(0)
-    return send_file(img_io, mimetype='image/png')
+@app.route('/bingo_spot', methods=['GET','post'])
+def index_3(num):
+    global bingo_list
+    num=int(num)
+    bingo_list[int(num/3)][num%3]=True
+    return render_template('bingo_spot.html')
 
-@app.route('/stamp/<int:cell_id>')
-def stamp(cell_id):
-    # セルIDの範囲チェック
-    if 1 <= cell_id <= 9:
-        bingo_sheet[cell_id - 1] = True
-        return jsonify(success=True, cell_id=cell_id)
-    else:
-        return jsonify(success=False)
+
+@app.route('/<sample_name>', methods=['GET', 'POST'])
+def allpass(sample_name):
+    global bingo_list 
+    bingo_num=bingo_check(bingo_list)
+    return render_template(f'{sample_name}.html',bingo_list=bingo_list,bingo_num=bingo_num)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run( debug=True)
+
+
+

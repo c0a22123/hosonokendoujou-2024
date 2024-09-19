@@ -19,38 +19,57 @@ body {
     border-bottom-left-radius: 20px; /* 左下の角を20pxの半径で丸くする */
     border-bottom-right-radius: 20px; /* 右下の角を20pxの半径で丸くする */
     background-color: rgb(255, 255, 255); /* ヘッダーの背景色を指定する */
+
+    display: flex; /* Flexboxを使用 */
+    align-items: center; /* 垂直方向で中央揃え */
+    justify-content: space-between; /* 子要素を左右に配置 */
+    padding: 0 20px; /* 左右に余白を追加 */
+    z-index: 1000;
 }
-/* ボタンのスタイル */
+/* ボタンとドロップダウンメニューの親要素 */
 #popupButton {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  /* ポップアップウィンドウの基本スタイル */
-  .popup {
-    display: none; /* 初期状態では非表示 */
-    position: fixed;
-    z-index: 1; /* 最前面に表示 */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* 背景の半透明黒 */
-  }
-  
-  /* ポップアップのコンテンツ */
-  .popup-content {
-    position: absolute;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    width: 300px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  }
+  padding: 0;
+  font-size: 16px;
+  cursor: pointer;
+  position: absolute; /* ヘッダーの右上に配置 */
+  top: 70%; /* ヘッダーの垂直方向で中央 */
+  transform: translateY(-50%); /* 垂直方向で中央に揃える */
+  right: 10px; /* 右からの距離 */
+  background-color: transparent;
+  border: none;
+}
+
+/* ドロップダウンの基本スタイル */
+.dropdown-content {
+  display: none; /* 初期状態で非表示 */
+  position: absolute;
+  right: 10px; /* ボタンの右下に表示 */
+  top: 100%; /* ボタンの下に表示 */
+  background-color: #fff;
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 5px;
+}
+
+/* ドロップダウンメニューのリンクスタイル */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* ホバー時のメニュー項目スタイル */
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+/* ボタンにホバーした際にドロップダウンを表示 */
+#popupButton:hover + .dropdown-content {
+  display: block;
+}
+
   
   /* 閉じるボタン */
   .close {
@@ -64,14 +83,106 @@ body {
     display: inline-block;
   }
 .Footer{
+    display: flex; /* 横並びにする */
+    justify-content: space-around; /* 各要素の間に均等なスペースを確保 */
+    align-items: center; /* 垂直方向で中央揃え */
 
     position:fixed;
     bottom:0;
     left:0;
     width:100%;
     height:80px;
-    background-color:  rgba(37, 35, 35, 0.266);
+    background-color:  rgba(245, 249, 249, 0);
+    z-index: 1000;
 }
+
+/* トップページ部分のリンク */
+.top-text {
+  display: flex;
+  flex-direction: column; /* 縦方向に要素を並べる */
+  justify-content: center; /* 垂直方向に中央揃え */
+  align-items: center; /* 水平方向に中央揃え */
+  width: 93px;
+  height: 87px;
+  background: white;
+  border-radius: 9999px;
+  border: 1px solid #E2E8F0;
+  text-decoration: none; /* 下線を消す */
+  color: #FFA823;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  text-align: center; /* テキストを中央揃え */
+}
+
+.top-text img {
+  display: block;
+  margin-bottom: 5px; /* 画像とテキストの間にスペースを作成 */
+}
+
+.top-text:hover {
+  background-color: #c3ac93; /* ホバー時の背景色 */
+  cursor: pointer;
+}
+
+.top-text:active {
+  background-color: #8f8378;
+  transform: scale(0.95); /* 押したときに縮小 */
+}
+
+/* スキャン部分のリンク */
+.scan-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 174.65px;
+  height: 67px;
+  background: #FFA823;
+  border-radius: 283px;
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+}
+
+.scan-text:hover {
+  background-color: #e6951b; /* ホバー時の背景色 */
+  cursor: pointer;
+}
+
+.scan-text:active {
+  background-color: #cc840f;
+  transform: scale(0.95); /* 押したときに縮小 */
+}
+
+/* クーポン部分のリンク */
+.coupon-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 93px;
+  height: 87px;
+  background: #FFA823;
+  border-radius: 9999px;
+  text-decoration: none;
+  color: white;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+}
+
+.coupon-text:hover {
+  background-color: #e6951b;
+  cursor: pointer;
+}
+
+.coupon-text:active {
+  background-color: #cc840f;
+  transform: scale(0.95); /* 押したときに縮小 */
+}
+
+
 /* 画像の幅と高さを指定 */
 .resized-image {
     top:0;

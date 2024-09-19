@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}トップページ{% endblock %}
+
+{% block content %}
+    <div style="width: 390px; height: 954px; position: relative; background: white">
+        <style>
+          .box {
+            width: 348px;
+            height: 89px;
+            position: absolute;
+            background: white;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            border-radius: 30px;
+          }
+          .circle {
+            width: 84px;
+            height: 81px;
+            position: absolute;
+            background: rgba(255, 190, 18, 0.80);
+            border-radius: 9999px;
+          }
+          .number {
+            width: 100px;
+            height: 85px;
+            position: absolute;
+            text-align: center;
+            color: white;
+            font-size: 30px;
+            font-family: Inter;
+            font-weight: 700;
+            line-height: 24px;
+            word-wrap: break-word;
+          }
+        </style>
+      
+        <!-- Box 1 -->
+        <div style="width: 351px; height: 89px; left: 19px; top: 123px; position: absolute">
+          <div class="box" style="left: 3px;"></div>
+          <div class="circle" style="left: 8px; top: 4px;"></div>
+          <div class="number" style="left: 0px; top: 4px;">1</div>
+        </div>
+      
+        <!-- Box 2 -->
+        <a href="/coupon_exchange" style="display: block; width: 351px; height: 89px; position: absolute; left: 19px; top: 226px;">
+            <div class="box" style="left: 3px; position: relative;">
+              <div class="store-name" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: black; font-size: 18px; font-family: Inter; font-weight: 700;">
+                クーポン名データベースから
+              </div>
+            </div>
+            <div class="circle" style="left: 8px; top: 4px;"></div>
+            <div class="number" style="left: 0px; top: 4px;">2</div>
+          </a>
+          
+      
+        <!-- Box 3 -->
+        <div style="width: 351px; height: 89px; left: 19px; top: 329px; position: absolute">
+          <div class="box" style="left: 3px;"></div>
+          <div class="circle" style="left: 8px; top: 4px;"></div>
+          <div class="number" style="left: 0px; top: 4px;">3</div>
+        </div>
+      
+        <!-- Box 4 -->
+        <div style="width: 351px; height: 89px; left: 19px; top: 432px; position: absolute">
+          <div class="box" style="left: 3px;"></div>
+          <div class="circle" style="left: 8px; top: 4px;"></div>
+          <div class="number" style="left: 0px; top: 4px;">4</div>
+        </div>
+      
+        <!-- Box 5 -->
+        <div style="width: 351px; height: 89px; left: 19px; top: 533px; position: absolute">
+          <div class="box" style="left: 3px;"></div>
+          <div class="circle" style="left: 8px; top: 4px;"></div>
+          <div class="number" style="left: 0px; top: 4px;">5</div>
+        </div>
+      
+        <!-- Box 6 -->
+        <div style="width: 351px; height: 89px; left: 19px; top: 637px; position: absolute">
+          <div class="box" style="left: 3px;"></div>
+          <div class="circle" style="left: 8px; top: 4px;"></div>
+          <div class="number" style="left: 0px; top: 4px;">6</div>
+        </div>
+      
+        <!-- Box 7 -->
+        <div style="width: 351px; height: 89px; left: 19px; top: 742px; position: absolute">
+          <div class="box" style="left: 3px;"></div>
+          <div class="circle" style="left: 8px; top: 4px;"></div>
+          <div class="number" style="left: 0px; top: 4px;">7</div>
+        </div>
+      </div>
+{% endblock %}
