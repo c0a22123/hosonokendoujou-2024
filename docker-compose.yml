@@ -1,0 +1,18 @@
+services:
+  app:
+    build: .
+    ports:
+      - "5001:5000"
+    container_name: app
+    volumes:
+      - ./app:/usr/src/app
+    command: flask run --host=0.0.0.0
+  db:
+    build: ./mysql/
+    volumes:
+      - ./mysql/mysql_data:/var/lib/mysql
+      - ./mysql/sqls:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=YES
+      - MYSQL_ALLOW_EMPTY_PASSWORD
+      - MYSQL_RANDOM_ROOT_PASSWORD
