@@ -16,9 +16,9 @@ def connect_db(username: str, password: str):
 
         conn = mysql.connector.connect(
         host='db',  # Docker Composeでのサービス名を指定
-        user='root',
-        password='YES',
-        database='login_sample',
+        user='root',         #ログインする時のname
+        password='YES',        #パスワード
+        database='login_sample',#繋ぐdatebase
         )
             
         cur = conn.cursor()
@@ -28,7 +28,6 @@ def connect_db(username: str, password: str):
         cur.close()
         conn.close()
         result = check_db(users, username, password)
-
         return result
 
     except pymysql.MySQLError as e:
@@ -55,6 +54,10 @@ def check_db(users, username, password):
             return False
 
 def add_user(username: str, password: str):
+    """
+    新規のユーザーとパスワードを追加するための関数
+    ユーザによって入力された(username),パスワード(password)
+    """ 
     try:
         conn = None 
 
@@ -76,6 +79,7 @@ def add_user(username: str, password: str):
         raise Exception("MySQLサーバへの接続に失敗しました")  
     
 def del_user(username: str, password: str):
+
     """
     MySQLとの接続を行う
     成功した場合はcheck_dbを呼び出し、
@@ -83,9 +87,9 @@ def del_user(username: str, password: str):
     失敗した場合はエラーを返す
     引数はブラウザに入力されたユーザ(username)、パスワード(password)である。
     """
+
     try:
         conn = None 
-
         conn = mysql.connector.connect(
         host='db',  # Docker Composeでのサービス名を指定
         user='root',

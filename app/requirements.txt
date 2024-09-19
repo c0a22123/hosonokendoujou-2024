@@ -1,14 +1,12 @@
 Flask==2.0.3
+opencv-python
+pyqrcode
 Werkzeug==2.0.3
 flask-restful
 flask-migrate
 cryptography
-flask-mysqldb
+Flask-MySQLdb
 gunicorn
 flask_marshmallow
 mysql-connector-python
 pymysql
-opencv-python
-qrcode[pil]
-opencv-python-headless
-Pillow==10.0.0

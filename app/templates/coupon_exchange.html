@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}トップページ{% endblock %}
+
+{% block content %}
+<div class="main">
+  <div style="width: 390px; height: 844px; position: relative; background: white">
+    <style>
+      .container {
+        width: 296px;
+        height: 365px;
+        position: absolute;
+        left: 47px;
+        top: 239px;
+      }
+      .box {
+        width: 296px;
+        height: 365px;
+        position: absolute;
+        background: white;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 30px;
+      }
+      .circle {
+        width: 80px;
+        height: 70px;
+        position: absolute;
+        left: 108px;
+        top: 21px;
+      }
+      .circle-inner {
+        width: 67.20px;
+        height: 66.71px;
+        position: absolute;
+        background: rgba(255, 190, 18, 0.80);
+        border-radius: 9999px;
+        left: 6.40px;
+        top: 0px;
+      }
+      .circle-text {
+        width: 80px;
+        height: 70px;
+        position: absolute;
+        text-align: center;
+        color: white;
+        font-size: 30px;
+        font-family: Inter;
+        font-weight: 700;
+        line-height: 24px;
+        word-wrap: break-word;
+      }
+      .button {
+        width: 174.65px;
+        height: 67px;
+        position: absolute;
+        left: 61px;
+        top: 261px;
+        background: #FFA823;
+        border-radius: 283px;
+        padding: 16px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .button-text {
+        width: 121px;
+        height: 36px;
+        text-align: center;
+        color: white;
+        font-size: 14px;
+        font-family: Inter;
+        font-weight: 700;
+        line-height: 24px;
+        word-wrap: break-word;
+      }
+      .title {
+        width: 233px;
+        height: 39px;
+        position: absolute;
+        left: 34px;
+        top: 155px;
+        text-align: center;
+        color: black;
+        font-size: 30px;
+        font-family: Microsoft Sans Serif;
+        font-weight: 400;
+        line-height: 24px;
+        word-wrap: break-word;
+      }
+    </style>
+  
+    <div class="container">
+      <div class="box"></div>
+      <div class="circle">
+        <div class="circle-inner"></div>
+        <div class="circle-text">２</div>
+      </div>
+      <div class="button">
+        <div class="button-text">クーポン取得</div>
+      </div>
+      <div class="title">100円引クーポン</div>
+    </div>
+  </div>
+  
+</div>
+{% endblock %}
