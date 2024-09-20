@@ -18,11 +18,11 @@ def connect_db(username: str, password: str):
         host='db',  # Docker Composeでのサービス名を指定
         user='root',         #ログインする時のname
         password='YES',        #パスワード
-        database='login_sample',#繋ぐdatebase
+        database='MyDatabase',#繋ぐdatebase
         )
             
         cur = conn.cursor()
-        query = "SELECT user_name AS name, password FROM User WHERE user_name = %s"
+        query = "SELECT username AS name, password FROM login WHERE username = %s"
         cur.execute(query, (username,))
         users = cur.fetchall()
         cur.close()
@@ -65,11 +65,11 @@ def add_user(username: str, password: str):
         host='db',  # Docker Composeでのサービス名を指定
         user='root',# 本当のユーザに変更する
         password='YES', #本当のパスワードに変更する
-        database='login_sample', # 本当のデータに変える
+        database='MyDatabase', # 本当のデータに変える
         )
 
         cur = conn.cursor()
-        query = "INSERT INTO User (user_name, password) VALUES (%s, %s)"
+        query = "INSERT INTO login (username, password) VALUES (%s, %s)"
         cur.execute(query, (username, password))
         conn.commit()
         cur.close()
@@ -94,11 +94,11 @@ def del_user(username: str, password: str):
         host='db',  # Docker Composeでのサービス名を指定
         user='root',
         password='YES',
-        database='login_sample',
+        database='MyDatabase',
         )
             
         cur = conn.cursor()
-        query = "DELETE FROM User WHERE user_name = %s"
+        query = "DELETE FROM login WHERE username = %s"
         cur.execute(query,(username,))
         conn.commit()
         cur.close()
