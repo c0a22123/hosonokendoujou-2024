@@ -1,0 +1,46 @@
+@keyframes infinity-scroll-left {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
+  
+  .scroll-infinity__wrap {
+    display: flex;
+    overflow-x: scroll; /* 横スクロールを許可 */
+    scroll-snap-type: x mandatory; /* スナップスクロールを設定 */
+    -webkit-overflow-scrolling: touch; /* スムーズスクロールの設定（モバイル対応） */
+    width: 100%;
+    gap: 10px; /* 各アイテムの間にスペースを追加 */
+    
+    /* スクロールバーを非表示にする設定 */
+    scrollbar-width: none; /* Firefox用 */
+  }
+  
+  .scroll-infinity__wrap::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera用 */
+  }
+  
+  .scroll-infinity__list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    animation: infinity-scroll-left 60s linear infinite; /* 自動スクロール */
+  }
+  
+  .scroll-infinity__item {
+    width: 25%; /* 幅を調整 */
+    flex-shrink: 0;
+    scroll-snap-align: start; /* スクロールがスナップで停止する位置 */
+  }
+  
+  .scroll-infinity__item > img {
+    width: 100%;        /* 親要素に合わせて幅を100%に */
+    height: 200px;      /* 必要に応じて高さを調整 */
+    object-fit: cover;  /* 画像の比率を保ちながら表示 */
+    display: block;     /* 画像をブロック要素として表示 */
+  }
+  
