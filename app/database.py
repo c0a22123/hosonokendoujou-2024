@@ -3,7 +3,7 @@ import mysql.connector
 import pymysql
 from pymysql.cursors import DictCursor
 
-def connect_db(username: str, password: str):
+def connect_db(user_name: str, password: str):
     """
     MySQLとの接続を行う
     成功した場合はcheck_dbを呼び出し、
@@ -22,12 +22,12 @@ def connect_db(username: str, password: str):
         )
             
         cur = conn.cursor()
-        query = "SELECT username AS name, password FROM login WHERE username = %s"
-        cur.execute(query, (username,))
+        query = "SELECT user_name AS name, password FROM login WHERE user_name = %s"
+        cur.execute(query, (user_name,))
         users = cur.fetchall()
         cur.close()
         conn.close()
-        result = check_db(users, username, password)
+        result = check_db(users, user_name, password)
         return result
 
     except pymysql.MySQLError as e:
@@ -36,7 +36,7 @@ def connect_db(username: str, password: str):
     
     
 
-def check_db(users, username, password):
+def check_db(users, user_name, password):
     """
     ユーザとパスワードが一致するかを判定する関数
     一致した場合はTrueをしなかった場合はFalseを返す
@@ -46,14 +46,14 @@ def check_db(users, username, password):
     #if user and user['password'] == password:
     password_d = ""
     for user in users:
-        if username == user[0]:
+        if user_name == user[0]:
             password_d = user[1]
             if(password_d == password):
                 return True
         else:
             return False
 
-def add_user(username: str, password: str):
+def add_user(user_name: str, password: str):
     """
     新規のユーザーとパスワードを追加するための関数
     ユーザによって入力された(username),パスワード(password)
@@ -69,8 +69,8 @@ def add_user(username: str, password: str):
         )
 
         cur = conn.cursor()
-        query = "INSERT INTO login (username, password) VALUES (%s, %s)"
-        cur.execute(query, (username, password))
+        query = "INSERT INTO login (user_name, password) VALUES (%s, %s)"
+        cur.execute(query, (user_name, password))
         conn.commit()
         cur.close()
         conn.close()
@@ -78,7 +78,7 @@ def add_user(username: str, password: str):
         print(f"Error connecting to MySQL: {e}")
         raise Exception("MySQLサーバへの接続に失敗しました")  
     
-def del_user(username: str, password: str):
+def del_user(user_name: str, password: str):
 
     """
     MySQLとの接続を行う
@@ -98,8 +98,8 @@ def del_user(username: str, password: str):
         )
             
         cur = conn.cursor()
-        query = "DELETE FROM login WHERE username = %s"
-        cur.execute(query,(username,))
+        query = "DELETE FROM login WHERE user_name = %s"
+        cur.execute(query,(user_name,))
         conn.commit()
         cur.close()
         conn.close()
