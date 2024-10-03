@@ -50,11 +50,10 @@ def generate_qr(url):
     img = qr.make_image(fill='black', back_color='white')
     return img
 
-@app.route('/top')
-def login_after():#ログイン済み確認
-    if 'username' in session:
-        return render_template('top.html', username=session['username'])
-    return redirect(url_for('login'))
+@app.route('/index')
+def index():#ログイン済み確認
+    return render_template('index.html')
+    #return redirect(url_for('login'))
 
 @app.route('/bingo')
 def bingo():
@@ -96,7 +95,8 @@ def login():
         result = connect_db(username, password)
         if(result):
             session['username'] = username
-            return render_template('top.html')
+            return redirect(url_for('index'))
+            #return render_template('top.html')
     return render_template('login.html')
 
 @app.route('/add', methods=['GET', 'POST'])
@@ -145,7 +145,7 @@ def allpass(sample_name):
     return render_template(f'{sample_name}.html',bingo_sheet=bingo_sheet,bingo_num=bingo_num)
 
 if __name__ == '__main__':
-    app.run( debug=True)
+    app.run(debug=True)
 
 
 
