@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}ビンゴスポット{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="/static/css/spot_list.css">
+<h1>ビンゴスポットリスト</h1>
+<ul>
+    <li><a href="{{ url_for('honzin') }}">日野宿本陣</a></li>
+    <li><a href="{{ url_for('housen') }}">宝泉寺</a></li>
+    <li><a href="{{ url_for('hurusato') }}">新撰組ふるさと資料館</a></li>
+    <li><a href="{{ url_for('kouryuu') }}">日野宿交流館</a></li>
+    <li><a href="{{ url_for('satou') }}">佐藤彦五郎資料館</a></li>
+    <li><a href="{{ url_for('taisyou') }}">大昌寺</a></li>
+    <li><a href="{{ url_for('yasaka') }}">日野八坂神社</a></li>
+    <li><a href="{{ url_for('zizou') }}">とんがらし地蔵</a></li>
+</ul>
+{% endblock %}

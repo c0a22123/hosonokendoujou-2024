@@ -26,6 +26,21 @@ body {
     padding: 0 20px; /* 左右に余白を追加 */
     z-index: 1000;
 }
+
+/* ログインリンクのスタイルを定義 */
+.login-link {
+  margin-right: auto; /* ポップアップボタンの左側に配置する */
+  font-size: 16px;
+  text-decoration: none;
+  color: #000; /* 必要なら色を変更 */
+  padding: 12px;
+}
+
+.login-link:hover {
+  text-decoration: underline; /* ホバー時の装飾 */
+  cursor: pointer;
+}
+
 /* ボタンとドロップダウンメニューの親要素 */
 #popupButton {
   padding: 0;

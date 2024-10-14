@@ -1,0 +1,47 @@
+/* 全体の中央揃え設定 */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* リンクリストのデザイン */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin: 10px 0;
+}
+
+/* リンクをボックスのように表示する */
+li a {
+    display: block;
+    padding: 15px 20px;
+    background-color: #FFA823;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+/* リンクのホバー時のエフェクト */
+li a:hover {
+    background-color: #FFA823;
+}
+
+/* モバイルフレンドリーにするためのレスポンシブ対応 */
+@media (max-width: 600px) {
+    li a {
+        width: 90%;
+        max-width: none;
+    }
+}

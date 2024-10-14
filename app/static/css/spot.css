@@ -1,0 +1,62 @@
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background-color: #fff; /* 背景色を白に変更 */
+}
+
+.container {
+    max-width: 800px;
+    width: 100%;
+    background-color: #fff; /* コンテナの背景も白に統一 */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* シャドウで立体感は残す */
+    text-align: center; /* 中央揃え */
+}
+
+.title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.image-section {
+    display: block;
+    width: 100%;
+    max-width: 395px;
+    height: auto;
+    margin: 0 auto 20px; /* 画像を中央に揃える */
+}
+
+.content-section {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #333;
+    text-align: left; /* テキストは左揃え */
+}
+
+.text {
+    margin-bottom: 20px;
+}
+
+a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .title {
+        font-size: 1.5rem;
+    }
+}

@@ -130,12 +130,42 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/bingo_spot', methods=['GET','post'])
-def index_3(num):
-    global bingo_sheet
-    num=int(num)
-    bingo_sheet[int(num/3)][num%3]=True
+@app.route('/bingo_spot')
+def route():
     return render_template('bingo_spot.html')
+
+@app.route('/honzin')
+def honzin():
+    return render_template('spot_info/honzin.html')
+
+@app.route('/housen')
+def housen():
+    return render_template('spot_info/housen.html')
+
+@app.route('/hurusato')
+def hurusato():
+    return render_template('spot_info/hurusato.html')
+
+@app.route('/kouryuu')
+def kouryuu():
+    return render_template('spot_info/kouryuu.html')
+
+@app.route('/satou')
+def satou():
+    return render_template('spot_info/satou.html')
+
+@app.route('/taisyou')
+def taisyou():
+    return render_template('spot_info/taisyou.html')
+
+@app.route('/yasaka')
+def yasaka():
+    return render_template('spot_info/yasaka.html')
+
+@app.route('/zizou')
+def zizou():
+    return render_template('spot_info/zizou.html')
+
 
 
 @app.route('/<sample_name>', methods=['GET', 'POST'])
