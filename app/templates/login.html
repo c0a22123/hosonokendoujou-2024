@@ -1,22 +1,113 @@
-<!-- templates/login.html -->
 <!DOCTYPE html>
-<html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ログインページ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: white;
+            padding: 40px; /* パディングを増やし、ゆとりを持たせる */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 30px; /* タイトルの下に余白を追加 */
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px; /* フィールドの上下に余白を追加 */
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px; /* インプットフィールドのパディングを少し狭める */
+            margin-bottom: 15px; /* 下に少し余白を追加 */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #ff8c00;
+            color: white;
+            padding: 10px 0; /* ボタンの高さを狭める */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 80%; /* ボタンの横幅を狭める */
+            font-size: 1.1rem; /* フォントサイズを少しだけ小さく */
+            margin-top: 10px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #e67600;
+        }
+
+        /* コンテンツ間に余白を追加 */
+        .form-section {
+            margin-bottom: 40px; /* フォームとアクションリンクの間に余白を追加 */
+        }
+
+        /* アクションリンク全体のスタイル */
+        .action-links {
+            margin-top: 20px; /* アクションリンク全体に余白を追加 */
+        }
+
+        /* p タグと form タグ間の隙間を狭める */
+        .action-links p {
+            margin-bottom: 1px; /* pタグとformの間の余白を狭める */
+        }
+
+        .action-links form {
+            margin: 5px 0; /* formタグの上下の余白を狭める */
+        }
+    </style>
+</head>
 <body>
-    <h2>Login</h2>
-    <form method="post" action="/login">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
-        <input type="submit" value="Login">
-    </form>
-    <p>新規登録はこちら</p>
-    <form action="/add" method="get">
-        <input type="submit" value="新規登録">
-    </form>
-    <p>退会はこちら</p>
-    <form action="/deleate" method="get">
-        <input type="submit" value="登録を消す">
-    </form>
+
+    <div class="login-container">
+        <h2>ログイン</h2>
+        <div class="form-section"> <!-- コンテンツを囲むdivを追加 -->
+            <form method="post" action="/login">
+                <label for="username">ユーザー名:</label>
+                <input type="text" id="username" name="username" required>
+                
+                <label for="password">パスワード:</label>
+                <input type="password" id="password" name="password" required>
+                
+                <input type="submit" value="ログイン">
+            </form>
+        </div>
+
+        <!-- コンテンツ間に余白を追加 -->
+        <div class="action-links">
+            <p>新規登録はこちら</p>
+            <form action="/add" method="get">
+                <input type="submit" value="新規登録">
+            </form>
+            <p></p>
+            <p>退会はこちら</p>
+            <form action="/deleate" method="get">
+                <input type="submit" value="登録を消す">
+            </form>
+        </div>
+    </div>
+
 </body>
 </html>

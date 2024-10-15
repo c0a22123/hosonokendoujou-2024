@@ -1,19 +1,100 @@
-<!-- templates/login.html -->
 <!DOCTYPE html>
-<html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ユーザー登録ページ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .register-container {
+            background-color: white;
+            padding: 40px; /* パディングを増やし、ゆとりを持たせる */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 30px; /* タイトルの下に余白を追加 */
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 5px; /* フィールドの上下に余白を追加 */
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px; /* インプットフィールドのパディングを少し増やす */
+            margin-bottom: 25px; /* 下にゆとりを追加 */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #ff8c00;
+            color: white;
+            padding: 10px 0; /* ボタンの高さを狭める */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 80%; /* ボタンの横幅を狭める */
+            font-size: 1.1rem; /* フォントサイズを少しだけ小さく */
+            margin-top: 10px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #e67600;
+        }
+
+        .action-links {
+            margin-top: 30px; /* アクションリンク全体に余白を追加 */
+        }
+
+        .action-links form {
+            margin: 10px 0;
+        }
+
+        p {
+            margin: 0 0 10px; /* テキストの下に少し余白を追加 */
+        }
+    </style>
+</head>
 <body>
-    <h2>add_user</h2>
-    <form method="post" action="/add">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
-        <label for="password2">Passwordの確認:</label>
-        <input type="password" id="password2" name="password2" required><br>
-        <input type="submit" value="登録">
-    </form>
-    <form action="/login" method="get">
-            <input type="submit" value="ログインに進む">
-    </form>
+
+    <div class="register-container">
+        <h2>ユーザー登録</h2>
+        <form method="post" action="/add">
+            <label for="username">ユーザー名:</label>
+            <input type="text" id="username" name="username" required>
+            
+            <label for="password">パスワード:</label>
+            <input type="password" id="password" name="password" required>
+            
+            <label for="password2">パスワードの確認:</label>
+            <input type="password" id="password2" name="password2" required>
+            
+            <input type="submit" value="登録">
+        </form>
+
+        <div class="action-links">
+            <form action="/login" method="get">
+                <input type="submit" value="ログインに進む">
+            </form>
+        </div>
+    </div>
+
 </body>
 </html>
