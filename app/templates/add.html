@@ -35,10 +35,10 @@
             font-weight: bold;
         }
 
-        input[type="text"], input[type="password"] {
+        input[type="text"], input[type="password"], select {
             width: 100%;
-            padding: 12px; /* インプットフィールドのパディングを少し増やす */
-            margin-bottom: 25px; /* 下にゆとりを追加 */
+            padding: 12px;
+            margin-bottom: 25px;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
@@ -70,6 +70,16 @@
         p {
             margin: 0 0 10px; /* テキストの下に少し余白を追加 */
         }
+
+        /* 性別選択を横並びにするためのCSS */
+        .gender-option {
+            display: inline-block;
+            margin-right: 15px; /* 各性別オプションの間に余白を追加 */
+        }
+
+        .gender-option label {
+            margin-right: 5px;
+        }
     </style>
 </head>
 <body>
@@ -85,7 +95,45 @@
             
             <label for="password2">パスワードの確認:</label>
             <input type="password" id="password2" name="password2" required>
-            
+
+            <label for="gender">性別:</label>
+            <div style="margin-bottom: 25px;">
+                <div class="gender-option">
+                    <label for="male">男性</label>
+                    <input type="radio" id="male" name="gender" value="male" required>
+                </div>
+                <div class="gender-option">
+                    <label for="female">女性</label>
+                    <input type="radio" id="female" name="gender" value="female" required>
+                </div>
+                <div class="gender-option">
+                    <label for="other">その他</label>
+                    <input type="radio" id="other" name="gender" value="other" required>
+                </div>
+            </div>
+
+            <label for="birthdate">生年月日:</label>
+            <div style="margin-bottom: 25px;">
+                <select id="year" name="birth_year" required>
+                    <option value="">年</option>
+                    {% for year in range(1980, 2024) %}
+                    <option value="{{ year }}">{{ year }}</option>
+                    {% endfor %}
+                </select>
+                <select id="month" name="birth_month" required>
+                    <option value="">月</option>
+                    {% for month in range(1, 13) %}
+                    <option value="{{ month }}">{{ month }}</option>
+                    {% endfor %}
+                </select>
+                <select id="day" name="birth_day" required>
+                    <option value="">日</option>
+                    {% for day in range(1, 32) %}
+                    <option value="{{ day }}">{{ day }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
             <input type="submit" value="登録">
         </form>
 
