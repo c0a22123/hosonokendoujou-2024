@@ -9,31 +9,36 @@ body {
     padding: 50px 10px 50px 10px; /* bodyの内側の余白を指定する */
 }
 .Header {
-    position: fixed; /* ヘッダーを固定する */
-    pointer-events: auto; /* フッター内の要素がクリック可能であることを保証 */
-    top: 0; /* 上部から配置の基準位置を決める */
-    left: 0; /* 左から配置の基準位置を決める */
-    width: 100%; /* ヘッダーの横幅を指定する */
-    height: 60px; /* ヘッダーの高さを指定する */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* 影を追加して浮かせる */
-    border-bottom-left-radius: 20px; /* 左下の角を20pxの半径で丸くする */
-    border-bottom-right-radius: 20px; /* 右下の角を20pxの半径で丸くする */
-    background-color: rgb(255, 255, 255); /* ヘッダーの背景色を指定する */
-
-    display: flex; /* Flexboxを使用 */
-    align-items: center; /* 垂直方向で中央揃え */
-    justify-content: space-between; /* 子要素を左右に配置 */
-    padding: 0 20px; /* 左右に余白を追加 */
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  background-color: rgb(255, 255, 255);
+  
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 左右に要素を分割配置 */
+  padding: 0 20px;
+  z-index: 1000;
 }
 
 /* ログインリンクのスタイルを定義 */
 .login-link {
-  margin-right: auto; /* ポップアップボタンの左側に配置する */
+  position: relative;
+  top: 10px; /* ログインボタンを20px下に下げる */
+  margin-left: 20px; /* メニューボタンと重ならないようにさらにマージンを追加 */
   font-size: 16px;
   text-decoration: none;
-  color: #000; /* 必要なら色を変更 */
-  padding: 12px;
+  color: #000;
+  padding: 5px 10px; /* パディングを広げてボタンの大きさを大きく見せる */
+  border: 2px solid #ffa07a00; /* 薄い橙色の枠を追加 */
+  background-color: #FFE4B5; /* 背景を薄い橙色に */
+  border-radius: 5px;
+  margin-right: 50px; /* 右側にさらに余白を追加 */
 }
 
 .login-link:hover {
@@ -199,12 +204,12 @@ body {
 
 
 /* 画像の幅と高さを指定 */
+
 .resized-image {
-    top:0;
-    left: 14px;
-    max-width: 197px; /* 最大幅を設定 */
-    max-height: 70px; /* 最大高さを設定 */
-    
+  top: 0;
+  left: 14px;
+  max-width: calc(197px * 2 / 3); /* 最大幅を2/3に */
+  max-height: calc(70px * 2 / 3);  /* 最大高さを2/3に */
 }
 
 
