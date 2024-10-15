@@ -5,31 +5,34 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" href="/static/css/styles.css">
   <!-- スマホに対応 -->
-  <meta name="viewport" content="width=device-width">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
   <header class="Header">
+    <!-- tamabingo.pngを左に配置 -->
     <a href="/index">
       <img src="/static/images/tamabingo.png" alt="error" class="resized-image">
     </a>
-    <button id="popupButton">
-      <img src="/static/images/overlayopen.png" alt="メニュー">
-    </button>
-    <a href="/login" class="login-link">ログイン</a>
+    
+    <!-- ログインリンクとメニュータブを右に配置 -->
+    <div class="header-right">
+      <button id="popupButton">
+        <img src="/static/images/overlayopen.png" alt="メニュー">
+      </button>
+      <a href="/login" class="login-link">ログイン</a>
+    </div>
 
+    <!-- ポップアップメニュー -->
     <div id="popupWindow" class="dropdown-content">
       <ul>
         <li><a href="/index">トップページ</a></li>
         <li><a href="/bingo">ビンゴページ</a></li>
         <li><a href="/bingo_spot">ビンゴスポット一覧</a></li>
-        <li><a href="/coupon">クーポン交換ページ</a></li>
         <li><a href="/account">アカウントページ</a></li>
       </ul>
     </div>    
   </header>
 
- 
-  
   <footer class="Footer">
     <!-- トップボタン -->
     <a href="/index" class="top-text">
@@ -47,10 +50,8 @@
     <a href="/spot" class="coupon-text">
       <span>スポット一覧</span>
     </a>
-</footer>
+  </footer>
 
-
-  
   <div class="main">
     {% block content %} ここにページごとの内容が入ります。 {% endblock %}
   </div>

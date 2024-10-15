@@ -1,8 +1,7 @@
-/* 全体の中央揃え設定 */
 body {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* ページ上部にコンテンツが来るように変更 */
     min-height: 100vh;
     margin: 0;
     font-family: Arial, sans-serif;
@@ -11,37 +10,48 @@ body {
 
 /* リンクリストのデザイン */
 ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2列に分ける */
+    gap: 20px; /* 各アイテムの間隔を調整 */
     list-style-type: none;
     padding: 0;
+    max-width: 800px; /* 最大幅を設定し、中央に揃える */
+    width: 100%;
 }
 
+/* リストアイテム */
 li {
-    margin: 10px 0;
+    margin: 0;
 }
 
 /* リンクをボックスのように表示する */
 li a {
     display: block;
     padding: 15px 20px;
-    background-color: #FFA823;
-    color: white;
+    background-color: #ffba53;
+    color: rgb(0, 0, 0);
     text-decoration: none;
     text-align: center;
     border-radius: 5px;
     transition: background-color 0.3s ease;
-    max-width: 300px;
-    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box; /* パディングも含めてボックスサイズを計算 */
 }
 
 /* リンクのホバー時のエフェクト */
 li a:hover {
-    background-color: #FFA823;
+    background-color: #FF8A00;
 }
 
 /* モバイルフレンドリーにするためのレスポンシブ対応 */
 @media (max-width: 600px) {
+    ul {
+        grid-template-columns: 1fr; /* 1列に変更 */
+    }
+
     li a {
         width: 90%;
         max-width: none;
+        margin: 0 auto; /* モバイル画面では中央揃え */
     }
 }

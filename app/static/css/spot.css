@@ -8,13 +8,13 @@
 }
 
 .container {
-    max-width: 800px;
-    width: 100%;
-    background-color: #fff; /* コンテナの背景も白に統一 */
+    max-width: 800px; /* コンテナの最大幅を広げる */
+    width: 100%; /* 画面幅に対して100% */
+    background-color: #fff;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* シャドウで立体感は残す */
-    text-align: center; /* 中央揃え */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
 .title {

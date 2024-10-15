@@ -10,9 +10,15 @@
     <title>ビンゴシート</title>
     <!-- Include the QR code scanner library -->
     <script src="https://cdn.jsdelivr.net/npm/html5-qrcode/minified/html5-qrcode.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bingo.css') }}">
+
 </head>
 <body>
     <h1>ビンゴシート</h1>
+    
+    <!-- カメラ起動ボタンをビンゴシートの上に移動 -->
+    <button id="start-camera">カメラを起動する</button>
+
     <table id="bingo-table">
         {% for i in range(1, 4) %}
         <tr>
@@ -22,13 +28,10 @@
         </tr>
         {% endfor %}
     </table>
+    
     <br>
-    <button id="start-camera">カメラを起動する</button>
-    <div id="qr-reader" style="width: 500px;"></div>
-    <br>
-    <a href='/index'>
-        <button>QRコード一覧に戻る</button>
-    </a>
+
+    <div id="qr-reader"></div>
 
     <script>
         document.getElementById('start-camera').addEventListener('click', function() {
@@ -60,4 +63,4 @@
     </script>
 </body>
 </html>
-    {% endblock %}
+{% endblock %}
