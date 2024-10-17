@@ -1,13 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for, session, send_file, jsonify
 import qrcode
 import io
-from .database import connect_db, check_db,add_user,del_user
+from .database import *
+from .bingo_database import *
+from .myfunction import *
 
 
 # ビンゴシートの状態を保持するためのリスト
-bingo_sheet =[[False,False,False],
-              [False,False,False],
-              [False,False,False]] # 3x3 ビンゴシート
+bingo_sheet = loadb_db("1", "1") # 3x3 ビンゴシート
 
 
 app = Flask(__name__, static_folder='./static')
@@ -21,17 +21,14 @@ def bingo_check(bingo_list):
     出力：ビンゴの数
     '''
     ans=0
-    for i in range(3):
-        if all(bingo_list[i]):
+    for i in range(2):
+        if (bingo_list[i+2] == "True" and bingo_list[i+3] == "True",bingo_list[i+4] == "True"):
             ans+=1
-            print(1)
-        if all(row[i] for row in bingo_list):
+        if (bingo_list[i+2] == "True" and bingo_list[i+5] == "True" and bingo_list[i+8] == "True"):
             ans+=1
-            print(2)
-    if bingo_list[0][0] and bingo_list[1][1] and bingo_list[2][2]:
+    if (bingo_list[i+2] == "True" and bingo_list[i+6] == "True" and bingo_list[i+10] == "True"):
         ans+=1
-        # print(3)
-    if bingo_list[2][0] and bingo_list[1][1] and bingo_list[0][2]:
+    if (bingo_list[i+4] == "True" and bingo_list[i+6] == "True" and bingo_list[i+8] == "True"):
         ans+=1
         # print(3)
     return ans
@@ -73,19 +70,13 @@ def generate_qr_code(cell_id):
 
 @app.route('/stamp/<int:cell_id>')
 def stamp(cell_id):
-    # call_idをindexに変換
-    index1 = int((cell_id - 1) / 3)
-    index2 = int((cell_id - 1) % 3)
-    if cell_id <= 9:
-        bingo_sheet[index1][index2] = True
-        return jsonify(success=True, cell_id=cell_id)
-
     # セルIDの範囲チェック
     if 1 <= cell_id <= 9:
         bingo_sheet[cell_id - 1] = True
         return jsonify(success=True, cell_id=cell_id)
     else:
         return jsonify(success=False)
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
