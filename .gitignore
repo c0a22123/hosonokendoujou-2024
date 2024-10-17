@@ -1,0 +1,6 @@
+mysql/mysql_data/
+*.sock
+*.pid
+*.cnf
+*.index
+ib_buffer_pool
