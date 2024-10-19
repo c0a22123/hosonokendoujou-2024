@@ -2,12 +2,15 @@ from flask import Flask, render_template, request, redirect, url_for, session, s
 import qrcode
 import io
 from .database import *
-from .bingo_database import *
+from .bingodatabase import *
 from .myfunction import *
+from .spot_info import *
 
 
 # ビンゴシートの状態を保持するためのリスト
-bingo_sheet = loadb_db("1", "1") # 3x3 ビンゴシート
+#bingo_sheet = loadb_db("1", "1") # 3x3 ビンゴシート
+bingo_sheet = [False] * 9
+
 
 
 app = Flask(__name__, static_folder='./static')
@@ -70,12 +73,24 @@ def generate_qr_code(cell_id):
 
 @app.route('/stamp/<int:cell_id>')
 def stamp(cell_id):
-    # セルIDの範囲チェック
-    if 1 <= cell_id <= 9:
-        bingo_sheet[cell_id - 1] = True
-        return jsonify(success=True, cell_id=cell_id)
-    else:
-        return jsonify(success=False)
+    try:
+        # セルIDの範囲チェック（1～9までの範囲）
+        if 1 <= cell_id <= 9:
+            # ビンゴシートを更新
+            bingo_sheet[cell_id - 1] = True
+            # 該当セルのスポット情報を取得
+            spot = spot_info.get(cell_id)
+            if spot is None:
+                raise ValueError(f"セルID {cell_id} に対応するスポット情報が見つかりません。")
+            
+            return jsonify(success=True, cell_id=cell_id, spot_name=spot["spot_name"], spot_trivia=spot["spot_trivia"])
+        else:
+            return jsonify(success=False, message="無効なセルIDです。")
+    
+    except Exception as e:
+        # エラーメッセージをログに出力し、エラーレスポンスを返す
+        print(f"サーバーエラー: {e}")
+        return jsonify(success=False, message="サーバーでエラーが発生しました。"), 500
 
 
 @app.route('/login', methods=['GET', 'POST'])
