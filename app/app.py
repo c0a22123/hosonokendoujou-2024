@@ -121,9 +121,9 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/bingo_spot')
+@app.route('/spot')
 def route():
-    return render_template('bingo_spot.html')
+    return render_template('spot.html')
 
 @app.route('/honzin')
 def honzin():
@@ -165,6 +165,9 @@ def allpass(sample_name):
     bingo_num=bingo_check(bingo_sheet)
     return render_template(f'{sample_name}.html',bingo_sheet=bingo_sheet,bingo_num=bingo_num)
 
+@app.route('/waiting')
+def waiting_page():
+    return render_template('waiting.html')
 if __name__ == '__main__':
     app.run(debug=True)
 
