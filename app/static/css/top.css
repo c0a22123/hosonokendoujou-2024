@@ -1,46 +1,109 @@
-@keyframes infinity-scroll-left {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-100%);
-    }
-  }
-  
-  .scroll-infinity__wrap {
-    display: flex;
-    overflow-x: scroll; /* 横スクロールを許可 */
-    scroll-snap-type: x mandatory; /* スナップスクロールを設定 */
-    -webkit-overflow-scrolling: touch; /* スムーズスクロールの設定（モバイル対応） */
-    width: 100%;
-    gap: 10px; /* 各アイテムの間にスペースを追加 */
-    
-    /* スクロールバーを非表示にする設定 */
-    scrollbar-width: none; /* Firefox用 */
-  }
-  
-  .scroll-infinity__wrap::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera用 */
-  }
-  
-  .scroll-infinity__list {
-    display: flex;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    animation: infinity-scroll-left 60s linear infinite; /* 自動スクロール */
-  }
-  
-  .scroll-infinity__item {
-    width: 25%; /* 幅を調整 */
-    flex-shrink: 0;
-    scroll-snap-align: start; /* スクロールがスナップで停止する位置 */
-  }
-  
-  .scroll-infinity__item > img {
-    width: 100%;        /* 親要素に合わせて幅を100%に */
-    height: 200px;      /* 必要に応じて高さを調整 */
-    object-fit: cover;  /* 画像の比率を保ちながら表示 */
-    display: block;     /* 画像をブロック要素として表示 */
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f7e5d2; /* 秋の暖かみを感じる背景色 */
+  color: #333;
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+header {
+  background-color: #ff8c00; /* メインカラーとしてオレンジを使用 */
+  color: white;
+  padding: 10px 0;
+}
+
+header h1 {
+  text-align: center;
+  font-size: 2.5rem;
+}
+
+nav ul {
+  list-style-type: none;
+  text-align: center;
+  margin-top: 10px;
+}
+
+nav ul li {
+  display: inline;
+  margin: 0 15px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.hero {
+  background-image: url('autumn-hero-image.jpg'); /* 秋を感じさせる画像を設定 */
+  background-size: cover;
+  background-position: center;
+  padding: 100px 0;
+  color: white;
+  text-align: center;
+}
+
+.hero h2 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+}
+
+.btn {
+  background-color: #ff8c00; /* オレンジのボタン */
+  color: white;
+  padding: 15px 30px;
+  text-decoration: none;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #e67600; /* ボタンホバー時に少し暗くする */
+}
+
+.features {
+  padding: 50px 0;
+  background-color: #fff;
+  text-align: center;
+}
+
+.features h3 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #e67600; /* オレンジ系のアクセントカラー */
+}
+
+.feature-list {
+  list-style-type: none;
+}
+
+.feature-list li {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #6a4f37; /* 秋の落ち葉を連想させるブラウン */
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+  margin-top: 30px;
+}
+
   
