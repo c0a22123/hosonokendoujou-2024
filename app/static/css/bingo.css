@@ -8,13 +8,13 @@ body {
     flex-direction: column;
     align-items: center;  /* 水平方向の中央寄せ */
     justify-content: center;  /* 垂直方向の中央寄せ */
-    height: 100vh; /* 全体の高さを画面いっぱいに */
-    background-color: #ffffff; /* 背景色を薄いグレーに設定 */
+    min-height: 100vh; /* 全体の高さを画面いっぱいに */
+    background-color: #fffaf0; /* 背景色を柔らかいオレンジ色に変更 */
 }
 
 /* カメラを起動するボタンのスタイル */
 #start-camera {
-    background-color: #007BFF; /* 青色 */
+    background-color: #ff8c00; /* オレンジ色 */
     color: white;
     font-size: 1.5rem;
     padding: 10px 20px;
@@ -28,32 +28,44 @@ body {
 }
 
 #start-camera:hover {
-    background-color: #0056b3; /* ホバー時の色 */
+    background-color: #e67600; /* ホバー時の色 */
+}
+
+/* ビンゴシートの全体のスタイル */
+#bingo-wrapper {
+    border: 5px solid orange; /* 大枠の色をオレンジに設定 */
+    border-radius: 20px; /* 大枠の角を丸める */
+    padding: 5px; /* 大枠とビンゴシートの間に5pxの余白を追加 */
+    margin-top: 20px;
+    display: inline-block; /* ビンゴシート全体を囲む */
+    background-color: white; /* 大枠の背景色を白に */
 }
 
 /* ビンゴシートのスタイル */
 #bingo-table {
-    border-collapse: collapse;
-    margin-top: 20px;
-    width: 100%; /* スマートフォンで幅いっぱいに表示 */
-    max-width: 300px; /* 最大幅を300pxに制限 */
+    border-collapse: separate; /* セルを分離 */
+    border-spacing: 5px; /* セル間のスペースを5pxに設定 */
     text-align: center; /* テーブルのセル内テキストを中央寄せ */
+    width: 100%; /* スマートフォンで幅いっぱいに表示 */
+    max-width: 350px; /* 最大幅を300pxから350pxに拡大 */
 }
 
 #bingo-table td {
-    border: 2px solid orange; /* 枠線の色を橙色に */
+    border: 2px solid orange; /* 枠線の色をオレンジに */
     width: 33%;
-    height: 100px;
+    height: 110px; /* 高さを100pxから110pxに拡大 */
     font-size: 1.2rem;
     background-color: transparent; /* 中は透明 */
     color: black;
     vertical-align: middle;
-    text-align: center; /* セル内のテキスト中央寄せ */
+    text-align: center; /* セル内のテキストを中央寄せ */
+    border-radius: 10px; /* セルに角丸を適用 */
+    padding: 10px; /* 内側に少し余白を追加 */
 }
 
 @media (max-width: 600px) {
     #bingo-table td {
-        height: 80px; /* スマートフォン向けに少し小さく */
+        height: 90px; /* スマートフォン向けに少し小さく */
     }
 }
 

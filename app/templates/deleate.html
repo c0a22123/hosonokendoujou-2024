@@ -1,14 +1,79 @@
-<!-- templates/login.html -->
 <!DOCTYPE html>
-<html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>退会ページ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .delete-container {
+            background-color: white;
+            padding: 40px; /* パディングを増やし、ゆとりを持たせる */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 30px; /* タイトルの下に余白を追加 */
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 5px; /* フィールドの上下に余白を追加 */
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px; /* インプットフィールドのパディングを少し増やす */
+            margin-bottom: 25px; /* 下にゆとりを追加 */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #ff8c00;
+            color: white;
+            padding: 10px 0; /* ボタンの高さを狭める */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 80%; /* ボタンの横幅を狭める */
+            font-size: 1.1rem; /* フォントサイズを少しだけ小さく */
+            margin-top: 10px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #e67600;
+        }
+    </style>
+</head>
 <body>
-    <h2>Deleate</h2>
-    <form method="post" action="/deleate">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
-        <input type="submit" value="登録を消す">
-    </form>
+
+    <div class="delete-container">
+        <h2>退会</h2>
+        <form method="post" action="/deleate">
+            <label for="username">ユーザー名:</label>
+            <input type="text" id="username" name="username" required>
+            
+            <label for="password">パスワード:</label>
+            <input type="password" id="password" name="password" required>
+            
+            <input type="submit" value="登録を消す">
+        </form>
+    </div>
+
 </body>
 </html>
