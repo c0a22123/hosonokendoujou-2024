@@ -1,13 +1,14 @@
-* {
+body {
+  font-family: 'Georgia', serif;  /* 歴史的な雰囲気を演出するためにセリフ体を使用 */
+  background-color: #f5f5dc;  /* ベージュ系の背景色で古典的な雰囲気 */
+  color: #333;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  padding-bottom: 80px;  /* スクロールに余裕を持たせるためのパディング */
 }
 
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f7e5d2; /* 秋の暖かみを感じる背景色 */
-  color: #333;
+main {
+  padding-bottom: 80px; /* コンテンツの下に余白を追加してスクロールに余裕を持たせる */
 }
 
 .container {
@@ -15,95 +16,126 @@ body {
   margin: 0 auto;
 }
 
-header {
-  background-color: #ff8c00; /* メインカラーとしてオレンジを使用 */
-  color: white;
-  padding: 10px 0;
+h2 {
+  color: #333;
 }
 
-header h1 {
-  text-align: center;
-  font-size: 2.5rem;
-}
-
-nav ul {
-  list-style-type: none;
-  text-align: center;
-  margin-top: 10px;
-}
-
-nav ul li {
-  display: inline;
-  margin: 0 15px;
-}
-
-nav ul li a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
+h3 {
+  color: #FFA823; /* メインカラー（薄いオレンジ） */
 }
 
 .hero {
-  background-image: url('autumn-hero-image.jpg'); /* 秋を感じさせる画像を設定 */
-  background-size: cover;
-  background-position: center;
-  padding: 100px 0;
-  color: white;
+  background-color: #FFD57E;  /* #FFA823 を少し薄めた色 */
+  padding: 50px 0;
   text-align: center;
-}
-
-.hero h2 {
-  font-size: 3rem;
-  margin-bottom: 20px;
-}
-
-.hero p {
-  font-size: 1.5rem;
-  margin-bottom: 30px;
+  color: #333;
+  border-bottom: 5px solid #FFA823;  /* 下にアクセントラインを追加 */
 }
 
 .btn {
-  background-color: #ff8c00; /* オレンジのボタン */
+  background-color: #FFA823;
   color: white;
-  padding: 15px 30px;
+  padding: 10px 20px;
   text-decoration: none;
-  font-size: 1.2rem;
   border-radius: 5px;
-  transition: background-color 0.3s;
 }
 
 .btn:hover {
-  background-color: #e67600; /* ボタンホバー時に少し暗くする */
+  background-color: #ff4500; /* クリック時のカラー変更 */
 }
 
-.features {
-  padding: 50px 0;
-  background-color: #fff;
-  text-align: center;
+/* もっと見るボタン */
+.more-container {
+  text-align: right;  /* 右揃え */
+  margin-top: 10px;
 }
 
-.features h3 {
-  font-size: 2rem;
-  margin-bottom: 30px;
-  color: #e67600; /* オレンジ系のアクセントカラー */
-}
-
-.feature-list {
-  list-style-type: none;
-}
-
-.feature-list li {
-  font-size: 1.5rem;
-  margin-bottom: 15px;
-  color: #6a4f37; /* 秋の落ち葉を連想させるブラウン */
-}
-
-footer {
-  background-color: #333;
+.btn-more {
+  background-color: #FFA823;
   color: white;
-  text-align: center;
-  padding: 20px 0;
-  margin-top: 30px;
+  padding: 5px 10px;  /* 小さめのボタン */
+  font-size: 14px;
+  text-decoration: none;
+  border-radius: 5px;
 }
 
-  
+.btn-more:hover {
+  background-color: #ff4500;
+}
+
+.news-list {
+  list-style-type: none;
+  padding: 0;
+  font-size: 16px;  /* フォントサイズを調整して見やすく */
+  font-family: 'Georgia', serif;  /* お知らせもセリフ体で統一 */
+}
+
+.news-list li {
+  background-color: #fafafa;
+  margin: 10px 0;
+  padding: 10px;
+  border-left: 4px solid #FFA823;  /* アクセントとして左にライン */
+}
+
+.slideshow-container {
+  position: relative;
+  max-width: 100%;
+  margin: 20px auto;
+  text-align: center;  /* スライドを中央に配置 */
+}
+
+.slide {
+  display: none;
+  text-align: center;
+}
+
+.event-image {
+  width: 395px;
+  height: 248px;  
+  object-fit: cover;
+}
+
+.caption {
+  color: #fff;
+  font-size: 18px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* スライドボタン */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+.prev:hover, .next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.account-box {
+  background-color: #fafafa;
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 10px;
+  border-left: 5px solid #FFA823; /* 左にラインを追加して歴史的なデザイン */
+}

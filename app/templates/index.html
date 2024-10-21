@@ -6,26 +6,92 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>デジタルビンゴ - Enjoy Tama with Bingo</title>
+        <title>タマビンゴ - Enjoy Tama with Bingo</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/top.css') }}">
     </head>
+
+    <!-- タイトルキャッチフレーズセクション -->
     <section class="hero">
       <div class="container">
-        <h2>デジタルビンゴで日野の歴史を堪能！</h2>
+        <h2>タマビンゴで日野の歴史を堪能！</h2>
         <p>QRコードをスキャンして、ビンゴを達成しよう！<br>景品をゲットできるチャンスも！</p>
         <a href="#" class="btn">ビンゴを開始する</a>
       </div>
     </section>
 
-    <section class="features">
+    <!-- お知らせセクション -->
+    <section class="news">
       <div class="container">
-        <h3>イベントの流れ</h3>
-        <ul class="feature-list">
-          <li>スマホで簡単にチェックイン</li>
-          <li>観光スポットでQRコードをスキャン</li>
-          <li>ビンゴを達成して景品をゲット</li>
+        <h3>お知らせ</h3>
+        <ul class="news-list">
+          <!-- お知らせを3件に減らす -->
+          <li>2024年10月20日: タマビンゴ in 日野 イベント開始のお知らせ</li>
+          <li>2024年10月15日: ビンゴアプリの新機能追加！</li>
+          <li>2024年10月10日: 日野の観光スポットでスタンプラリーが体験可能！</li>
         </ul>
+        <!-- もっと見るボタン（右揃え、小さく） -->
+        <div class="more-container">
+          <a href="#" class="btn-more">もっと見る</a>
+        </div>
       </div>
     </section>
+
+    <!-- スライドショーセクション -->
+    <section class="events">
+      <div class="container">
+        <h3>タマビンゴ in 日野 - デジタルスタンプラリー</h3>
+        <div class="slideshow-container">
+          <div class="slide">
+            <img src="{{ url_for('static', filename='images/event1.jpg') }}" alt="イベント1">
+            <div class="caption">2024年11月1日 10:00 AM: タマビンゴ in 日野 スタート</div>
+          </div>
+          <div class="slide">
+            <img src="{{ url_for('static', filename='images/event2.jpg') }}" alt="イベント2">
+            <div class="caption">観光スポットを巡ってスタンプを集めよう！</div>
+          </div>
+          <div class="slide">
+            <img src="{{ url_for('static', filename='images/event3.jpg') }}" alt="イベント3">
+            <div class="caption">景品ゲットのチャンス！</div>
+          </div>
+
+          <!-- スライドボタンを追加 -->
+          <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+          <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- アカウント情報セクション -->
+    <section class="account-info">
+      <div class="container">
+        <h3>アカウント情報</h3>
+        <div class="account-box">
+          <p><strong>ニックネーム:</strong> マサキ</p>
+          <p><strong>年代:</strong> 20代</p>
+        </div>
+      </div>
+    </section>
+
   </main>
+
+  <!-- スライドショー用スクリプト -->
+  <script>
+    let slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+
+    function showSlides(n) {
+      let slides = document.getElementsByClassName("slide");
+      if (n > slides.length) {slideIndex = 1}
+      if (n < 1) {slideIndex = slides.length}
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";  
+      }
+      slides[slideIndex - 1].style.display = "block";  
+    }
+  </script>
+
 {% endblock %}
