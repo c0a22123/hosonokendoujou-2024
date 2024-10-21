@@ -96,7 +96,33 @@
             <label for="password2">パスワードの確認:</label>
             <input type="password" id="password2" name="password2" required>
 
-           
+            <!-- 性別選択（横並びのラジオボタン） -->
+            <label>性別:</label>
+            <div class="gender-option">
+                <label for="male">男性</label>
+                <input type="radio" id="male" name="gender" value="男性" required>
+            </div>
+            <div class="gender-option">
+                <label for="female">女性</label>
+                <input type="radio" id="female" name="gender" value="女性" required>
+            </div>
+            <div class="gender-option">
+                <label for="other">その他</label>
+                <input type="radio" id="other" name="gender" value="その他" required>
+            </div>
+
+            <!-- 年代選択 -->
+            <label for="age">年代:</label>
+            <select id="age" name="age" required>
+                <option value="" disabled selected>年代を選択</option>
+                <option value="10代">10代</option>
+                <option value="20代">20代</option>
+                <option value="30代">30代</option>
+                <option value="40代">40代</option>
+                <option value="50代">50代</option>
+                <option value="60代">60代</option>
+                <option value="70代以上">70代以上</option>
+            </select>
 
             <input type="submit" value="登録">
         </form>
