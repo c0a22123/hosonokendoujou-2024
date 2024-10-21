@@ -41,6 +41,36 @@
     </div>
 </div>
 
+<!-- 景品交換ボタン -->
+<button id="exchange-prize" class="exchange-button">景品を交換する</button>
+
+<!-- ポップアップのオーバーレイ -->
+<div id="exchange-popup" class="exchange-popup-overlay">
+    <div class="exchange-popup-content">
+        <h2>本当に交換しますか？</h2>
+        <button id="confirm-exchange" class="popup-button">はい</button>
+        <button id="cancel-exchange" class="popup-button">いいえ</button>
+    </div>
+</div>
+
+<script>
+    // 景品交換ボタンのイベントリスナー
+    document.getElementById('exchange-prize').addEventListener('click', function() {
+        document.getElementById('exchange-popup').style.display = 'flex'; // ポップアップを表示
+    });
+
+    // 「はい」ボタンを押したときの処理
+    document.getElementById('confirm-exchange').addEventListener('click', function() {
+        alert('景品を交換しました！');
+        document.getElementById('exchange-popup').style.display = 'none'; // ポップアップを閉じる
+    });
+
+    // 「いいえ」ボタンを押したときの処理
+    document.getElementById('cancel-exchange').addEventListener('click', function() {
+        document.getElementById('exchange-popup').style.display = 'none'; // ポップアップを閉じる
+    });
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/html5-qrcode/minified/html5-qrcode.min.js"></script>
 <script>
     let qrCodeReader;

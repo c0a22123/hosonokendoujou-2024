@@ -15,7 +15,7 @@ CREATE TABLE login (
 CREATE TABLE user_infomation (
     user_id INT,
     gendar VARCHAR(10),
-    birthday DATE,
+    birthday VARCHAR(10),
     PRIMARY KEY (user_id),
     FOREIGN KEY (user_id) REFERENCES login(user_id)
 );

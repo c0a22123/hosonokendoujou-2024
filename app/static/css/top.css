@@ -16,7 +16,11 @@ main {
   margin: 0 auto;
 }
 
-h2, h3 {
+h2 {
+  color: #333;
+}
+
+h3 {
   color: #FFA823; /* メインカラー（薄いオレンジ） */
 }
 
@@ -85,9 +89,10 @@ h2, h3 {
   text-align: center;
 }
 
-.slide img {
-  width: 100%;
-  height: auto;
+.event-image {
+  width: 395px;
+  height: 248px;  
+  object-fit: cover;
 }
 
 .caption {

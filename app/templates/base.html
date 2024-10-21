@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <title>ビンゴページ</title>
+  <title>{% block title %}ビンゴページ{% endblock %}</title>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="/static/css/styles.css">
   <!-- スマホに対応 -->
@@ -19,7 +19,13 @@
       <button id="popupButton">
         <img src="/static/images/overlayopen.png" alt="メニュー">
       </button>
-      <a href="/login" class="login-link">ログイン</a>
+      <!-- ログイン状態によって表示を変更 -->
+      {% if logged_in %}
+        <span>ようこそ、{{ username }} さん</span>
+        <a href="/logout" class="login-link">ログアウト</a>
+      {% else %}
+        <a href="/login" class="login-link">ログイン</a>
+      {% endif %}
     </div>
 
     <!-- ポップアップメニュー -->
@@ -28,7 +34,6 @@
         <li><a href="/index">トップページ</a></li>
         <li><a href="/bingo">ビンゴページ</a></li>
         <li><a href="/bingo_spot">ビンゴスポット一覧</a></li>
-
       </ul>
     </div>    
   </header>
@@ -41,7 +46,7 @@
     </a>
 
     <!-- スキャンボタン -->
-    <a href="/waiting" class="scan-text">
+    <a href="/bingo" class="scan-text">
       <img src="/static/images/QRsample.png" alt="error">
       <span>スキャン</span>
     </a>
