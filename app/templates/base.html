@@ -21,7 +21,6 @@
       </button>
       <!-- ログイン状態によって表示を変更 -->
       {% if logged_in %}
-        <span>ようこそ、{{ username }} さん</span>
         <a href="/logout" class="login-link">ログアウト</a>
       {% else %}
         <a href="/login" class="login-link">ログイン</a>
@@ -32,7 +31,7 @@
     <div id="popupWindow" class="dropdown-content">
       <ul>
         <li><a href="/index">トップページ</a></li>
-        <li><a href="/bingo">ビンゴページ</a></li>
+        <li><a href="/waiting">ビンゴページ</a></li>
         <li><a href="/bingo_spot">ビンゴスポット一覧</a></li>
       </ul>
     </div>    
@@ -46,7 +45,7 @@
     </a>
 
     <!-- スキャンボタン -->
-    <a href="/bingo" class="scan-text">
+    <a href="/waiting" class="scan-text">
       <img src="/static/images/QRsample.png" alt="error">
       <span>スキャン</span>
     </a>

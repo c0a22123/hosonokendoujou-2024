@@ -5,6 +5,7 @@ from .database import *
 from .bingodatabase import *
 from .myfunction import *
 from .spot_info import *
+from .user_info import get_user_info
 
 
 
@@ -55,7 +56,18 @@ def generate_qr(url):
 
 @app.route('/index')
 def index():
-    return render_template('index.html')
+    # セッションからユーザーIDを取得
+    user_id = session.get('user_id')
+    
+    if user_id:
+        user_info = get_user_info(user_id)
+    else:
+        user_info = None  # ログインしていない場合は None を設定
+
+    return render_template('index.html', user_info=user_info)
+    
+
+    
 
 @app.route('/bingo')
 def bingo():
@@ -93,14 +105,20 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        result = connect_db(username, password)
-        if result:
-            session['username'] = username
+        
+        # データベースからユーザー情報を取得（ユーザーIDも取得）
+        user = connect_db(username, password)  # ここで `user_id` を取得できるようにする
+        
+        if user:  # ユーザーが存在し、ログイン成功した場合
+            session['user_id'] = user['user_id']  # セッションにユーザーIDを保存
+            session['username'] = user['user_name']  # さらにユーザー名も保存
             flash('ログインしました。', 'success')
             return redirect(url_for('index'))
         else:
             flash('ユーザー名またはパスワードが違います。', 'danger')
+    
     return render_template('login.html')
+
 
 @app.route('/add', methods=['GET', 'POST'])
 def add():
@@ -133,7 +151,7 @@ def deleate():
 
 @app.route('/logout')
 def logout():
-    session.pop('username', None)
+    session.clear()  # セッションの全データをクリア
     flash('ログアウトしました。', 'success')
     return redirect(url_for('index'))
 

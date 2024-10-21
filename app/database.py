@@ -5,32 +5,38 @@ from pymysql.cursors import DictCursor
 
 def connect_db(user_name: str, password: str):
     """
-    MySQLとの接続を行う
-    成功した場合はcheck_dbを呼び出し、
-    dbに登録されているユーザとパスワードが一致するかを確認する
-    失敗した場合はエラーを返す
-    引数はブラウザに入力されたユーザ(username)、パスワード(password)である。
+    MySQLとの接続を行い、ユーザー情報を取得する。
+    成功した場合はユーザーIDとユーザー名を返し、パスワードが一致しない場合はNoneを返す。
     """
     try:
         conn = mysql.connector.connect(
             host='db',  # Docker Composeでのサービス名を指定
-            user='root',         #ログインする時のname
-            password='YES',        #パスワード
-            database='MyDatabase',#繋ぐdatebase
+            user='root',         # ログインする時のname
+            password='YES',      # パスワード
+            database='MyDatabase'  # 接続するデータベース
         )
             
-        cur = conn.cursor()
-        query = "SELECT user_name AS name, password FROM login WHERE user_name = %s"
+        cur = conn.cursor(dictionary=True)  # 辞書形式で結果を取得するために dictionary=True
+        query = "SELECT user_id, user_name, password FROM login WHERE user_name = %s"
         cur.execute(query, (user_name,))
-        users = cur.fetchall()
-        cur.close()
-        conn.close()
-        result = check_db(users, user_name, password)
-        return result
+        user = cur.fetchone()  # 結果を一つだけ取得
+
+        # クエリ結果を処理した後にカーソルを閉じる
+        if user and user['password'] == password:
+            # パスワードが一致した場合、ユーザーIDとユーザー名を返す
+            return {'user_id': user['user_id'], 'user_name': user['user_name']}
+        else:
+            # パスワードが一致しない場合は None を返す
+            return None
 
     except pymysql.MySQLError as e:
         print(f"Error connecting to MySQL: {e}")
         raise Exception("MySQLサーバへの接続に失敗しました")
+
+    finally:
+        # すべてのクエリ結果が処理された後にカーソルと接続をクローズする
+        cur.close()
+        conn.close()
     
 
 def check_db(users, user_name, password):

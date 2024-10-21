@@ -15,7 +15,7 @@
       <div class="container">
         <h2>タマビンゴで日野の歴史を堪能！</h2>
         <p>QRコードをスキャンして、ビンゴを達成しよう！<br>景品をゲットできるチャンスも！</p>
-        <a href="#" class="btn">ビンゴを開始する</a>
+        <a href="/waiting" class="btn">ビンゴを開始する</a>
       </div>
     </section>
 
@@ -39,19 +39,19 @@
     <!-- スライドショーセクション -->
     <section class="events">
       <div class="container">
-        <h3>タマビンゴ in 日野 - デジタルスタンプラリー</h3>
+        <h3>タマビンゴで開催予定のイベント</del></h3>
         <div class="slideshow-container">
           <div class="slide">
             <img src="{{ url_for('static', filename='images/event1.jpg') }}" alt="イベント1">
-            <div class="caption">2024年11月1日 10:00 AM: タマビンゴ in 日野 スタート</div>
+            <div class="caption">イベント①</div>
           </div>
           <div class="slide">
             <img src="{{ url_for('static', filename='images/event2.jpg') }}" alt="イベント2">
-            <div class="caption">観光スポットを巡ってスタンプを集めよう！</div>
+            <div class="caption">イベント②</div>
           </div>
           <div class="slide">
             <img src="{{ url_for('static', filename='images/event3.jpg') }}" alt="イベント3">
-            <div class="caption">景品ゲットのチャンス！</div>
+            <div class="caption">イベント③</div>
           </div>
 
           <!-- スライドボタンを追加 -->
@@ -66,8 +66,8 @@
       <div class="container">
         <h3>アカウント情報</h3>
         <div class="account-box">
-          <p><strong>ニックネーム:</strong> マサキ</p>
-          <p><strong>年代:</strong> 20代</p>
+          <p><strong>ニックネーム:</strong>{{ user_info.user_name if user_info else '未設定' }} </p>
+          <p><strong>性別・年代:</strong> {{ user_info.gendar if user_info else '未設定' }}・{{ user_info.birthday if user_info else '未設定' }} </p>
         </div>
       </div>
     </section>

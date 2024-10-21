@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>イベント開始までお待ちください</title>
+{% extends "base.html" %}
+
+{% block content %}
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,6 +9,7 @@
             text-align: center;
             padding: 50px;
         }
+
         .container {
             max-width: 600px;
             margin: 0 auto;
@@ -20,20 +18,24 @@
             border-radius: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         h1 {
             color: #e67e22;
             font-size: 2.5em;
             margin-bottom: 20px;
         }
+
         p {
             font-size: 1.2em;
             line-height: 1.6;
         }
+
         .start-time {
             font-size: 1.5em;
             color: #d35400;
             margin-top: 20px;
         }
+
         .spinner {
             margin: 20px auto;
             width: 50px;
@@ -43,25 +45,26 @@
             border-top-color: #e67e22;
             animation: spin 1s infinite linear;
         }
+
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+
         footer {
             margin-top: 30px;
             font-size: 0.9em;
             color: #7f8c8d;
         }
     </style>
-</head>
-<body>
+
     <div class="container">
         <h1>イベント開始をお待ちください</h1>
         <p>イベントは11月1日 10:00から開始されます。</p>
         <div class="spinner"></div>
         <p class="start-time">開始後はページを更新してください。</p>
     </div>
+
     <footer>
         &copy; 2024 デジタルビンゴイベント
     </footer>
-</body>
-</html>
+{% endblock %}
