@@ -12,13 +12,11 @@ def connect_db(user_name: str, password: str):
     引数はブラウザに入力されたユーザ(username)、パスワード(password)である。
     """
     try:
-        conn = None 
-
         conn = mysql.connector.connect(
-        host='db',  # Docker Composeでのサービス名を指定
-        user='root',         #ログインする時のname
-        password='YES',        #パスワード
-        database='MyDatabase',#繋ぐdatebase
+            host='db',  # Docker Composeでのサービス名を指定
+            user='root',         #ログインする時のname
+            password='YES',        #パスワード
+            database='MyDatabase',#繋ぐdatebase
         )
             
         cur = conn.cursor()
@@ -34,7 +32,6 @@ def connect_db(user_name: str, password: str):
         print(f"Error connecting to MySQL: {e}")
         raise Exception("MySQLサーバへの接続に失敗しました")
     
-    
 
 def check_db(users, user_name, password):
     """
@@ -43,67 +40,60 @@ def check_db(users, user_name, password):
     引数はデータベースのユーザ情報とパスワード情報が入っている(user),
     ユーザによって入力された(username),パスワード(password)
     """                
-    #if user and user['password'] == password:
-    password_d = ""
     for user in users:
-        if user_name == user[0]:
-            password_d = user[1]
-            if(password_d == password):
-                return True
-        else:
-            return False
+        if user_name == user[0] and password == user[1]:
+            return True
+    return False
 
-def add_user(user_name: str, password: str):
+def add_user(user_name: str, password: str, gender: str, birthday: str):
     """
-    新規のユーザーとパスワードを追加するための関数
-    ユーザによって入力された(username),パスワード(password)
-    """ 
+    新規のユーザーとパスワードを追加し、ユーザー情報も user_infomation テーブルに登録する関数
+    """
     try:
-        conn = None 
-
         conn = mysql.connector.connect(
-        host='db',  # Docker Composeでのサービス名を指定
-        user='root',# 本当のユーザに変更する
-        password='YES', #本当のパスワードに変更する
-        database='MyDatabase', # 本当のデータに変える
+            host='db',  # Docker Composeでのサービス名を指定
+            user='root',# 本当のユーザに変更する
+            password='YES', #本当のパスワードに変更する
+            database='MyDatabase', # 本当のデータに変える
         )
 
         cur = conn.cursor()
-        query = "INSERT INTO login (user_name, password) VALUES (%s, %s)"
-        cur.execute(query, (user_name, password))
+
+        # login テーブルにユーザー名とパスワードを登録
+        query_login = "INSERT INTO login (user_name, password) VALUES (%s, %s)"
+        cur.execute(query_login, (user_name, password))
+        user_id = cur.lastrowid  # 登録したユーザーの ID を取得
+
+        # user_infomation テーブルに性別と年代を登録
+        query_info = "INSERT INTO user_infomation (user_id, gendar, birthday) VALUES (%s, %s, %s)"
+        cur.execute(query_info, (user_id, gender, birthday))
+
         conn.commit()
         cur.close()
         conn.close()
+
     except pymysql.MySQLError as e:
         print(f"Error connecting to MySQL: {e}")
-        raise Exception("MySQLサーバへの接続に失敗しました")  
-    
+        raise Exception("MySQLサーバへの接続に失敗しました")
+
 def del_user(user_name: str, password: str):
-
     """
-    MySQLとの接続を行う
-    成功した場合はcheck_dbを呼び出し、
-    dbに登録されているユーザとパスワードが一致するかを確認する
-    失敗した場合はエラーを返す
-    引数はブラウザに入力されたユーザ(username)、パスワード(password)である。
+    MySQLとの接続を行い、ユーザーを削除する
     """
-
     try:
-        conn = None 
         conn = mysql.connector.connect(
-        host='db',  # Docker Composeでのサービス名を指定
-        user='root',
-        password='YES',
-        database='MyDatabase',
+            host='db',  # Docker Composeでのサービス名を指定
+            user='root',
+            password='YES',
+            database='MyDatabase',
         )
             
         cur = conn.cursor()
         query = "DELETE FROM login WHERE user_name = %s"
-        cur.execute(query,(user_name,))
+        cur.execute(query, (user_name,))
         conn.commit()
         cur.close()
         conn.close()
-
 
     except pymysql.MySQLError as e:
         print(f"Error connecting to MySQL: {e}")
