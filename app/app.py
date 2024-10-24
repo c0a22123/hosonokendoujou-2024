@@ -54,7 +54,7 @@ def generate_qr(url):
     img = qr.make_image(fill='black', back_color='white')
     return img
 
-@app.route('/index')
+@app.route('/')
 def index():
     # セッションからユーザーIDを取得
     user_id = session.get('user_id')
