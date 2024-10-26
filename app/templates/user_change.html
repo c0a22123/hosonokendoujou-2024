@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ユーザー情報の変更</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .gender-option {
+            display: inline-block;
+            margin-right: 15px;
+        }
+
+        button {
+            background-color: #ff8c00;
+            color: white;
+            padding: 10px 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 80%;
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #e67600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>ユーザー情報の変更</h2>
+        <form action="{{ url_for('update_user_info') }}" method="POST">
+            <!-- ニックネーム入力 -->
+            <div class="form-group">
+                <label for="username">ニックネーム:</label>
+                <input type="text" id="username" name="username" value="{{ user_info.user_name }}" required>
+            </div>
+            
+            <!-- 性別選択（横並びのラジオボタン） -->
+            <label>性別:</label>
+            <div class="gender-option">
+                <label for="male">男性</label>
+                <input type="radio" id="male" name="gender" value="男性" {% if user_info.gendar == "男性" %}checked{% endif %}>
+            </div>
+            <div class="gender-option">
+                <label for="female">女性</label>
+                <input type="radio" id="female" name="gender" value="女性" {% if user_info.gendar == "女性" %}checked{% endif %}>
+            </div>
+            <div class="gender-option">
+                <label for="other">その他</label>
+                <input type="radio" id="other" name="gender" value="その他" {% if user_info.gendar == "その他" %}checked{% endif %}>
+            </div>
+            
+            <!-- 年代選択 -->
+            <label for="birthday">年代:</label>
+            <select id="birthday" name="birthday" required>
+                <option value="" disabled>年代を選択</option>
+                <option value="10代" {% if user_info.birthday == "10代" %}selected{% endif %}>10代</option>
+                <option value="20代" {% if user_info.birthday == "20代" %}selected{% endif %}>20代</option>
+                <option value="30代" {% if user_info.birthday == "30代" %}selected{% endif %}>30代</option>
+                <option value="40代" {% if user_info.birthday == "40代" %}selected{% endif %}>40代</option>
+                <option value="50代" {% if user_info.birthday == "50代" %}selected{% endif %}>50代</option>
+                <option value="60代" {% if user_info.birthday == "60代" %}selected{% endif %}>60代</option>
+                <option value="70代以上" {% if user_info.birthday == "70代以上" %}selected{% endif %}>70代以上</option>
+            </select>
+            
+            <button type="submit">変更を保存</button>
+        </form>
+    </div>
+</body>
+</html>
