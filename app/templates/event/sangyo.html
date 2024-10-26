@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/event.css') }}">
+<head>
+    
+<div class="event-detail-container">
+    <div class="event-header">
+        <h1>第58回 日野市産業まつり</h1>
+        <p>未来へ輝く “日野の産業”</p>
+    </div>
+
+    <div class="event-image">
+        <img src="{{ url_for('static', filename='images/event1.png') }}" alt="日野市産業まつりのポスター" class="event-poster">
+    </div>
+
+    <div class="event-info">
+        <h2>イベント詳細</h2>
+        <p><strong>開催日:</strong> 2024年11月9日（土）& 10日（日）</p>
+        <p><strong>開催場所:</strong> 市民の森ふれあいホールとその周辺</p>
+        <p><strong>アクセス:</strong>
+            <ul>
+                <li>JR中央線 日野駅より徒歩13分</li>
+                <li>多摩モノレール 甲州街道駅より徒歩10分</li>
+            </ul>
+        </p>
+
+        <h3>イベント内容</h3>
+        <p>日野市の産業の魅力を市民の皆様にお届けするための産業まつりです。さまざまな農産物の販売、地元企業の出展、家族で楽しめるアクティビティやステージイベントが予定されています。</p>
+
+        <h3>主なアクティビティ</h3>
+        <ul>
+            <li>地元産の農産物販売</li>
+            <li>地元企業による展示・販売</li>
+            <li>ステージパフォーマンス</li>
+            <li>楽しいゲームやアクティビティ</li>
+        </ul>
+
+        <h3>お問い合わせ</h3>
+        <p>日野市観光協会：042-585-1111</p>
+    </div>
+
+    <div class="back-button">
+        <a href="{{ url_for('index') }}" class="btn">戻る</a>
+    </div>
+</div>
+{% endblock %}

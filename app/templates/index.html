@@ -1,16 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-  <main>
+<main>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="google-site-verification" content="o_qjc2Nlk8z88d_B7iX8hqnKA1oQvjXthX0GCnPf1cs" />
         <title>タマビンゴ - Enjoy Tama with Bingo</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/top.css') }}">
     </head>
 
-    <!-- タイトルキャッチフレーズセクション -->
     <section class="hero">
       <div class="container">
         <h2>タマビンゴで日野の歴史を堪能！</h2>
@@ -19,75 +18,56 @@
       </div>
     </section>
 
-    <!-- お知らせセクション -->
     <section class="news">
       <div class="container">
         <h3>お知らせ</h3>
         <ul class="news-list">
-          <!-- お知らせを3件に減らす -->
-          <li>2024年10月20日: タマビンゴ ウェブアプリ公開！</li>
-          <li></li>
-          <li></li>
+          <li>2024年10月20日: タマビンゴ 公開開始！</li>
+          <li>2024年10月15日: ビンゴアプリの新機能追加！</li>
+          <li>2024年10月10日: 日野の観光スポットでスタンプラリーが体験可能！</li>
         </ul>
-        <!-- もっと見るボタン（右揃え、小さく） -->
         <div class="more-container">
-          <a href="#" class="btn-more">もっと見る</a>
+          <a href="/announce" class="btn-more">もっと見る</a>
         </div>
       </div>
     </section>
 
-    <!-- スライドショーセクション -->
-    <section class="events">
-      <div class="container">
-        <h3>今後の日野市での開催予定イベント</del></h3>
-        <div class="slideshow-container">
-          <div class="slide">
-            <img src="{{ url_for('static', filename='images/event1.png') }}" alt="イベント1">
-            <div class="caption">イベント①</div>
-          </div>
-          <div class="slide">
-            <img src="{{ url_for('static', filename='images/event2.png') }}" alt="イベント2">
-            <div class="caption">イベント②</div>
-          </div>
-
-          <!-- スライドボタンを追加 -->
-          <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-          <a class="next" onclick="plusSlides(1)">&#10095;</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- アカウント情報セクション -->
     <section class="account-info">
       <div class="container">
         <h3>アカウント情報</h3>
         <div class="account-box">
-          <p><strong>ニックネーム:</strong>{{ user_info.user_name if user_info else '未設定' }} </p>
-          <p><strong>性別・年代:</strong> {{ user_info.gendar if user_info else '未設定' }}・{{ user_info.birthday if user_info else '未設定' }} </p>
+          <div class="account-row">
+            <span class="account-label">ニックネーム</span>
+            <span class="account-data">{{ user_info.user_name if user_info else '未設定' }}</span>
+          </div>
+          <div class="account-row">
+            <span class="account-label">性別・年代</span>
+            <span class="account-data">
+              {{ user_info.gendar if user_info else '未設定' }}・{{ user_info.birthday if user_info else '未設定' }}
+            </span>
+          </div>
         </div>
       </div>
     </section>
 
-  </main>
-
-  <!-- スライドショー用スクリプト -->
-  <script>
-    let slideIndex = 1;
-    showSlides(slideIndex);
-
-    function plusSlides(n) {
-      showSlides(slideIndex += n);
-    }
-
-    function showSlides(n) {
-      let slides = document.getElementsByClassName("slide");
-      if (n > slides.length) {slideIndex = 1}
-      if (n < 1) {slideIndex = slides.length}
-      for (let i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";  
-      }
-      slides[slideIndex - 1].style.display = "block";  
-    }
-  </script>
-
+    <section class="events">
+      <div class="container">
+        <h3>日野市開催予定のイベント</h3>
+      </div>
+      <div class="event-grid">
+        <div class="event">
+          <a href="/sangyoumatsuri">
+            <img src="{{ url_for('static', filename='images/event1.png') }}" alt="イベント1">
+            <div class="caption">第58回 日野市産業まつり</div>
+          </a>
+        </div>
+        <div class="event">
+          <a href="/momiji">
+            <img src="{{ url_for('static', filename='images/event2.png') }}" alt="イベント2">
+            <div class="caption">第16回もみじ灯路</div>
+          </a>
+        </div>
+      </div>
+    </section>
+</main>
 {% endblock %}
