@@ -1,14 +1,14 @@
 body {
-  font-family: 'Georgia', serif;  /* 歴史的な雰囲気を演出するためにセリフ体を使用 */
-  background-color: #f5f5dc;  /* ベージュ系の背景色で古典的な雰囲気 */
+  font-family: 'Georgia', serif;
+  background-color: #f5f5dc;
   color: #333;
   margin: 0;
   padding: 0;
-  padding-bottom: 80px;  /* スクロールに余裕を持たせるためのパディング */
+  padding-bottom: 80px;
 }
 
 main {
-  padding-bottom: 80px; /* コンテンツの下に余白を追加してスクロールに余裕を持たせる */
+  padding-bottom: 80px;
 }
 
 .container {
@@ -18,18 +18,20 @@ main {
 
 h2 {
   color: #333;
+  font-size: 1.8em;
 }
 
 h3 {
-  color: #FFA823; /* メインカラー（薄いオレンジ） */
+  color: #FFA823;
+  font-size: 1.3em;
 }
 
 .hero {
-  background-color: #FFD57E;  /* #FFA823 を少し薄めた色 */
+  background-color: #FFD57E;
   padding: 50px 0;
   text-align: center;
   color: #333;
-  border-bottom: 5px solid #FFA823;  /* 下にアクセントラインを追加 */
+  border-bottom: 5px solid #FFA823;
 }
 
 .btn {
@@ -41,19 +43,18 @@ h3 {
 }
 
 .btn:hover {
-  background-color: #ff4500; /* クリック時のカラー変更 */
+  background-color: #ff4500;
 }
 
-/* もっと見るボタン */
 .more-container {
-  text-align: right;  /* 右揃え */
+  text-align: right;
   margin-top: 10px;
 }
 
 .btn-more {
   background-color: #FFA823;
   color: white;
-  padding: 5px 10px;  /* 小さめのボタン */
+  padding: 5px 10px;
   font-size: 14px;
   text-decoration: none;
   border-radius: 5px;
@@ -66,76 +67,82 @@ h3 {
 .news-list {
   list-style-type: none;
   padding: 0;
-  font-size: 16px;  /* フォントサイズを調整して見やすく */
-  font-family: 'Georgia', serif;  /* お知らせもセリフ体で統一 */
+  font-size: 16px;
+  font-family: 'Georgia', serif;
 }
 
 .news-list li {
   background-color: #fafafa;
   margin: 10px 0;
   padding: 10px;
-  border-left: 4px solid #FFA823;  /* アクセントとして左にライン */
-}
-
-.slideshow-container {
-  position: relative;
-  max-width: 100%;
-  margin: 20px auto;
-  text-align: center;  /* スライドを中央に配置 */
-}
-
-.slide {
-  display: none;
-  text-align: center;
-}
-
-.event-image {
-  width: 395px;
-  height: 248px;  
-  object-fit: cover;
-}
-
-.caption {
-  color: #fff;
-  font-size: 18px;
-  padding: 8px 12px;
-  position: absolute;
-  bottom: 8px;
-  width: 100%;
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-/* スライドボタン */
-.prev, .next {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  width: auto;
-  padding: 16px;
-  margin-top: -22px;
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  transition: 0.6s ease;
-  border-radius: 0 3px 3px 0;
-  user-select: none;
-}
-
-.next {
-  right: 0;
-  border-radius: 3px 0 0 3px;
-}
-
-.prev:hover, .next:hover {
-  background-color: rgba(0, 0, 0, 0.8);
+  border-left: 4px solid #FFA823;
 }
 
 .account-box {
   background-color: #fafafa;
   border: 1px solid #ddd;
-  padding: 20px;
+  padding: 15px;
   margin-top: 20px;
-  border-radius: 10px;
-  border-left: 5px solid #FFA823; /* 左にラインを追加して歴史的なデザイン */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  font-size: 0.9em;
+}
+
+.account-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.account-row:last-child {
+  border-bottom: none;
+}
+
+.account-label {
+  font-weight: bold;
+  color: #FFA823;
+  flex-basis: 40%;
+}
+
+.account-data {
+  flex-basis: 60%;
+  text-align: left;
+  color: #333;
+}
+
+.events {
+  margin-top: 40px;
+  padding: 20px 0;
+}
+
+.event-grid {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.event {
+  width: 45%;
+  max-width: 300px;
+  border: 2px solid #FFD57E;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  text-align: center;
+  background-color: #fff8e1;
+}
+
+.event img {
+  width: 100%;
+  display: block;
+}
+
+.caption {
+  padding: 10px;
+  background-color: #ffedcc;
+  color: #333;
+  font-weight: bold;
 }

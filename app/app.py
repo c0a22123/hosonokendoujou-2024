@@ -8,7 +8,6 @@ from .spot_info import *
 from .user_info import get_user_info
 
 
-
 # ビンゴシートの状態を保持するためのリスト
 bingo_sheet = [False] * 9
 
@@ -131,6 +130,8 @@ def add():
 
         if password == password2:
             add_user(username, password, gender, age)
+            user_id = session.get('user_id')
+            add_bingo(str(user_id),"1")
             flash('ユーザーが追加されました。', 'success')
             return redirect(url_for('login'))
         
@@ -201,6 +202,22 @@ def allpass(sample_name):
 @app.route('/waiting')
 def waiting_page():
     return render_template('waiting.html')
+
+@app.route('/sangyoumatsuri')
+def sangyoumatsuri():
+    return render_template('event/sangyo.html')
+
+@app.route('/momiji')
+def momiji():
+    return render_template('event/momiji.html')
+
+@app.route('/announce')
+def announce():
+    return render_template('announce.html')
+
+app.route('/favicon.ico')
+def favicon():
+    return '', 204
 
 if __name__ == '__main__':
     app.run(debug=True)
