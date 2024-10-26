@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}マイページ{% endblock %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mypage.css') }}">
+</head>
+<div class="container">
+    <h2>マイページ</h2>
+    
+    <!-- ユーザー情報の表示 -->
+    <div class="account-info">
+        <h3>アカウント情報</h3>
+        <div class="account-box">
+            <div class="account-row">
+                <span class="account-label">ニックネーム:</span>
+                <span class="account-data">{{ user_info.user_name if user_info else '未設定' }}</span>
+            </div>
+            <div class="account-row">
+                <span class="account-label">性別:</span>
+                <span class="account-data">{{ user_info.gendar if user_info else '未設定' }}</span>
+            </div>
+            <div class="account-row">
+                <span class="account-label">年代:</span>
+                <span class="account-data">{{ user_info.birthday if user_info else '未設定' }}</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ユーザー情報変更と退会へのリンク -->
+    <div class="actions">
+        <a href="{{ url_for('user_change') }}" class="btn">ユーザー情報の変更</a>
+        <a href="{{ url_for('deleate') }}" class="btn btn-danger">退会する</a>
+    </div>
+</div>
+{% endblock %}

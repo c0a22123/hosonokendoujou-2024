@@ -17,7 +17,7 @@
 
         .register-container {
             background-color: white;
-            padding: 40px; /* パディングを増やし、ゆとりを持たせる */
+            padding: 40px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             max-width: 400px;
@@ -26,12 +26,12 @@
         }
 
         h2 {
-            margin-bottom: 30px; /* タイトルの下に余白を追加 */
+            margin-bottom: 30px;
         }
 
         label {
             display: block;
-            margin: 15px 0 5px; /* フィールドの上下に余白を追加 */
+            margin: 15px 0 5px;
             font-weight: bold;
         }
 
@@ -46,12 +46,12 @@
         input[type="submit"] {
             background-color: #ff8c00;
             color: white;
-            padding: 10px 0; /* ボタンの高さを狭める */
+            padding: 10px 0;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            width: 80%; /* ボタンの横幅を狭める */
-            font-size: 1.1rem; /* フォントサイズを少しだけ小さく */
+            width: 80%;
+            font-size: 1.1rem;
             margin-top: 10px;
         }
 
@@ -60,21 +60,20 @@
         }
 
         .action-links {
-            margin-top: 30px; /* アクションリンク全体に余白を追加 */
+            margin-top: 30px;
         }
 
-        .action-links form {
-            margin: 10px 0;
-        }
-
-        p {
-            margin: 0 0 10px; /* テキストの下に少し余白を追加 */
+        /* エラーメッセージのスタイルを追加 */
+        .alert-danger {
+            color: red;
+            font-weight: bold;
+            margin-bottom: 20px;
         }
 
         /* 性別選択を横並びにするためのCSS */
         .gender-option {
             display: inline-block;
-            margin-right: 15px; /* 各性別オプションの間に余白を追加 */
+            margin-right: 15px;
         }
 
         .gender-option label {
@@ -84,55 +83,59 @@
 </head>
 <body>
 
-    <div class="register-container">
-        <h2>ユーザー登録</h2>
-        <form method="post" action="/add">
-            <label for="username">ユーザー名:</label>
-            <input type="text" id="username" name="username" required>
-            
-            <label for="password">パスワード:</label>
-            <input type="password" id="password" name="password" required>
-            
-            <label for="password2">パスワードの確認:</label>
-            <input type="password" id="password2" name="password2" required>
+<div class="register-container">
+    <h2>ユーザー登録</h2>
 
-            <!-- 性別選択（横並びのラジオボタン） -->
-            <label>性別:</label>
-            <div class="gender-option">
-                <label for="male">男性</label>
-                <input type="radio" id="male" name="gender" value="男性" required>
-            </div>
-            <div class="gender-option">
-                <label for="female">女性</label>
-                <input type="radio" id="female" name="gender" value="女性" required>
-            </div>
-            <div class="gender-option">
-                <label for="other">その他</label>
-                <input type="radio" id="other" name="gender" value="その他" required>
-            </div>
+    <!-- メッセージ表示エリア -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
 
-            <!-- 年代選択 -->
-            <label for="age">年代:</label>
-            <select id="age" name="age" required>
-                <option value="" disabled selected>年代を選択</option>
-                <option value="10代">10代</option>
-                <option value="20代">20代</option>
-                <option value="30代">30代</option>
-                <option value="40代">40代</option>
-                <option value="50代">50代</option>
-                <option value="60代">60代</option>
-                <option value="70代以上">70代以上</option>
-            </select>
+    <form method="post" action="/add">
+        <label for="username">ユーザー名:</label>
+        <input type="text" id="username" name="username" required>
+        
+        <label for="password">パスワード:</label>
+        <input type="password" id="password" name="password" required>
+        
+        <label for="password2">パスワードの確認:</label>
+        <input type="password" id="password2" name="password2" required>
 
-            <input type="submit" value="登録">
-        </form>
-
-        <div class="action-links">
-            <form action="/login" method="get">
-                <input type="submit" value="ログインに進む">
-            </form>
+        <!-- 性別選択 -->
+        <label>性別:</label>
+        <div class="gender-option">
+            <label for="male">男性</label>
+            <input type="radio" id="male" name="gender" value="男性" required>
         </div>
-    </div>
+        <div class="gender-option">
+            <label for="female">女性</label>
+            <input type="radio" id="female" name="gender" value="女性" required>
+        </div>
+        <div class="gender-option">
+            <label for="other">その他</label>
+            <input type="radio" id="other" name="gender" value="その他" required>
+        </div>
+
+        <!-- 年代選択 -->
+        <label for="age">年代:</label>
+        <select id="age" name="age" required>
+            <option value="" disabled selected>年代を選択</option>
+            <option value="10代">10代</option>
+            <option value="20代">20代</option>
+            <option value="30代">30代</option>
+            <option value="40代">40代</option>
+            <option value="50代">50代</option>
+            <option value="60代">60代</option>
+            <option value="70代以上">70代以上</option>
+        </select>
+
+        <input type="submit" value="登録">
+    </form>
+</div>
 
 </body>
 </html>

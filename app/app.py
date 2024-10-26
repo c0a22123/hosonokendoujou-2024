@@ -7,7 +7,6 @@ from .myfunction import *
 from .spot_info import *
 from .user_info import get_user_info
 
-
 # ビンゴシートの状態を保持するためのリスト
 bingo_sheet = [False] * 9
 
@@ -15,31 +14,33 @@ app = Flask(__name__, static_folder='./static')
 app.secret_key = 'your_secret_key'
 FILE_PNG_AB = 'qrcode_AB.png'
 
+# セッション情報が保持されているか確認し、リクエストごとにユーザー情報を更新
+@app.before_request
+def load_user_info():
+    user_id = session.get('user_id')
+    if user_id:
+        session['user_info'] = get_user_info(user_id)
+    else:
+        session['user_info'] = None
 
 # コンテキストプロセッサを使って、すべてのテンプレートでログイン情報を利用可能に
 @app.context_processor
 def inject_user():
-    return dict(logged_in=session.get('username') is not None, username=session.get('username'))
-
+    return dict(logged_in=session.get('username') is not None, user_info=session.get('user_info'))
 
 def bingo_check(bingo_list):
-    '''
-    引数：なし
-    出力：ビンゴの数
-    '''
     ans = 0
     for i in range(2):
-        if (bingo_list[i+2] == "True" and bingo_list[i+3] == "True",bingo_list[i+4] == "True"):
+        if (bingo_list[i+2] == "True" and bingo_list[i+3] == "True" and bingo_list[i+4] == "True"):
             ans += 1
         if (bingo_list[i+2] == "True" and bingo_list[i+5] == "True" and bingo_list[i+8] == "True"):
             ans += 1
-    if (bingo_list[i+2] == "True" and bingo_list[i+6] == "True" and bingo_list[i+10] == "True"):
+    if (bingo_list[2] == "True" and bingo_list[6] == "True" and bingo_list[10] == "True"):
         ans += 1
-    if (bingo_list[i+4] == "True" and bingo_list[i+6] == "True" and bingo_list[i+8] == "True"):
+    if (bingo_list[4] == "True" and bingo_list[6] == "True" and bingo_list[8] == "True"):
         ans += 1
     return ans
 
-# QRコード生成用関数
 def generate_qr(url):
     qr = qrcode.QRCode(
         version=1,
@@ -49,24 +50,12 @@ def generate_qr(url):
     )
     qr.add_data(url)
     qr.make(fit=True)
-
     img = qr.make_image(fill='black', back_color='white')
     return img
 
 @app.route('/')
 def index():
-    # セッションからユーザーIDを取得
-    user_id = session.get('user_id')
-    
-    if user_id:
-        user_info = get_user_info(user_id)
-    else:
-        user_info = None  # ログインしていない場合は None を設定
-
-    return render_template('index.html', user_info=user_info)
-    
-
-    
+    return render_template('index.html')
 
 @app.route('/bingo')
 def bingo():
@@ -105,19 +94,17 @@ def login():
         username = request.form['username']
         password = request.form['password']
         
-        # データベースからユーザー情報を取得（ユーザーIDも取得）
-        user = connect_db(username, password)  # ここで `user_id` を取得できるようにする
+        user = connect_db(username, password)
         
-        if user:  # ユーザーが存在し、ログイン成功した場合
-            session['user_id'] = user['user_id']  # セッションにユーザーIDを保存
-            session['username'] = user['user_name']  # さらにユーザー名も保存
+        if user:
+            session['user_id'] = user['user_id']
+            session['username'] = user['user_name']
             flash('ログインしました。', 'success')
             return redirect(url_for('index'))
         else:
             flash('ユーザー名またはパスワードが違います。', 'danger')
     
     return render_template('login.html')
-
 
 @app.route('/add', methods=['GET', 'POST'])
 def add():
@@ -128,12 +115,22 @@ def add():
         gender = request.form['gender']
         age = request.form['age']
 
-        if password == password2:
-            add_user(username, password, gender, age)
-            user_id = session.get('user_id')
-            add_bingo(str(user_id),"1")
-            flash('ユーザーが追加されました。', 'success')
-            return redirect(url_for('login'))
+        if password != password2:
+            flash('パスワードが一致しません。', 'danger')
+            return render_template('add.html')
+        
+        # パスワード重複チェック
+        if is_password_duplicate(password):
+            flash('そのパスワードはすでに使用されています。別のパスワードを選んでください。', 'danger')
+            return render_template('add.html')
+        
+        # 新規ユーザーを追加
+        add_user(username, password, gender, age)
+        flash('ユーザーが追加されました。', 'success')
+        return redirect(url_for('login'))
+        
+    return render_template('add.html')
+
         
     return render_template('add.html')
 
@@ -152,10 +149,9 @@ def deleate():
 
 @app.route('/logout')
 def logout():
-    session.clear()  # セッションの全データをクリア
+    session.clear()
     flash('ログアウトしました。', 'success')
     return redirect(url_for('index'))
-
 
 @app.route('/spot')
 def route():
@@ -231,7 +227,42 @@ def privacy():
 def contact():
     return render_template('contact.html')
 
-app.route('/favicon.ico')
+# マイページのルートとユーザー情報の更新
+@app.route('/mypage')
+def mypage():
+    user_info = session.get('user_info')
+    return render_template('mypage.html', user_info=user_info)
+
+@app.route('/user_change')
+def user_change():
+    user_info = session.get('user_info')
+    if not user_info:
+        flash('ログインしてください', 'danger')
+        return redirect(url_for('login'))
+    return render_template('user_change.html', user_info=user_info)
+
+
+@app.route('/update_user_info', methods=['POST'])
+def update_user_info():
+    if not session.get('user_id'):
+        flash('ログインしてください', 'danger')
+        return redirect(url_for('login'))
+    
+    # フォームからのデータ取得
+    new_username = request.form.get('username')
+    new_gender = request.form.get('gender')
+    new_birthday = request.form.get('birthday')
+
+    # ユーザー情報の更新
+    user_id = session['user_id']
+    update_user_details(user_id, new_username, new_gender, new_birthday)
+
+    # セッション情報の更新
+    session['user_info'] = get_user_info(user_id)
+    flash('ユーザー情報が更新されました', 'success')
+    return redirect(url_for('mypage'))
+
+@app.route('/favicon.ico')
 def favicon():
     return '', 204
 
