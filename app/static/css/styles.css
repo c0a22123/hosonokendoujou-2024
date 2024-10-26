@@ -225,7 +225,10 @@ body {
   color: #333;
   border-top: 2px solid #FFA823; /* 上部の枠線 */
   margin-top: 20px;
+  width: 100%;
+  box-sizing: border-box; /* フッターのサイズを幅全体にフィット */
 }
+
 
 .bottom-footer .container {
   max-width: 1200px;

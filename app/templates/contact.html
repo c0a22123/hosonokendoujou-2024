@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}お問い合わせ{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
+
+<div class="contact-container">
+    <h1>お問い合わせ</h1>
+    <p>お問い合わせ方法をお選びください。</p>
+    
+    <div class="contact-options">
+        <div class="option">
+            <h2>Gmailアカウントをお持ちの方</h2>
+            <p>Googleフォームにアクセスし、必要事項をご記入ください。</p>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSc4Cn3GJl2q0PxuaQ-E-XyV4yNKkE6e3wzTgbrAzNSW9hueMA/viewform?usp=sf_link" target="_blank" class="contact-button">Googleフォームへ</a>
+        </div>
+        
+        <div class="option">
+            <h2>メールでのお問い合わせ</h2>
+            <p>tamadd6mem@gmail.com へメールをご送信ください。</p>
+            <a href="mailto:tamadd6mem@gmail.com" class="contact-button">メールを送信</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

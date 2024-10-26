@@ -193,6 +193,10 @@ def yasaka():
 def zizou():
     return render_template('spot_info/zizou.html')
 
+@app.route('/humonji')
+def humonji():
+    return render_template('spot_info/humonji.html')
+
 @app.route('/<sample_name>', methods=['GET', 'POST'])
 def allpass(sample_name):
     global bingo_sheet 
@@ -214,6 +218,18 @@ def momiji():
 @app.route('/announce')
 def announce():
     return render_template('announce.html')
+
+@app.route('/terms')
+def terms():
+    return render_template('terms.html')
+
+@app.route('/privacy')
+def privacy():
+    return render_template('privacy.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
 
 app.route('/favicon.ico')
 def favicon():

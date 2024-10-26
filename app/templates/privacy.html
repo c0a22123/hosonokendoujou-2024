@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/policy.css') }}">
+</head
+>
+<div class="policy-container">
+    <h1>タマビンゴプライバシーポリシー</h1>
+    <section>
+        <h2>第1条（個人情報の定義）</h2>
+        <p>「個人情報」とは、ユーザーを特定できる情報を指します（ニックネーム、利用記録など）。</p>
+    </section>
+    <section>
+        <h2>第2条（個人情報の収集方法）</h2>
+        <p>ユーザー登録時およびビンゴ達成時に、必要な情報を収集する場合があります。</p>
+    </section>
+    <section>
+        <h2>第3条（個人情報の利用目的）</h2>
+        <p>サービスの運営・管理、利用状況の分析などの目的で個人情報を利用します。</p>
+    </section>
+    <section>
+        <h2>第4条（個人情報の第三者提供）</h2>
+        <p>ユーザーの同意なく個人情報を第三者に提供することはありません（法令に基づく場合を除く）。</p>
+    </section>
+    <section>
+        <h2>第5条（個人情報の安全管理）</h2>
+        <p>個人情報を適切に管理し、外部からの不正アクセスを防止します。</p>
+    </section>
+    <section>
+        <h2>第6条（お問い合わせ窓口）</h2>
+        <p>本ポリシーに関するお問い合わせは、tamadd6mem@gmail.com までお願いします。</p>
+    </section>
+</div>
+{% endblock %}
