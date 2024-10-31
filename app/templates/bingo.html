@@ -46,7 +46,12 @@
     </div>
 </div>
 
-<button id="exchange-prize" class="exchange-button">景品を交換する</button>
+<!-- 景品交換ボタン表示ロジック -->
+{% if exchanged %}
+    <button class="exchange-button" disabled>景品は交換済みです</button>
+{% else %}
+    <button id="exchange-prize" class="exchange-button">景品を交換する</button>
+{% endif %}
 
 <div id="exchange-popup" class="exchange-popup-overlay">
     <div class="exchange-popup-content">
