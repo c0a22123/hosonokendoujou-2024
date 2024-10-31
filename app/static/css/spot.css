@@ -3,39 +3,48 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 20px;
-    background-color: #fff; /* 背景色を白に変更 */
+    padding: 5px;
+    background-color: #fff;
 }
 
 .container {
-    max-width: 800px; /* コンテナの最大幅を広げる */
-    width: 100%; /* 画面幅に対して100% */
-    background-color: #fff;
-    padding: 20px;
+    max-width: 1200px; /* PCやタブレットでのコンテナ最大幅 */
+    width: 100%;
+    background-color: #ffffff00;
+    padding: 5px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
 .title {
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: bold;
     margin-bottom: 20px;
 }
 
-.image-section {
+.image-section,
+.additional-image:first-of-type {
     display: block;
     width: 100%;
-    max-width: 395px;
+    max-width: 600px;
     height: auto;
-    margin: 0 auto 20px; /* 画像を中央に揃える */
+    margin: 0 auto 20px;
+}
+
+.additional-image {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    margin: 20px auto;
 }
 
 .content-section {
     font-size: 1rem;
     line-height: 1.6;
     color: #333;
-    text-align: left; /* テキストは左揃え */
+    text-align: left;
 }
 
 .text {
@@ -51,12 +60,19 @@ a:hover {
     text-decoration: underline;
 }
 
+/* スマートフォン向けのスタイル */
 @media (max-width: 768px) {
     .container {
+        max-width: 95%; /* スマートフォン画面全体の95%を占める */
         padding: 15px;
     }
 
     .title {
         font-size: 1.5rem;
+    }
+
+    .image-section,
+    .additional-image {
+        max-width: 100%; /* スマートフォンでは画像が画面いっぱいに表示 */
     }
 }

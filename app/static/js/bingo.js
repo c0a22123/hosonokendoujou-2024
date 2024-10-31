@@ -2,20 +2,19 @@
 
 let qrCodeReader = null;
 
-// カメラを起動してQRコードを読み取る関数
+// Start camera to scan QR code
 function startCamera() {
-    // すでにQRコードリーダーが存在する場合、停止して破棄
     if (qrCodeReader) {
         qrCodeReader.stop().then(() => {
-            document.getElementById('qr-reader').innerHTML = ''; // リーダーの内容をクリア
-            initializeQrReader(); // 新たなインスタンスを生成してカメラを再起動
+            document.getElementById('qr-reader').innerHTML = '';
+            initializeQrReader();
         }).catch(err => console.error("QRコードリーダーの停止エラー:", err));
     } else {
         initializeQrReader();
     }
 }
 
-// QRコードリーダーのインスタンスを初期化し、カメラを起動する
+// Initialize QR code reader and start camera
 function initializeQrReader() {
     qrCodeReader = new Html5Qrcode("qr-reader");
     qrCodeReader.start(
@@ -26,13 +25,13 @@ function initializeQrReader() {
     ).catch(err => console.error("QRコードリーダーの起動エラー:", err));
 }
 
-// QRコードが正常に読み取られたときの処理
+// Handle successful QR code scan
 function handleQrCodeSuccess(qrCodeMessage) {
     console.log(`QRコードが読み取られました: ${qrCodeMessage}`);
     
     qrCodeReader.stop().then(() => {
         document.getElementById('qr-reader').style.display = 'none';
-        document.getElementById('qr-reader').innerHTML = ''; // QRリーダーの内容をクリア
+        document.getElementById('qr-reader').innerHTML = '';
         fetch(`/stamp/${qrCodeMessage}`)
             .then(response => response.json())
             .then(data => {
@@ -48,50 +47,72 @@ function handleQrCodeSuccess(qrCodeMessage) {
     }).catch(err => console.error("カメラ停止エラー:", err));
 }
 
-// QRコード読み取りエラー時の処理
+// Handle QR code reading error
 function handleQrCodeError(errorMessage) {
     console.warn(`QRコード読み取りエラー: ${errorMessage}`);
 }
 
-// ビンゴセルを更新する関数
+// Update bingo cell with stamp
 function updateCell(cellId) {
     const cell = document.getElementById(`cell-${cellId}`);
     cell.innerHTML = `<img src="/static/images/stamp/tamabingo_stamp.png" alt="スタンプ ${cellId + 1}">`;
     cell.classList.add("checked");
 }
 
-// オーバーレイを表示する関数
+// Show overlay with stamp animation, confetti, and trivia
 function showOverlay(spotName, trivia) {
     document.getElementById('spot-name').textContent = `${spotName} のスタンプが押されました！`;
     document.getElementById('spot-trivia').textContent = trivia;
+
+    const stampImage = document.createElement('img');
+    stampImage.src = '/static/images/stamp/tamabingo_stamp.png';
+    stampImage.alt = 'スタンプ';
+    stampImage.classList.add('stamp-animation');
+
+    const overlayContent = document.querySelector('.overlay-content');
+    overlayContent.insertBefore(stampImage, document.getElementById('spot-trivia'));
+
     document.getElementById('overlay').style.display = 'flex';
+
+    // Trigger the confetti effect
+    createConfetti();
+
+    // Add autumn leaves effect
+    createFallingLeaves();
 }
 
-// オーバーレイを閉じる関数
+// Close overlay and remove animations
 function closeOverlay() {
     document.getElementById('overlay').style.display = 'none';
     closeCamera();
+
+    const stampImage = document.querySelector('.overlay-content .stamp-animation');
+    if (stampImage) {
+        stampImage.remove();
+    }
+
+    // Remove all confetti and leaf elements
+    document.querySelectorAll('.confetti, .leaf').forEach(element => element.remove());
 }
 
-// カメラを手動で閉じる関数
+// Stop the camera manually
 function closeCamera() {
     if (qrCodeReader) {
         qrCodeReader.stop().then(() => {
             document.getElementById('qr-reader').style.display = 'none';
-            document.getElementById('qr-reader').innerHTML = ''; // QRリーダーの内容をクリア
-            qrCodeReader = null; // インスタンスを破棄
+            document.getElementById('qr-reader').innerHTML = '';
+            qrCodeReader = null;
         }).catch(err => console.error("カメラ停止エラー:", err));
     }
 }
 
-// 景品交換ボタンとポップアップの制御
+// Setup prize exchange button and popup
 function setupPrizeExchange() {
     document.getElementById('exchange-prize').addEventListener('click', () => {
         document.getElementById('exchange-popup').style.display = 'flex';
     });
 
     document.getElementById('confirm-exchange').addEventListener('click', () => {
-        // サーバーへ景品交換のリクエストを送信
         fetch('/exchange_prize', {
             method: 'POST',
             headers: {
@@ -111,6 +132,7 @@ function setupPrizeExchange() {
                 document.getElementById('exchange-popup').style.display = 'none';
             }, 1000);
         })
+
         .catch(error => console.error('交換エラー:', error));
     });
 
@@ -119,8 +141,43 @@ function setupPrizeExchange() {
     });
 }
 
+// Create confetti animation
+function createConfetti() {
+    for (let i = 0; i < 20; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = `${Math.random() * 100}%`;
+        confetti.style.animationDelay = `${Math.random() * 2}s`;
+        confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
+        
+        document.body.appendChild(confetti);
 
-// イベントリスナーを初期化
+        // Remove confetti after animation completes
+        confetti.addEventListener('animationend', () => {
+            confetti.remove();
+        });
+    }
+}
+
+// Create falling leaves animation
+function createFallingLeaves() {
+    for (let i = 0; i < 10; i++) {
+        const leaf = document.createElement('div');
+        leaf.classList.add('leaf');
+        leaf.style.left = `${Math.random() * 100}%`;
+        leaf.style.animationDelay = `${Math.random() * 2 + 1}s`;
+        leaf.style.backgroundImage = 'url("/static/images/leaf.png")';
+        
+        document.body.appendChild(leaf);
+
+        // Remove leaf after animation completes
+        leaf.addEventListener('animationend', () => {
+            leaf.remove();
+        });
+    }
+}
+
+// Initialize event listeners
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('start-camera').addEventListener('click', startCamera);
     setupPrizeExchange();
