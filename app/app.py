@@ -8,7 +8,7 @@ from .spot_info import *
 from .user_info import get_user_info
 
 # ビンゴシートの状態を保持するためのリスト
-bingo_sheet = [False] * 9  # 全てのセルがFalseで初期化
+
 
 app = Flask(__name__, static_folder='./static')
 app.secret_key = 'your_secret_key'
@@ -55,9 +55,10 @@ def bingo():
     # データベースからビンゴシートの状態を取得
     bingo_data = loadb_db(user_id, event_id="1")  # イベントIDを指定
 
-    # ビンゴシートのデータをフロントエンドに渡す
-    return render_template('bingo.html', bingo_sheet=bingo_data)
+    # データベースのビンゴデータをリスト形式でフロントエンドに渡す
+    bingo_sheet = [str(row) == '1' for row in bingo_data[0]]  # 0,1をTrue,Falseに変換
 
+    return render_template('bingo.html', bingo_sheet=bingo_sheet)
 
 
 @app.route('/stamp/<int:cell_id>')
