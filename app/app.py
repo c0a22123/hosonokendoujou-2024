@@ -8,7 +8,7 @@ from .spot_info import *
 from .user_info import get_user_info
 
 # ビンゴシートの状態を保持するためのリスト
-bingo_sheet = [False] * 9
+bingo_sheet = [False] * 9  # 全てのセルがFalseで初期化
 
 app = Flask(__name__, static_folder='./static')
 app.secret_key = 'your_secret_key'
@@ -41,49 +41,45 @@ def bingo_check(bingo_list):
         ans += 1
     return ans
 
-def generate_qr(url):
-    qr = qrcode.QRCode(
-        version=1,
-        error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=10,
-        border=4,
-    )
-    qr.add_data(url)
-    qr.make(fit=True)
-    img = qr.make_image(fill='black', back_color='white')
-    return img
-
 @app.route('/')
 def index():
     return render_template('index.html')
 
 @app.route('/bingo')
 def bingo():
-    return render_template('bingo.html')
+    user_id = session.get('user_id')
+    if not user_id:
+        flash('ログインが必要です', 'danger')
+        return redirect(url_for('login'))
 
-@app.route('/generate_qr/<int:cell_id>')
-def generate_qr_code(cell_id):
-    url = str(cell_id)
-    img = generate_qr(url)
+    # データベースからビンゴシートの状態を取得
+    bingo_data = loadb_db(user_id, event_id="1")  # イベントIDを指定
 
-    img_io = io.BytesIO()
-    img.save(img_io, 'PNG')
-    img_io.seek(0)
-    return send_file(img_io, mimetype='image/png')
+    # ビンゴシートのデータをフロントエンドに渡す
+    return render_template('bingo.html', bingo_sheet=bingo_data)
+
+
 
 @app.route('/stamp/<int:cell_id>')
 def stamp(cell_id):
     try:
+        user_id = session.get('user_id')
+        event_id = 1  # イベントIDが1で固定の場合。動的に変更するならセッションから取得
+
+        if user_id is None:
+            return jsonify(success=False, message="ログインが必要です。")
+
         if 1 <= cell_id <= 9:
-            bingo_sheet[cell_id - 1] = True
+            # ビンゴシートの進捗をデータベースに記録
+            update_bingo(f"bingo_row{cell_id - 1}", user_id, event_id)
             spot = spot_info.get(cell_id)
             if spot is None:
                 raise ValueError(f"セルID {cell_id} に対応するスポット情報が見つかりません。")
-            
+
             return jsonify(success=True, cell_id=cell_id, spot_name=spot["spot_name"], spot_trivia=spot["spot_trivia"])
         else:
             return jsonify(success=False, message="無効なセルIDです。")
-    
+
     except Exception as e:
         print(f"サーバーエラー: {e}")
         return jsonify(success=False, message="サーバーでエラーが発生しました。"), 500
@@ -106,6 +102,7 @@ def login():
     
     return render_template('login.html')
 
+# 新規ユーザー登録後に bingo テーブルに初期データを追加
 @app.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
@@ -119,20 +116,22 @@ def add():
             flash('パスワードが一致しません。', 'danger')
             return render_template('add.html')
         
-        # パスワード重複チェック
         if is_password_duplicate(password):
             flash('そのパスワードはすでに使用されています。別のパスワードを選んでください。', 'danger')
             return render_template('add.html')
         
-        # 新規ユーザーを追加
         add_user(username, password, gender, age)
+
+        # ユーザーID取得後に bingo テーブルに初期データを追加
+        user_id = get_user_id(username)  # 新しく作成したユーザーの user_id を取得する関数
+        if user_id:
+            add_bingo(user_id, 1)  # event_id は仮に 1 を指定
+
         flash('ユーザーが追加されました。', 'success')
         return redirect(url_for('login'))
-        
+    
     return render_template('add.html')
 
-        
-    return render_template('add.html')
 
 @app.route('/deleate', methods=['GET', 'POST'])
 def deleate():
