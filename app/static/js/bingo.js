@@ -91,19 +91,34 @@ function setupPrizeExchange() {
     });
 
     document.getElementById('confirm-exchange').addEventListener('click', () => {
-        document.getElementById('exchange-message').textContent = '景品を交換しました！';
-        document.getElementById('exchange-prize').textContent = '景品は交換済みです';
-        document.getElementById('exchange-prize').disabled = true;
-        
-        setTimeout(() => {
-            document.getElementById('exchange-popup').style.display = 'none';
-        }, 1000); // ポップアップを1秒後に閉じる
+        // サーバーへ景品交換のリクエストを送信
+        fetch('/exchange_prize', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById('exchange-message').textContent = data.message;
+                document.getElementById('exchange-prize').textContent = '景品は交換済みです';
+                document.getElementById('exchange-prize').disabled = true;
+            } else {
+                alert(data.message);
+            }
+            setTimeout(() => {
+                document.getElementById('exchange-popup').style.display = 'none';
+            }, 1000);
+        })
+        .catch(error => console.error('交換エラー:', error));
     });
 
     document.getElementById('cancel-exchange').addEventListener('click', () => {
         document.getElementById('exchange-popup').style.display = 'none';
     });
 }
+
 
 // イベントリスナーを初期化
 document.addEventListener('DOMContentLoaded', () => {

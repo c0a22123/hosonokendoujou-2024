@@ -6,6 +6,7 @@ from .bingodatabase import *
 from .myfunction import *
 from .spot_info import *
 from .user_info import get_user_info
+from datetime import datetime
 
 # ビンゴシートの状態を保持するためのリスト
 
@@ -52,13 +53,21 @@ def bingo():
         flash('ログインが必要です', 'danger')
         return redirect(url_for('login'))
 
-    # データベースからビンゴシートの状態を取得
-    bingo_data = loadb_db(user_id, event_id="1")  # イベントIDを指定
+    # ビンゴシートの状態を取得
+    bingo_data = loadb_db(user_id, event_id="1")
+    bingo_sheet = [str(row) == '1' for row in bingo_data[0]]
 
-    # データベースのビンゴデータをリスト形式でフロントエンドに渡す
-    bingo_sheet = [str(row) == '1' for row in bingo_data[0]]  # 0,1をTrue,Falseに変換
+    # 景品交換状態を取得
+    conn = connectb_db()
+    cur = conn.cursor(dictionary=True)
+    cur.execute("SELECT exchanged FROM prize_exchange WHERE user_id = %s AND event_id = %s", (user_id, 1))
+    prize_data = cur.fetchone()
+    exchanged = prize_data['exchanged'] if prize_data else False  # データがなければ交換されていないと仮定
+    cur.close()
+    conn.close()
 
-    return render_template('bingo.html', bingo_sheet=bingo_sheet)
+    return render_template('bingo.html', bingo_sheet=bingo_sheet, exchanged=exchanged)
+
 
 
 @app.route('/stamp/<int:cell_id>')
@@ -84,6 +93,38 @@ def stamp(cell_id):
     except Exception as e:
         print(f"サーバーエラー: {e}")
         return jsonify(success=False, message="サーバーでエラーが発生しました。"), 500
+    
+@app.route('/exchange_prize', methods=['POST'])
+def exchange_prize():
+    user_id = session.get('user_id')
+    event_id = 1  # 例としてイベントIDを1に固定
+
+    if not user_id:
+        return jsonify(success=False, message="ログインが必要です。")
+
+    conn = connectb_db()
+    cur = conn.cursor(dictionary=True)
+
+    # 景品交換の状態を確認
+    cur.execute("SELECT exchanged FROM prize_exchange WHERE user_id = %s AND event_id = %s", (user_id, event_id))
+    prize_data = cur.fetchone()
+
+    # すでに交換済みの場合、メッセージを返す
+    if prize_data and prize_data['exchanged']:
+        return jsonify(success=False, message="景品は既に交換済みです。")
+    
+    # 新規または未交換の場合、交換状態を更新
+    if prize_data:
+        cur.execute("UPDATE prize_exchange SET exchanged = TRUE, exchange_date = %s WHERE user_id = %s AND event_id = %s",
+                    (datetime.now(), user_id, event_id))
+    else:
+        cur.execute("INSERT INTO prize_exchange (user_id, event_id, exchanged, exchange_date) VALUES (%s, %s, TRUE, %s)",
+                    (user_id, event_id, datetime.now()))
+    
+    conn.commit()
+    cur.close()
+    conn.close()
+    return jsonify(success=True, message="景品を交換しました。")
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -121,12 +162,24 @@ def add():
             flash('そのパスワードはすでに使用されています。別のパスワードを選んでください。', 'danger')
             return render_template('add.html')
         
+        # 新規ユーザーを追加
         add_user(username, password, gender, age)
-
+        
         # ユーザーID取得後に bingo テーブルに初期データを追加
         user_id = get_user_id(username)  # 新しく作成したユーザーの user_id を取得する関数
         if user_id:
             add_bingo(user_id, 1)  # event_id は仮に 1 を指定
+            
+            # 景品交換データをprize_exchangeテーブルに挿入
+            conn = connectb_db()
+            cur = conn.cursor()
+            cur.execute(
+                "INSERT INTO prize_exchange (user_id, event_id, exchanged) VALUES (%s, %s, %s)",
+                (user_id, 1, False)  # event_idは仮に1を指定、交換済みをFalseで初期設定
+            )
+            conn.commit()
+            cur.close()
+            conn.close()
 
         flash('ユーザーが追加されました。', 'success')
         return redirect(url_for('login'))
