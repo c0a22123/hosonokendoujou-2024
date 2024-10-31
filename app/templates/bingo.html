@@ -9,33 +9,53 @@
     <title>デジタルビンゴ - Enjoy Tama with Bingo</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bingo.css') }}">
 </head>
-
 <h1>ビンゴシート</h1>
 
-<!-- カメラ起動ボタン -->
 <button id="start-camera">カメラを起動する</button>
 
-<!-- ビンゴシート -->
 <div id="bingo-wrapper">
-  <table id="bingo-table">
-      {% for i in range(3) %}
-      <tr>
-          {% for j in range(3) %}
-          <td id="cell-{{ i*3 + j }}" class="{{ 'checked' if bingo_sheet[i*3 + j] == 'True' else '' }}">
-              {{ 'チェック済み' if bingo_sheet[i*3 + j] == 'True' else '未チェック' }}
-          </td>
-          {% endfor %}
-      </tr>
-      {% endfor %}
-  </table>
+    <table id="bingo-table">
+        {% for i in range(3) %}
+        <tr>
+            {% for j in range(3) %}
+            {% set cell_index = i * 3 + j %}
+            <td id="cell-{{ cell_index }}" class="{{ 'checked' if bingo_sheet[cell_index] else '' }}">
+                {% if bingo_sheet[cell_index] %}
+                    <!-- チェック済みの場合、該当の画像を表示 -->
+                    <img src="{{ url_for('static', filename='images/stamp/tamabingo_stamp.png') }}" alt="スタンプ {{ cell_index + 1 }}">
+                {% else %}
+                    <!-- 未チェックのセル番号を丸で囲んで表示 -->
+                    <div class="circle">{{ cell_index + 1 }}</div>
+                {% endif %}
+            </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
 </div>
 
-<!-- JavaScriptファイルの読み込み -->
+<br>
+
+<div id="qr-reader"></div>
+
+<div id="overlay" class="overlay">
+    <div class="overlay-content">
+        <h2 id="spot-name"></h2>
+        <p id="spot-trivia"></p>
+        <button class="close-overlay" onclick="closeOverlay()">閉じる</button>
+    </div>
+</div>
+
+<button id="exchange-prize" class="exchange-button">景品を交換する</button>
+
+<div id="exchange-popup" class="exchange-popup-overlay">
+    <div class="exchange-popup-content">
+        <h2 id="exchange-message">本当に交換しますか？</h2>
+        <button id="confirm-exchange" class="popup-button">はい</button>
+        <button id="cancel-exchange" class="popup-button">いいえ</button>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/html5-qrcode/minified/html5-qrcode.min.js"></script>
 <script src="{{ url_for('static', filename='js/bingo.js') }}"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const initialBingoSheet = {{ bingo_sheet | tojson | safe }};
-        maintainBingoState(initialBingoSheet);
-    });
-</script>
 {% endblock %}

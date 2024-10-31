@@ -1,60 +1,91 @@
-// QRコードの読み取りとビンゴ状態更新
-let qrCodeReader;
+// static/js/bingo.js
 
+let qrCodeReader = null;
+
+// カメラを起動してQRコードを読み取る関数
 function startCamera() {
-    qrCodeReader = new Html5Qrcode("qr-reader");
-    qrCodeReader.start({ facingMode: "environment" }, { fps: 10, qrbox: 250 },
-        handleQRCodeScan,
-        handleQRCodeError
-    );
+    // すでにQRコードリーダーが存在する場合、停止して破棄
+    if (qrCodeReader) {
+        qrCodeReader.stop().then(() => {
+            document.getElementById('qr-reader').innerHTML = ''; // リーダーの内容をクリア
+            initializeQrReader(); // 新たなインスタンスを生成してカメラを再起動
+        }).catch(err => console.error("QRコードリーダーの停止エラー:", err));
+    } else {
+        initializeQrReader();
+    }
 }
 
-function handleQRCodeScan(qrCodeMessage) {
+// QRコードリーダーのインスタンスを初期化し、カメラを起動する
+function initializeQrReader() {
+    qrCodeReader = new Html5Qrcode("qr-reader");
+    qrCodeReader.start(
+        { facingMode: "environment" },
+        { fps: 10, qrbox: 250 },
+        handleQrCodeSuccess,
+        handleQrCodeError
+    ).catch(err => console.error("QRコードリーダーの起動エラー:", err));
+}
+
+// QRコードが正常に読み取られたときの処理
+function handleQrCodeSuccess(qrCodeMessage) {
     console.log(`QRコードが読み取られました: ${qrCodeMessage}`);
+    
     qrCodeReader.stop().then(() => {
         document.getElementById('qr-reader').style.display = 'none';
-        updateBingoSheet(qrCodeMessage);
-    }).catch(error => console.error("カメラ停止エラー:", error));
+        document.getElementById('qr-reader').innerHTML = ''; // QRリーダーの内容をクリア
+        fetch(`/stamp/${qrCodeMessage}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const cellId = data.cell_id - 1;
+                    updateCell(cellId);
+                    showOverlay(data.spot_name, data.spot_trivia);
+                } else {
+                    alert('無効なQRコードです');
+                }
+            })
+            .catch(error => console.error('エラー:', error));
+    }).catch(err => console.error("カメラ停止エラー:", err));
 }
 
-function handleQRCodeError(errorMessage) {
+// QRコード読み取りエラー時の処理
+function handleQrCodeError(errorMessage) {
     console.warn(`QRコード読み取りエラー: ${errorMessage}`);
 }
 
-function updateBingoSheet(qrCodeMessage) {
-    fetch(`/stamp/${qrCodeMessage}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                updateBingoCell(data.cell_id, data.spot_name, data.spot_trivia);
-            } else {
-                alert('無効なQRコードです');
-            }
-        })
-        .catch(error => console.error('エラー:', error));
+// ビンゴセルを更新する関数
+function updateCell(cellId) {
+    const cell = document.getElementById(`cell-${cellId}`);
+    cell.innerHTML = `<img src="/static/images/stamp/tamabingo_stamp.png" alt="スタンプ ${cellId + 1}">`;
+    cell.classList.add("checked");
 }
 
-function updateBingoCell(cellId, spotName, trivia) {
-    const cellElement = document.getElementById(`cell-${cellId}`);
-    cellElement.textContent = 'チェック済み';
-    cellElement.classList.add('checked');
-    showOverlay(spotName, trivia);
-}
-
-// オーバーレイの表示と閉じる機能
+// オーバーレイを表示する関数
 function showOverlay(spotName, trivia) {
     document.getElementById('spot-name').textContent = `${spotName} のスタンプが押されました！`;
     document.getElementById('spot-trivia').textContent = trivia;
     document.getElementById('overlay').style.display = 'flex';
 }
 
+// オーバーレイを閉じる関数
 function closeOverlay() {
     document.getElementById('overlay').style.display = 'none';
-    document.getElementById('qr-reader').style.display = 'block';
+    closeCamera();
 }
 
-// 景品交換のポップアップ処理
-function setupExchangePopup() {
+// カメラを手動で閉じる関数
+function closeCamera() {
+    if (qrCodeReader) {
+        qrCodeReader.stop().then(() => {
+            document.getElementById('qr-reader').style.display = 'none';
+            document.getElementById('qr-reader').innerHTML = ''; // QRリーダーの内容をクリア
+            qrCodeReader = null; // インスタンスを破棄
+        }).catch(err => console.error("カメラ停止エラー:", err));
+    }
+}
+
+// 景品交換ボタンとポップアップの制御
+function setupPrizeExchange() {
     document.getElementById('exchange-prize').addEventListener('click', () => {
         document.getElementById('exchange-popup').style.display = 'flex';
     });
@@ -63,7 +94,10 @@ function setupExchangePopup() {
         document.getElementById('exchange-message').textContent = '景品を交換しました！';
         document.getElementById('exchange-prize').textContent = '景品は交換済みです';
         document.getElementById('exchange-prize').disabled = true;
-        setTimeout(() => document.getElementById('exchange-popup').style.display = 'none', 1000);
+        
+        setTimeout(() => {
+            document.getElementById('exchange-popup').style.display = 'none';
+        }, 1000); // ポップアップを1秒後に閉じる
     });
 
     document.getElementById('cancel-exchange').addEventListener('click', () => {
@@ -71,22 +105,8 @@ function setupExchangePopup() {
     });
 }
 
-// ページロード時にビンゴ状態を保持
-function maintainBingoState(bingoSheet) {
-    bingoSheet.forEach((state, index) => {
-        const cell = document.getElementById(`cell-${index}`);
-        if (state === "True") {
-            cell.classList.add("checked");
-            cell.textContent = "チェック済み";
-        } else {
-            cell.classList.remove("checked");
-            cell.textContent = "未チェック";
-        }
-    });
-}
-
-// 初期化処理
+// イベントリスナーを初期化
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('start-camera').addEventListener('click', startCamera);
-    setupExchangePopup();
+    setupPrizeExchange();
 });
