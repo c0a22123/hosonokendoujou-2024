@@ -315,6 +315,10 @@ def update_user_info():
     flash('ユーザー情報が更新されました', 'success')
     return redirect(url_for('mypage'))
 
+@app.route('/prize')
+def prize():
+    return render_template('prize.html')
+
 @app.route('/favicon.ico')
 def favicon():
     return '', 204
