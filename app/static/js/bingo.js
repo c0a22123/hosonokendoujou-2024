@@ -143,7 +143,7 @@ function setupPrizeExchange() {
 
 // Create confetti animation
 function createConfetti() {
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 200; i++) {
         const confetti = document.createElement('div');
         confetti.classList.add('confetti');
         confetti.style.left = `${Math.random() * 100}%`;
@@ -160,22 +160,7 @@ function createConfetti() {
 }
 
 // Create falling leaves animation
-function createFallingLeaves() {
-    for (let i = 0; i < 10; i++) {
-        const leaf = document.createElement('div');
-        leaf.classList.add('leaf');
-        leaf.style.left = `${Math.random() * 100}%`;
-        leaf.style.animationDelay = `${Math.random() * 2 + 1}s`;
-        leaf.style.backgroundImage = 'url("/static/images/leaf.png")';
-        
-        document.body.appendChild(leaf);
 
-        // Remove leaf after animation completes
-        leaf.addEventListener('animationend', () => {
-            leaf.remove();
-        });
-    }
-}
 
 // Initialize event listeners
 document.addEventListener('DOMContentLoaded', () => {
