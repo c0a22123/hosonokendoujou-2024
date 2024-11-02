@@ -9,51 +9,76 @@
     <title>デジタルビンゴ - Enjoy Tama with Bingo</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bingo.css') }}">
 </head>
-<h1>ビンゴシート</h1>
 
-<button id="start-camera">カメラを起動する</button>
+<div class="container">
+    <h1>ビンゴシート</h1>
 
-<div id="bingo-wrapper">
-    <table id="bingo-table">
-        {% for i in range(3) %}
-        <tr>
-            {% for j in range(3) %}
-            {% set cell_index = i * 3 + j %}
-            <td id="cell-{{ cell_index }}" class="{{ 'checked' if bingo_sheet[cell_index] else '' }}">
-                {% if bingo_sheet[cell_index] %}
-                    <!-- チェック済みの場合、該当の画像を表示 -->
-                    <img src="{{ url_for('static', filename='images/stamp/tamabingo_stamp.png') }}" alt="スタンプ {{ cell_index + 1 }}">
-                {% else %}
-                    <!-- 未チェックのセル番号を丸で囲んで表示 -->
-                    <div class="circle">{{ cell_index + 1 }}</div>
-                {% endif %}
-            </td>
+    <button id="start-camera">カメラを起動する</button>
+
+    <div id="bingo-wrapper">
+        <table id="bingo-table">
+            {% for i in range(3) %}
+            <tr>
+                {% for j in range(3) %}
+                {% set cell_index = i * 3 + j %}
+                <td id="cell-{{ cell_index }}" class="{{ 'checked' if bingo_sheet[cell_index] else '' }}">
+                    {% if bingo_sheet[cell_index] %}
+                        <img src="{{ url_for('static', filename='images/stamp/tamabingo_stamp.png') }}" alt="スタンプ {{ cell_index + 1 }}">
+                    {% else %}
+                        <div class="circle">{{ cell_index + 1 }}</div>
+                    {% endif %}
+                </td>
+                {% endfor %}
+            </tr>
             {% endfor %}
-        </tr>
-        {% endfor %}
-    </table>
-</div>
-
-<br>
-
-<div id="qr-reader"></div>
-
-<div id="overlay" class="overlay">
-    <div class="overlay-content">
-        <h2 id="spot-name"></h2>
-        <p id="spot-trivia"></p>
-        <button class="close-overlay" onclick="closeOverlay()">閉じる</button>
+        </table>
     </div>
-</div>
 
-<button id="exchange-prize" class="exchange-button">景品を交換する</button>
+    <div id="qr-reader"></div>
 
-<div id="exchange-popup" class="exchange-popup-overlay">
-    <div class="exchange-popup-content">
-        <h2 id="exchange-message">本当に交換しますか？</h2>
-        <button id="confirm-exchange" class="popup-button">はい</button>
-        <button id="cancel-exchange" class="popup-button">いいえ</button>
+    <div id="overlay" class="overlay">
+        <div class="overlay-content">
+            <h2 id="spot-name"></h2>
+            <p id="spot-trivia"></p>
+            <button class="close-overlay" onclick="closeOverlay()">閉じる</button>
+        </div>
     </div>
+
+    <button id="exchange-prize" class="exchange-button">景品を交換する</button>
+    <p><strong>※この交換は、一度のみです。ビンゴを達成したら、交換所で交換する際に押してください</strong></p>
+
+    <div id="exchange-popup" class="exchange-popup-overlay">
+        <div class="exchange-popup-content">
+            <h2 id="exchange-message">本当に交換しますか？<br><br><strong>この交換は、景品受け取り所で行ってください。</strong></h2>
+            <button id="confirm-exchange" class="popup-button">はい</button>
+            <button id="cancel-exchange" class="popup-button">いいえ</button>
+        </div>
+    </div>
+
+    <section class="prize-details">
+        <h3>景品一覧</h3>
+        <div class="prize-item">
+            <img src="{{ url_for('static', filename='images/1bingo_prize.png') }}" alt="1ビンゴ景品" class="prize-image">
+            <div class="prize-description">
+                <h4>【1ビンゴ達成】達成土方歳三はがき</h4>
+                <p>日野市ならではの、土方歳三はがきを1ビンゴでプレゼント！<br><strong>※先着50名様限定</strong></p>
+            </div>
+        </div>
+
+        <div class="prize-item">
+            <img src="{{ url_for('static', filename='images/5bingo_prize.png') }}" alt="5ビンゴ景品" class="prize-image">
+            <div class="prize-description">
+                <h4>【5ビンゴ達成】300円相当の新選組グッズ</h4>
+                <p>新選組ファン必見のグッズを5ビンゴでゲット！さらに日野の魅力が詰まったアイテムです。<br><strong>※先着50名様限定</strong></p>
+            </div>
+        </div>
+        <div class="prize-item">
+            <div class="prize-description">
+                <a href="/prize" class="prize-exchange-button">景品交換所はこちら</a>
+            </div>
+        </div>
+    </section>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/html5-qrcode/minified/html5-qrcode.min.js"></script>
