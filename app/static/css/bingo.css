@@ -1,7 +1,7 @@
 /* 全体のスタイル設定 */
 body {
     font-family: Arial, sans-serif;
-    margin: 30px;
+    margin: 0;
     padding: 0;
     box-sizing: border-box;
     display: flex;
@@ -195,61 +195,3 @@ html {
     color: white;
     font-weight: bold;
 }
-
-.stamp-animation {
-    width: 100px;
-    margin: 10px auto;
-    display: block;
-    position: relative;
-    animation: dropDown 1s ease-out forwards; /* Adjusted to 1s */
-    opacity: 0;
-}
-
-@keyframes dropDown {
-    0% {
-        transform: translateY(-100px);
-        opacity: 0;
-    }
-    100% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-/* Confetti Animation */
-.confetti {
-    position: fixed;
-    top: 0;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    animation: confettiFall 3s linear forwards;
-}
-
-@keyframes confettiFall {
-    0% { transform: translateY(-10vh) rotate(0); opacity: 1; }
-    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-}
-
-/* Falling leaves style */
-.leaf {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-image: url('/static/images/leaf.png'); /* Use a leaf image */
-    background-size: contain;
-    opacity: 0.7;
-    animation: leafFall linear infinite;
-}
-
-@keyframes leafFall {
-    from {
-        transform: translateY(-50px) rotate(0deg);
-        opacity: 1;
-    }
-    to {
-        transform: translateY(300px) rotate(360deg);
-        opacity: 0;
-    }
-}
-

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ログインページ</title>
     <style>
+        /* CSS styles remain the same */
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
@@ -17,7 +18,7 @@
 
         .login-container {
             background-color: white;
-            padding: 40px; /* パディングを増やし、ゆとりを持たせる */
+            padding: 40px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             max-width: 400px;
@@ -26,19 +27,19 @@
         }
 
         h2 {
-            margin-bottom: 30px; /* タイトルの下に余白を追加 */
+            margin-bottom: 30px;
         }
 
         label {
             display: block;
-            margin: 10px 0 5px; /* フィールドの上下に余白を追加 */
+            margin: 10px 0 5px;
             font-weight: bold;
         }
 
         input[type="text"], input[type="password"] {
             width: 100%;
-            padding: 10px; /* インプットフィールドのパディングを少し狭める */
-            margin-bottom: 15px; /* 下に少し余白を追加 */
+            padding: 10px;
+            margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
@@ -46,12 +47,12 @@
         input[type="submit"] {
             background-color: #ff8c00;
             color: white;
-            padding: 10px 0; /* ボタンの高さを狭める */
+            padding: 10px 0;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            width: 80%; /* ボタンの横幅を狭める */
-            font-size: 1.1rem; /* フォントサイズを少しだけ小さく */
+            width: 80%;
+            font-size: 1.1rem;
             margin-top: 10px;
         }
 
@@ -59,23 +60,31 @@
             background-color: #e67600;
         }
 
-        /* コンテンツ間に余白を追加 */
         .form-section {
-            margin-bottom: 40px; /* フォームとアクションリンクの間に余白を追加 */
+            margin-bottom: 40px;
         }
 
-        /* アクションリンク全体のスタイル */
         .action-links {
-            margin-top: 20px; /* アクションリンク全体に余白を追加 */
+            margin-top: 20px;
         }
 
-        /* p タグと form タグ間の隙間を狭める */
         .action-links p {
-            margin-bottom: 1px; /* pタグとformの間の余白を狭める */
+            margin-bottom: 1px;
         }
 
         .action-links form {
-            margin: 5px 0; /* formタグの上下の余白を狭める */
+            margin: 5px 0;
+        }
+
+        /* 忘れたパスワードリンクのスタイル */
+        .forgot-password-link {
+            color: #3498db;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .forgot-password-link:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -83,7 +92,7 @@
 
     <div class="login-container">
         <h2>ログイン</h2>
-        <div class="form-section"> <!-- コンテンツを囲むdivを追加 -->
+        <div class="form-section">
             <form method="post" action="/login">
                 <label for="username">ユーザー名:</label>
                 <input type="text" id="username" name="username" required>
@@ -95,17 +104,16 @@
             </form>
         </div>
 
-        <!-- コンテンツ間に余白を追加 -->
         <div class="action-links">
             <p>新規登録はこちら</p>
             <form action="/add" method="get">
                 <input type="submit" value="新規登録">
             </form>
-            <p></p>
-            <p>退会はこちら</p>
-            <form action="/deleate" method="get">
-                <input type="submit" value="登録を消す">
-            </form>
+            
+
+            <!-- パスワードを忘れた方向けのリンク -->
+            <p><a href="/contact" class="forgot-password-link">パスワードを忘れた方はこちら</a></p>
+            <p>※ユーザー名とメールアドレスをお伝えください。入力いただいたメールアドレスにパスワードを送らせていただきます。
         </div>
     </div>
 
