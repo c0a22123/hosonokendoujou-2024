@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}カメラのトラブルシューティング{% endblock %}
+
+{% block content %}
+<main>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>カメラが読み取れないときの対処法 - タマビンゴ</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/cameraway.css') }}">
+    </head>
+
+    <section class="camera-trouble">
+        <div class="container1">
+            <h2>カメラが起動できないときの対処法</h2>
+            <p>カメラが起動できない場合は、ページを何度か更新してみてください。</p>
+            <div class="refresh-button">
+                <a href="#" onclick="location.reload();">
+                    <img src="{{ url_for('static', filename='images/cameraway.png') }}" alt="ページを更新" class="refresh-image">
+                </a>
+            </div>
+            <p class="note">ページを再読み込みしてもカメラが起動しない場合、以下のお問い合わせボタンからご連絡ください。</p>
+            <a href="/contact" class="contact-button">お問い合わせフォーム</a>
+        </div>
+    </section>
+</main>
+{% endblock %}

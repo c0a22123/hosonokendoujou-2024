@@ -206,6 +206,8 @@ def logout():
     flash('ログアウトしました。', 'success')
     return redirect(url_for('index'))
 
+
+
 @app.route('/spot')
 def route():
     return render_template('spot.html')
@@ -318,6 +320,11 @@ def update_user_info():
 @app.route('/prize')
 def prize():
     return render_template('prize.html')
+
+@app.route('/cameraway')
+def cameraway():
+    return render_template('cameraway.html')
+
 
 @app.route('/favicon.ico')
 def favicon():
