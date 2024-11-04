@@ -7,6 +7,7 @@ from .myfunction import *
 from .spot_info import *
 from .user_info import get_user_info
 from datetime import datetime
+from flask import send_from_directory
 
 # ビンゴシートの状態を保持するためのリスト
 
@@ -329,6 +330,10 @@ def cameraway():
 @app.route('/favicon.ico')
 def favicon():
     return '', 204
+
+@app.route('/robots.txt')
+def robots_txt():
+    return send_from_directory(app.static_folder, 'robots.txt')
 
 if __name__ == '__main__':
     app.run(debug=True)
