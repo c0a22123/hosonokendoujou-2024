@@ -326,6 +326,10 @@ def prize():
 def cameraway():
     return render_template('cameraway.html')
 
+@app.route('/end')
+def end():
+    return render_template('event_end.html')
+
 
 @app.route('/favicon.ico')
 def favicon():
