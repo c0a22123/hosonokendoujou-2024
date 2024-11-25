@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/event.css') }}">
+<head>
+    
+<div class="event-detail-container">
+    <div class="event-header">
+        <h1>第16回もみじ灯路</h1>
+        <p>高幡不動尊参道が温かい灯りで彩られます。</p>
+    </div>
+
+    <div class="event-image">
+        <img src="{{ url_for('static', filename='images/event2.png') }}" alt="もみじ灯路" class="event-poster">
+    </div>
+
+    <div class="event-info">
+        <h2>イベント詳細</h2>
+        <p><strong>開催日:</strong> 11月22日 - 11月23日, 17:00 - 20:00</p>
+        <p><strong>開催場所:</strong> 高幡不動尊参道</p>
+
+        <h3>イベント内容</h3>
+        <p>駅前の街並みをさまざまに飾られた3000個もの灯篭の灯りが広がる秋の風情をお楽しむことができます。
+
+        </p>
+    </div>
+
+    <div class="back-button">
+        <a href="{{ url_for('index') }}" class="btn">戻る</a>
+    </div>
+</div>
+{% endblock %}

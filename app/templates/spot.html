@@ -3,27 +3,30 @@
 {% block title %}ビンゴスポット{% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="/static/css/spot_list.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/spot_list.css') }}">
 
-<h1>ビンゴスポットリスト</h1>
+<div class="spot-page">
+    <h1 class="spot-title">ビンゴスポットリスト</h1>
 
-<!-- 画像を中央揃えで表示 -->
-<div style="text-align: center;">
-    <img src="/static/images/map.png" alt="ビンゴスポット地図" style="max-width: 100%; height: auto;">
-</div>
+    <!-- 地図画像を全画面幅に表示 -->
+    <div class="map-container">
+        <img src="{{ url_for('static', filename='images/map.png') }}" alt="ビンゴスポット地図" class="map-image">
+    </div>
 
-<!-- 2列に分けたスポットリスト -->
-<div class="spot-list">
-    <ul>
-        <li><a href="{{ url_for('honzin') }}">日野宿本陣</a></li>
-        <li><a href="{{ url_for('housen') }}">宝泉寺</a></li>
-        <li><a href="{{ url_for('hurusato') }}">新撰組ふるさと資料館</a></li>
-        <li><a href="{{ url_for('kouryuu') }}">日野宿交流館</a></li>
-        <li><a href="{{ url_for('satou') }}">佐藤彦五郎資料館</a></li>
-        <li><a href="{{ url_for('taisyou') }}">大昌寺</a></li>
-        <li><a href="{{ url_for('yasaka') }}">日野八坂神社</a></li>
-        <li><a href="{{ url_for('zizou') }}">とんがらし地蔵</a></li>
-    </ul>
+    <!-- 2列に分けたスポットリスト -->
+    <div class="spot-list">
+        <ul>
+            <li><a href="{{ url_for('housen') }}"><span class="spot-number">①</span>宝泉寺</a></li>
+            <li><a href="{{ url_for('yasaka') }}"><span class="spot-number">②</span>日野八坂神社</a></li>
+            <li><a href="{{ url_for('zizou') }}"><span class="spot-number">③</span>とんがらし地蔵</a></li>
+            <li><a href="{{ url_for('taisyou') }}"><span class="spot-number">④</span>大昌寺</a></li>
+            <li><a href="{{ url_for('hurusato') }}"><span class="spot-number">⑤</span>新選組ふるさと資料館</a></li>
+            <li><a href="{{ url_for('satou') }}"><span class="spot-number">⑥</span>佐藤彦五郎新選組資料館</a></li>
+            <li><a href="{{ url_for('honzin') }}"><span class="spot-number">⑦</span>日野宿本陣</a></li>
+            <li><a href="{{ url_for('kouryuu') }}"><span class="spot-number">⑧</span>日野宿交流館</a></li>
+            <li><a href="{{ url_for('humonji') }}"><span class="spot-number">⑨</span>普門寺</a></li>
+        </ul>
+    </div>
 </div>
 
 {% endblock %}

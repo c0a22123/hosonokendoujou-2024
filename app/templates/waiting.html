@@ -1,70 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #fff4e6;
-            color: #333;
-            text-align: center;
-            padding: 50px;
-        }
+<link rel="stylesheet" href="{{ url_for('static', filename='css/waiting.css') }}">
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #ffcc99;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+<div class="waiting-container">
+    <h1>イベント開始をお待ちください</h1>
+    <p>イベントは11月1日 10:00から開始されます。</p>
+    <div class="spinner"></div>
+    <p class="start-time">開始後はページを更新してください。</p>
+</div>
 
-        h1 {
-            color: #e67e22;
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
-
-        p {
-            font-size: 1.2em;
-            line-height: 1.6;
-        }
-
-        .start-time {
-            font-size: 1.5em;
-            color: #d35400;
-            margin-top: 20px;
-        }
-
-        .spinner {
-            margin: 20px auto;
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(0, 0, 0, 0.1);
-            border-radius: 50%;
-            border-top-color: #e67e22;
-            animation: spin 1s infinite linear;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        footer {
-            margin-top: 30px;
-            font-size: 0.9em;
-            color: #7f8c8d;
-        }
-    </style>
-
-    <div class="container">
-        <h1>イベント開始をお待ちください</h1>
-        <p>イベントは11月1日 10:00から開始されます。</p>
-        <div class="spinner"></div>
-        <p class="start-time">開始後はページを更新してください。</p>
-    </div>
-
-    <footer>
-        &copy; 2024 デジタルビンゴイベント
-    </footer>
 {% endblock %}

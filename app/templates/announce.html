@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>お知らせ一覧 - タマビンゴ</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/announce.css') }}">
+    </head>
+
+    <section class="announce-section">
+        <div class="container">
+            <h3>お知らせ一覧</h3>
+            <ul class="announce-list">
+                <li>
+                    <h4>2024年10月20日: タマビンゴ 公開開始！</h4>
+                    <p>タマビンゴがついに公開されました！日野の歴史を感じながら、楽しくビンゴに挑戦してください。</p>
+                </li>
+
+            </ul>
+            <div class="back-button">
+                <a href="{{ url_for('index') }}" class="btn">トップページに戻る</a>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}
