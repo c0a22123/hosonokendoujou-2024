@@ -1,47 +1,74 @@
+/* Center content in main section */
 .main {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 20px;
-    background-color: #fff; /* 背景色を白に変更 */
+    padding: 5px;
+    background-color: #fff;
 }
 
 .container {
-    max-width: 800px; /* コンテナの最大幅を広げる */
-    width: 100%; /* 画面幅に対して100% */
-    background-color: #fff;
-    padding: 20px;
+    max-width: 1200px;
+    width: 100%;
+    background-color: #ffffff00;
+    padding: 5px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
 .title {
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: bold;
     margin-bottom: 20px;
 }
 
-.image-section {
+.additional-image {
     display: block;
     width: 100%;
-    max-width: 395px;
+    max-width: 400px;
     height: auto;
-    margin: 0 auto 20px; /* 画像を中央に揃える */
+    margin: 20px auto;
 }
 
 .content-section {
     font-size: 1rem;
     line-height: 1.6;
     color: #333;
-    text-align: left; /* テキストは左揃え */
+    text-align: left;
 }
 
 .text {
     margin-bottom: 20px;
 }
 
+/* New sticker section styling */
+.sticker-section {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.sticker-section h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.sticker-images {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Space between images */
+    margin-top: 10px;
+}
+
+.sticker-image {
+    width: 150px;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Link styling */
 a {
     color: #3498db;
     text-decoration: none;
@@ -51,12 +78,23 @@ a:hover {
     text-decoration: underline;
 }
 
+/* Responsive adjustments for mobile */
 @media (max-width: 768px) {
     .container {
+        max-width: 95%;
         padding: 15px;
     }
 
     .title {
         font-size: 1.5rem;
+    }
+
+    .sticker-images {
+        flex-direction: column;
+    }
+
+    .sticker-image {
+        max-width: 80%; /* Scale images for smaller screens */
+        margin: 0 auto;
     }
 }

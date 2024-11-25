@@ -1,0 +1,83 @@
+.prize-details .container, .exchange-location .container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.prize-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 20px 0;
+    position: relative;
+    padding-left: 20px;
+    
+}
+
+.prize-image {
+    width: 150px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: rotate(90deg);
+}
+
+.prize-description {
+    max-width: 300px;
+    font-size: 1rem;
+    line-height: 1.6;
+    text-align: left;
+    position: relative;
+    padding: 20px;
+
+}
+
+.exchange-location .location-image {
+    width: 80%;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.prize-item p {
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.prize-item strong {
+    color: #d9534f;
+}
+
+@media (max-width: 768px) {
+    .prize-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding-left: 0;
+        
+    }
+    
+    .prize-item::before {
+        display: none;
+        content: "";
+        display: block;
+        width: 100%;
+        border-top: 2px dashed #d9534f; /* 点線 */
+        margin: 10px 0; /* 点線の上下に余白を追加 */
+    }
+    
+    .prize-image {
+        width: 300px;
+        margin-bottom: 10px;
+        transform: none;
+    }
+    
+    .prize-description {
+        max-width: 100%;
+        font-size: 0.9rem;
+        padding: 10px;
+        
+    }
+    
+    .exchange-location .location-image {
+        width: 100%;
+    }
+}

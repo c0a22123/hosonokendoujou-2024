@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}イベント終了{% endblock %}
+
+{% block content %}
+<main>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/event_end.css') }}">
+    <section class="hero">
+        <div class="container">
+            <h2>イベントは終了しました</h2>
+            <p>「タマビンゴ in 日野」にご参加いただきありがとうございました！<br>
+               次回のイベントでお会いできるのを楽しみにしています。</p>
+        </div>
+    </section>
+</main>
+{% endblock %}

@@ -1,64 +1,82 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <title>{% block title %}ビンゴページ{% endblock %}</title>
+  <title>{% block title %}タマビンゴ‐デジタルスタンプラリー{% endblock %}</title>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="/static/css/styles.css">
-  <!-- スマホに対応 -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MSJ7V3G9');
+    </script>
 </head>
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MSJ7V3G9"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
   <header class="Header">
-    <!-- tamabingo.pngを左に配置 -->
-    <a href="/index">
+    <a href="/">
       <img src="/static/images/tamabingo.png" alt="error" class="resized-image">
     </a>
-    
-    <!-- ログインリンクとメニュータブを右に配置 -->
     <div class="header-right">
       <button id="popupButton">
         <img src="/static/images/overlayopen.png" alt="メニュー">
       </button>
-      <!-- ログイン状態によって表示を変更 -->
       {% if logged_in %}
         <a href="/logout" class="login-link">ログアウト</a>
       {% else %}
         <a href="/login" class="login-link">ログイン</a>
       {% endif %}
     </div>
-
-    <!-- ポップアップメニュー -->
     <div id="popupWindow" class="dropdown-content">
       <ul>
-        <li><a href="/index">トップページ</a></li>
-        <li><a href="/waiting">ビンゴページ</a></li>
-        <li><a href="/bingo_spot">ビンゴスポット一覧</a></li>
+        <li><a href="/">トップページ</a></li>
+        <li><a href="/end">ビンゴページ</a></li>
+        <li><a href="/spot">ビンゴスポット一覧</a></li>
+        <li><a href="/mypage">マイページ</a></li>
+        <li><a href="/contact">お問い合わせ</a></li>
       </ul>
     </div>    
   </header>
 
+  <div class="main">
+    {% block content %} ここにページごとの内容が入ります。 {% endblock %}
+  </div>
+
+  <!-- 固定フッター -->
   <footer class="Footer">
-    <!-- トップボタン -->
-    <a href="/index" class="top-text">
+    <a href="/" class="top-text">
       <img src="/static/images/top.png" alt="error">
       <span>トップ</span>
     </a>
-
-    <!-- スキャンボタン -->
-    <a href="/waiting" class="scan-text">
+    <a href="/end" class="scan-text">
       <img src="/static/images/QRsample.png" alt="error">
       <span>スキャン</span>
     </a>
-
-    <!-- スポットボタン -->
     <a href="/spot" class="coupon-text">
       <span>スポット一覧</span>
     </a>
   </footer>
 
-  <div class="main">
-    {% block content %} ここにページごとの内容が入ります。 {% endblock %}
-  </div>
+  <!-- ページ下部フッター -->
+  <footer class="bottom-footer">
+    <div class="container">
+      <img src="/static/images/tamabingo.png" alt="タマビンゴロゴ" class="footer-logo">
+      <p>© 2024 タマビンゴ | チーム名: タマアド</p>
+      <nav class="footer-links">
+        <a href="/privacy">プライバシーポリシー</a> |
+        <a href="/terms">利用規約</a> |
+        <a href="/contact">お問い合わせ</a>
+      </nav>
+    </div>
+</footer>
+
+  </footer>
 
   <script src="/static/js/script.js"></script>
 </body>

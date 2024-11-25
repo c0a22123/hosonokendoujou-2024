@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}景品について{% endblock %}
+
+{% block content %}
+<main>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>景品について - タマビンゴ</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/prize.css') }}">
+    </head>
+
+    <section class="hero">
+        <div class="container">
+            <h2>タマビンゴの景品を手に入れよう！</h2>
+            <p>ビンゴを達成して、限定の新選組グッズをゲット！</p>
+        </div>
+    </section>
+
+    <section class="prize-details">
+        <div class="container">
+            <h3>景品一覧</h3>
+            <div class="prize-item">
+                <img src="{{ url_for('static', filename='images/1bingo_prize.png') }}" alt="1ビンゴ景品" class="prize-image">
+                <div class="prize-description">
+                    <h4>1ビンゴ達成</h4>
+                    <p>土方歳三ポストカード</p>
+                    <p>日野市ならではの、土方歳三ポストカードを1ビンゴでプレゼント！<br><strong>※先着50名様限定</strong></p>
+                </div>
+            </div>
+            
+            <div class="prize-item">
+                <img src="{{ url_for('static', filename='images/5bingo_prize.png') }}" alt="5ビンゴ景品" class="prize-image">
+                <div class="prize-description">
+                    <h4>5ビンゴ達成</h4>
+                    <p>300円相当の新選組グッズ</p>
+                    <p>新選組ファン必見のグッズを5ビンゴでゲット！さらに日野の魅力が詰まったアイテムです。<br><strong>※先着50名様限定</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="exchange-location">
+        <div class="container">
+            <h3>景品交換場所</h3>
+            <p>景品は日野宿交流館のレジにて交換できます。ビンゴを達成したらぜひお立ち寄りください！</p>
+            <img src="{{ url_for('static', filename='images/route_place.png') }}" alt="日野宿交流館案内" class="location-image">
+        </div>
+    </section>
+</main>
+{% endblock %}

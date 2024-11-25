@@ -6,99 +6,126 @@ from .bingodatabase import *
 from .myfunction import *
 from .spot_info import *
 from .user_info import get_user_info
-
-
+from datetime import datetime
+from flask import send_from_directory
 
 # ビンゴシートの状態を保持するためのリスト
-bingo_sheet = [False] * 9
+
 
 app = Flask(__name__, static_folder='./static')
 app.secret_key = 'your_secret_key'
 FILE_PNG_AB = 'qrcode_AB.png'
 
+# セッション情報が保持されているか確認し、リクエストごとにユーザー情報を更新
+@app.before_request
+def load_user_info():
+    user_id = session.get('user_id')
+    if user_id:
+        session['user_info'] = get_user_info(user_id)
+    else:
+        session['user_info'] = None
 
 # コンテキストプロセッサを使って、すべてのテンプレートでログイン情報を利用可能に
 @app.context_processor
 def inject_user():
-    return dict(logged_in=session.get('username') is not None, username=session.get('username'))
-
+    return dict(logged_in=session.get('username') is not None, user_info=session.get('user_info'))
 
 def bingo_check(bingo_list):
-    '''
-    引数：なし
-    出力：ビンゴの数
-    '''
     ans = 0
     for i in range(2):
-        if (bingo_list[i+2] == "True" and bingo_list[i+3] == "True",bingo_list[i+4] == "True"):
+        if (bingo_list[i+2] == "True" and bingo_list[i+3] == "True" and bingo_list[i+4] == "True"):
             ans += 1
         if (bingo_list[i+2] == "True" and bingo_list[i+5] == "True" and bingo_list[i+8] == "True"):
             ans += 1
-    if (bingo_list[i+2] == "True" and bingo_list[i+6] == "True" and bingo_list[i+10] == "True"):
+    if (bingo_list[2] == "True" and bingo_list[6] == "True" and bingo_list[10] == "True"):
         ans += 1
-    if (bingo_list[i+4] == "True" and bingo_list[i+6] == "True" and bingo_list[i+8] == "True"):
+    if (bingo_list[4] == "True" and bingo_list[6] == "True" and bingo_list[8] == "True"):
         ans += 1
     return ans
 
-# QRコード生成用関数
-def generate_qr(url):
-    qr = qrcode.QRCode(
-        version=1,
-        error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=10,
-        border=4,
-    )
-    qr.add_data(url)
-    qr.make(fit=True)
-
-    img = qr.make_image(fill='black', back_color='white')
-    return img
-
 @app.route('/')
 def index():
-    # セッションからユーザーIDを取得
-    user_id = session.get('user_id')
-    
-    if user_id:
-        user_info = get_user_info(user_id)
-    else:
-        user_info = None  # ログインしていない場合は None を設定
-
-    return render_template('index.html', user_info=user_info)
-    
-
-    
+    return render_template('index.html')
 
 @app.route('/bingo')
 def bingo():
-    return render_template('bingo.html')
+    user_id = session.get('user_id')
+    if not user_id:
+        flash('ログインが必要です', 'danger')
+        return redirect(url_for('login'))
 
-@app.route('/generate_qr/<int:cell_id>')
-def generate_qr_code(cell_id):
-    url = str(cell_id)
-    img = generate_qr(url)
+    # ビンゴシートの状態を取得
+    bingo_data = loadb_db(user_id, event_id="1")
+    bingo_sheet = [str(row) == '1' for row in bingo_data[0]]
 
-    img_io = io.BytesIO()
-    img.save(img_io, 'PNG')
-    img_io.seek(0)
-    return send_file(img_io, mimetype='image/png')
+    # 景品交換状態を取得
+    conn = connectb_db()
+    cur = conn.cursor(dictionary=True)
+    cur.execute("SELECT exchanged FROM prize_exchange WHERE user_id = %s AND event_id = %s", (user_id, 1))
+    prize_data = cur.fetchone()
+    exchanged = prize_data['exchanged'] if prize_data else False  # データがなければ交換されていないと仮定
+    cur.close()
+    conn.close()
+
+    return render_template('bingo.html', bingo_sheet=bingo_sheet, exchanged=exchanged)
+
+
 
 @app.route('/stamp/<int:cell_id>')
 def stamp(cell_id):
     try:
+        user_id = session.get('user_id')
+        event_id = 1  # イベントIDが1で固定の場合。動的に変更するならセッションから取得
+
+        if user_id is None:
+            return jsonify(success=False, message="ログインが必要です。")
+
         if 1 <= cell_id <= 9:
-            bingo_sheet[cell_id - 1] = True
+            # ビンゴシートの進捗をデータベースに記録
+            update_bingo(f"bingo_row{cell_id - 1}", user_id, event_id)
             spot = spot_info.get(cell_id)
             if spot is None:
                 raise ValueError(f"セルID {cell_id} に対応するスポット情報が見つかりません。")
-            
+
             return jsonify(success=True, cell_id=cell_id, spot_name=spot["spot_name"], spot_trivia=spot["spot_trivia"])
         else:
             return jsonify(success=False, message="無効なセルIDです。")
-    
+
     except Exception as e:
         print(f"サーバーエラー: {e}")
         return jsonify(success=False, message="サーバーでエラーが発生しました。"), 500
+    
+@app.route('/exchange_prize', methods=['POST'])
+def exchange_prize():
+    user_id = session.get('user_id')
+    event_id = 1  # 例としてイベントIDを1に固定
+
+    if not user_id:
+        return jsonify(success=False, message="ログインが必要です。")
+
+    conn = connectb_db()
+    cur = conn.cursor(dictionary=True)
+
+    # 景品交換の状態を確認
+    cur.execute("SELECT exchanged FROM prize_exchange WHERE user_id = %s AND event_id = %s", (user_id, event_id))
+    prize_data = cur.fetchone()
+
+    # すでに交換済みの場合、メッセージを返す
+    if prize_data and prize_data['exchanged']:
+        return jsonify(success=False, message="景品は既に交換済みです。")
+    
+    # 新規または未交換の場合、交換状態を更新
+    if prize_data:
+        cur.execute("UPDATE prize_exchange SET exchanged = TRUE, exchange_date = %s WHERE user_id = %s AND event_id = %s",
+                    (datetime.now(), user_id, event_id))
+    else:
+        cur.execute("INSERT INTO prize_exchange (user_id, event_id, exchanged, exchange_date) VALUES (%s, %s, TRUE, %s)",
+                    (user_id, event_id, datetime.now()))
+    
+    conn.commit()
+    cur.close()
+    conn.close()
+    return jsonify(success=True, message="景品を交換しました。")
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -106,12 +133,11 @@ def login():
         username = request.form['username']
         password = request.form['password']
         
-        # データベースからユーザー情報を取得（ユーザーIDも取得）
-        user = connect_db(username, password)  # ここで `user_id` を取得できるようにする
+        user = connect_db(username, password)
         
-        if user:  # ユーザーが存在し、ログイン成功した場合
-            session['user_id'] = user['user_id']  # セッションにユーザーIDを保存
-            session['username'] = user['user_name']  # さらにユーザー名も保存
+        if user:
+            session['user_id'] = user['user_id']
+            session['username'] = user['user_name']
             flash('ログインしました。', 'success')
             return redirect(url_for('index'))
         else:
@@ -119,7 +145,7 @@ def login():
     
     return render_template('login.html')
 
-
+# 新規ユーザー登録後に bingo テーブルに初期データを追加
 @app.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
@@ -129,12 +155,38 @@ def add():
         gender = request.form['gender']
         age = request.form['age']
 
-        if password == password2:
-            add_user(username, password, gender, age)
-            flash('ユーザーが追加されました。', 'success')
-            return redirect(url_for('login'))
+        if password != password2:
+            flash('パスワードが一致しません。', 'danger')
+            return render_template('add.html')
         
+        if is_password_duplicate(password):
+            flash('そのパスワードはすでに使用されています。別のパスワードを選んでください。', 'danger')
+            return render_template('add.html')
+        
+        # 新規ユーザーを追加
+        add_user(username, password, gender, age)
+        
+        # ユーザーID取得後に bingo テーブルに初期データを追加
+        user_id = get_user_id(username)  # 新しく作成したユーザーの user_id を取得する関数
+        if user_id:
+            add_bingo(user_id, 1)  # event_id は仮に 1 を指定
+            
+            # 景品交換データをprize_exchangeテーブルに挿入
+            conn = connectb_db()
+            cur = conn.cursor()
+            cur.execute(
+                "INSERT INTO prize_exchange (user_id, event_id, exchanged) VALUES (%s, %s, %s)",
+                (user_id, 1, False)  # event_idは仮に1を指定、交換済みをFalseで初期設定
+            )
+            conn.commit()
+            cur.close()
+            conn.close()
+
+        flash('ユーザーが追加されました。', 'success')
+        return redirect(url_for('login'))
+    
     return render_template('add.html')
+
 
 @app.route('/deleate', methods=['GET', 'POST'])
 def deleate():
@@ -151,9 +203,10 @@ def deleate():
 
 @app.route('/logout')
 def logout():
-    session.clear()  # セッションの全データをクリア
+    session.clear()
     flash('ログアウトしました。', 'success')
     return redirect(url_for('index'))
+
 
 
 @app.route('/spot')
@@ -192,6 +245,10 @@ def yasaka():
 def zizou():
     return render_template('spot_info/zizou.html')
 
+@app.route('/humonji')
+def humonji():
+    return render_template('spot_info/humonji.html')
+
 @app.route('/<sample_name>', methods=['GET', 'POST'])
 def allpass(sample_name):
     global bingo_sheet 
@@ -201,6 +258,86 @@ def allpass(sample_name):
 @app.route('/waiting')
 def waiting_page():
     return render_template('waiting.html')
+
+@app.route('/sangyoumatsuri')
+def sangyoumatsuri():
+    return render_template('event/sangyo.html')
+
+@app.route('/momiji')
+def momiji():
+    return render_template('event/momiji.html')
+
+@app.route('/announce')
+def announce():
+    return render_template('announce.html')
+
+@app.route('/terms')
+def terms():
+    return render_template('terms.html')
+
+@app.route('/privacy')
+def privacy():
+    return render_template('privacy.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
+# マイページのルートとユーザー情報の更新
+@app.route('/mypage')
+def mypage():
+    user_info = session.get('user_info')
+    return render_template('mypage.html', user_info=user_info)
+
+@app.route('/user_change')
+def user_change():
+    user_info = session.get('user_info')
+    if not user_info:
+        flash('ログインしてください', 'danger')
+        return redirect(url_for('login'))
+    return render_template('user_change.html', user_info=user_info)
+
+
+@app.route('/update_user_info', methods=['POST'])
+def update_user_info():
+    if not session.get('user_id'):
+        flash('ログインしてください', 'danger')
+        return redirect(url_for('login'))
+    
+    # フォームからのデータ取得
+    new_username = request.form.get('username')
+    new_gender = request.form.get('gender')
+    new_birthday = request.form.get('birthday')
+
+    # ユーザー情報の更新
+    user_id = session['user_id']
+    update_user_details(user_id, new_username, new_gender, new_birthday)
+
+    # セッション情報の更新
+    session['user_info'] = get_user_info(user_id)
+    flash('ユーザー情報が更新されました', 'success')
+    return redirect(url_for('mypage'))
+
+@app.route('/prize')
+def prize():
+    return render_template('prize.html')
+
+@app.route('/cameraway')
+def cameraway():
+    return render_template('cameraway.html')
+
+@app.route('/end')
+def end():
+    return render_template('event_end.html')
+
+
+@app.route('/favicon.ico')
+def favicon():
+    return '', 204
+
+@app.route('/robots.txt')
+def robots_txt():
+    return send_from_directory(app.static_folder, 'robots.txt')
 
 if __name__ == '__main__':
     app.run(debug=True)

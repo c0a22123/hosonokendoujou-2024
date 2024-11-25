@@ -1,93 +1,148 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-  <main>
+<main>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="google-site-verification" content="o_qjc2Nlk8z88d_B7iX8hqnKA1oQvjXthX0GCnPf1cs" />
         <title>タマビンゴ - Enjoy Tama with Bingo</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/top.css') }}">
     </head>
 
-    <!-- タイトルキャッチフレーズセクション -->
     <section class="hero">
-      <div class="container">
-        <h2>タマビンゴで日野の歴史を堪能！</h2>
-        <p>QRコードをスキャンして、ビンゴを達成しよう！<br>景品をゲットできるチャンスも！</p>
-        <a href="/waiting" class="btn">ビンゴを開始する</a>
-      </div>
-    </section>
-
-    <!-- お知らせセクション -->
-    <section class="news">
-      <div class="container">
-        <h3>お知らせ</h3>
-        <ul class="news-list">
-          <!-- お知らせを3件に減らす -->
-          <li>2024年10月20日: タマビンゴ ウェブアプリ公開！</li>
-          <li></li>
-          <li></li>
-        </ul>
-        <!-- もっと見るボタン（右揃え、小さく） -->
-        <div class="more-container">
-          <a href="#" class="btn-more">もっと見る</a>
+        <div class="container">
+            <h2>タマビンゴで日野の歴史を堪能！</h2>
+            <p>QRコードをスキャンして、ビンゴを達成しよう！<br>景品をゲットできるチャンスも！</p>
+            <a href="/end" class="btn">ビンゴを開始する</a>
         </div>
-      </div>
     </section>
 
-    <!-- スライドショーセクション -->
-    <section class="events">
-      <div class="container">
-        <h3>今後の日野市での開催予定イベント</del></h3>
-        <div class="slideshow-container">
-          <div class="slide">
-            <img src="{{ url_for('static', filename='images/event1.png') }}" alt="イベント1">
-            <div class="caption">イベント①</div>
-          </div>
-          <div class="slide">
-            <img src="{{ url_for('static', filename='images/event2.png') }}" alt="イベント2">
-            <div class="caption">イベント②</div>
-          </div>
-
-          <!-- スライドボタンを追加 -->
-          <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-          <a class="next" onclick="plusSlides(1)">&#10095;</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- アカウント情報セクション -->
     <section class="account-info">
-      <div class="container">
-        <h3>アカウント情報</h3>
-        <div class="account-box">
-          <p><strong>ニックネーム:</strong>{{ user_info.user_name if user_info else '未設定' }} </p>
-          <p><strong>性別・年代:</strong> {{ user_info.gendar if user_info else '未設定' }}・{{ user_info.birthday if user_info else '未設定' }} </p>
+        <div class="container">
+            <h3>イベント説明</h3>
+            <div class="account-box">
+                <div class="account-row">
+                    <span class="account-label">イベント概要</span>
+                    <span class="account-data">
+                        
+                        <p>デジタルスタンプラリーでは皆さんのスマートフォンでQRコードを読み込む事で、誰でも、いつでも参加することができます</p>
+                    </span>
+                </div>
+		<div class="account-row">
+                    <span class="account-label">開催期間</span>
+                    <span class="account-data">
+
+                        <p>11月1日10:00　開始<br>11月10日17:00　終了</p>
+                    </span>
+                </div>
+                <div class="account-row">
+                    <span class="account-label">参加費</span>
+                    <span class="account-data">
+
+                        <p>無料</p>
+                    </span>
+                </div>
+                <div class="account-row">
+                    <span class="account-label">開催期間</span>
+                    <span class="account-data">
+                        
+                        <p>11月1日10:00　開始<br>11月10日17:00　終了</p>
+                    </span>
+                </div>
+                <div class="account-row">
+                    <span class="account-label">参加費</span>
+                    <span class="account-data">
+                        
+                        <p>無料</p>
+                    </span>
+                </div>
+                <div class="account-row">
+                    <span class="account-label">注意事項</span>
+                    <span class="account-data">
+                        <p>・当イベントでは、近隣住民の迷惑にならないように、イベント開催時間（10時～17時）以外のQRコードの読み取りはご遠慮ください</p>
+                        
+                        
+                    </span>
+                    
+                </div>
+            </div>
+            <div class="more-container">
+              <a href="/prize" class="btn-more">景品の詳細はこちら→</a>
+          </div>
         </div>
-      </div>
+        
     </section>
 
-  </main>
+    <section class="news">
+        <div class="container">
+            <h3>お知らせ</h3>
+            <ul class="news-list">
+                <li>2024年11月10日: イベントは、終了しました。たくさんのご参加ありがとうございました。</li>
+                <li>2024年11月1日: タマビンゴ in 日野を開始しました！</li>
+                <li>2024年10月20日: タマビンゴ 公開開始！</li>
+            </ul>
+            <div class="more-container">
+                <a href="/announce" class="btn-more">もっと見る</a>
+            </div>
+        </div>
+    </section>
 
-  <!-- スライドショー用スクリプト -->
-  <script>
-    let slideIndex = 1;
-    showSlides(slideIndex);
+    <section class="account-info">
+        <div class="container">
+            <h3>アカウント情報</h3>
+            <div class="account-box">
+                <div class="account-row">
+                    <span class="account-label">ニックネーム</span>
+                    <span class="account-data">{{ user_info.user_name if user_info else '未設定' }}</span>
+                </div>
+                <div class="account-row">
+                    <span class="account-label">性別・年代</span>
+                    <span class="account-data">
+                        {{ user_info.gendar if user_info else '未設定' }}・{{ user_info.birthday if user_info else '未設定' }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    function plusSlides(n) {
-      showSlides(slideIndex += n);
-    }
+    <section class="events">
+        <div class="container">
+            <h3>日野市開催予定のイベント</h3>
+        </div>
+        <div class="event-grid">
+            <div class="event">
+                <a href="/sangyoumatsuri">
+                    <img src="{{ url_for('static', filename='images/event1.png') }}" alt="イベント1">
+                    <div class="caption">第58回 日野市産業まつり</div>
+                </a>
+            </div>
+            <div class="event">
+                <a href="/momiji">
+                    <img src="{{ url_for('static', filename='images/event2.png') }}" alt="イベント2">
+                    <div class="caption">第16回もみじ灯路</div>
+                </a>
+            </div>
+        </div>
+    </section>
 
-    function showSlides(n) {
-      let slides = document.getElementsByClassName("slide");
-      if (n > slides.length) {slideIndex = 1}
-      if (n < 1) {slideIndex = slides.length}
-      for (let i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";  
-      }
-      slides[slideIndex - 1].style.display = "block";  
-    }
-  </script>
+    <section class="exchange">
+        <div class="container">
+            <h3>景品交換方法</h3>
+            <div class="more-container">
+              <a href="/prize" class="btn-more">景品の詳細はこちら→</a>
+          </div>
+            <ul class="news-list">
+                <li>ステップ１</li>
+                    イベントに参加してQRコードを読み込んでビンゴを達成しよう！
+                <li>ステップ２</li>
+                    目標のビンゴ数になったら、景品交換所でビンゴシートを見せよう！
 
+                <p>※景品を交換してしまうとその時点でイベント終了となってしまいますので、ご注意ください。</p>
+            </ul>
+            
+            
+        </div>
+    </section>
+</main>
 {% endblock %}

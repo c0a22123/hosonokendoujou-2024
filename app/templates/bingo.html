@@ -9,177 +9,81 @@
     <title>デジタルビンゴ - Enjoy Tama with Bingo</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bingo.css') }}">
 </head>
-<h1>ビンゴシート</h1>
 
-<!-- カメラ起動ボタン -->
-<button id="start-camera">カメラを起動する</button>
+<div class="container">
+    <h1>ビンゴシート</h1>
 
-<!-- ビンゴシート -->
-<div id="bingo-wrapper">
-  <table id="bingo-table">
-      {% for i in range(1, 4) %}
-      <tr>
-          {% for j in range(1, 4) %}
-          <td id="cell-{{ (i-1)*3 + j }}">未チェック</td>
-          {% endfor %}
-      </tr>
-      {% endfor %}
-  </table>
-</div>
+    <button id="start-camera">カメラを起動する</button>
+    <p><strong>※カメラが開けない場合、ページを更新してください</strong></p>
+    <p style="text-align: right;"><a href="/cameraway" class="exchange-link">カメラが作動しない場合はこちら</a></p>
 
-<br>
-
-<!-- QRコード読み取りエリア -->
-<div id="qr-reader" style="width: 300px; height: 300px; margin: 0 auto;"></div>
-
-<!-- オーバーレイ部分 -->
-<div id="overlay" class="overlay">
-    <div class="overlay-content">
-        <h2 id="spot-name"></h2> <!-- スポット名がここに表示されます -->
-        <p id="spot-trivia"></p> <!-- 豆知識がここに表示されます -->
-        <button class="close-overlay" onclick="closeOverlay()">閉じる</button>
+    <div id="bingo-wrapper">
+        <table id="bingo-table">
+            {% for i in range(3) %}
+            <tr>
+                {% for j in range(3) %}
+                {% set cell_index = i * 3 + j %}
+                <td id="cell-{{ cell_index }}" class="{{ 'checked' if bingo_sheet[cell_index] else '' }}">
+                    {% if bingo_sheet[cell_index] %}
+                        <img src="{{ url_for('static', filename='images/stamp/tamabingo_stamp.png') }}" alt="スタンプ {{ cell_index + 1 }}">
+                    {% else %}
+                        <div class="circle">{{ cell_index + 1 }}</div>
+                    {% endif %}
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
     </div>
-</div>
 
-<!-- 景品交換ボタン -->
-<button id="exchange-prize" class="exchange-button">景品を交換する</button>
 
-<!-- ポップアップのオーバーレイ -->
-<div id="exchange-popup" class="exchange-popup-overlay">
-    <div class="exchange-popup-content">
-        <h2 id="exchange-message">本当に交換しますか？</h2> <!-- メッセージ表示場所 -->
-        <button id="confirm-exchange" class="popup-button">はい</button>
-        <button id="cancel-exchange" class="popup-button">いいえ</button>
+    <div id="qr-reader"></div>
+
+    <div id="overlay" class="overlay">
+        <div class="overlay-content">
+            <h2 id="spot-name"></h2>
+            <p id="spot-trivia"></p>
+            <button class="close-overlay" onclick="closeOverlay()">閉じる</button>
+        </div>
     </div>
+
+    <button id="exchange-prize" class="exchange-button">景品を交換する</button>
+    <p><strong>※この交換は、一度のみです。ビンゴを達成したら、交換所で交換する際に押してください</strong></p>
+
+    <div id="exchange-popup" class="exchange-popup-overlay">
+        <div class="exchange-popup-content">
+            <h2 id="exchange-message">本当に交換しますか？<br><br><strong>この交換は、景品受け取り所で行ってください。</strong></h2>
+            <button id="confirm-exchange" class="popup-button">はい</button>
+            <button id="cancel-exchange" class="popup-button">いいえ</button>
+        </div>
+    </div>
+
+    <section class="prize-details">
+        <h3>景品一覧</h3>
+        <div class="prize-item">
+            <img src="{{ url_for('static', filename='images/1bingo_prize.png') }}" alt="1ビンゴ景品" class="prize-image">
+            <div class="prize-description">
+                <h4>【1ビンゴ達成】達成土方歳三はがき</h4>
+                <p>日野市ならではの、土方歳三はがきを1ビンゴでプレゼント！<br><strong>※先着50名様限定</strong></p>
+            </div>
+        </div>
+
+        <div class="prize-item">
+            <img src="{{ url_for('static', filename='images/5bingo_prize.png') }}" alt="5ビンゴ景品" class="prize-image">
+            <div class="prize-description">
+                <h4>【5ビンゴ達成】300円相当の新選組グッズ</h4>
+                <p>新選組ファン必見のグッズを5ビンゴでゲット！さらに日野の魅力が詰まったアイテムです。<br><strong>※先着50名様限定</strong></p>
+            </div>
+        </div>
+        <div class="prize-item">
+            <div class="prize-description">
+                <a href="/prize" class="prize-exchange-button">景品交換所はこちら</a>
+            </div>
+        </div>
+    </section>
+
 </div>
-
-<script>
-    // 景品交換ボタンのイベントリスナー
-    document.getElementById('exchange-prize').addEventListener('click', function() {
-        document.getElementById('exchange-popup').style.display = 'flex'; // ポップアップを表示
-    });
-
-    // 「はい」ボタンを押したときの処理
-    document.getElementById('confirm-exchange').addEventListener('click', function() {
-        // メッセージを「景品を交換しました！」に変更
-        document.getElementById('exchange-message').textContent = '景品を交換しました！';
-        document.getElementById('exchange-prize').textContent = '景品は交換済みです'; // ボタンのテキストを変更
-        document.getElementById('exchange-prize').disabled = true; // ボタンを無効化（必要なら追加）
-
-        // 1秒後にポップアップを閉じる
-        setTimeout(function() {
-            document.getElementById('exchange-popup').style.display = 'none';
-        }, 1000); // 1000ミリ秒 = 1秒
-    });
-
-    // 「いいえ」ボタンを押したときの処理
-    document.getElementById('cancel-exchange').addEventListener('click', function() {
-        document.getElementById('exchange-popup').style.display = 'none'; // ポップアップを閉じる
-    });
-</script>
-
 
 <script src="https://cdn.jsdelivr.net/npm/html5-qrcode/minified/html5-qrcode.min.js"></script>
-<script>
-    let qrCodeReader;
-
-    document.getElementById('start-camera').addEventListener('click', function() {
-        qrCodeReader = new Html5Qrcode("qr-reader");
-        qrCodeReader.start({ facingMode: "environment" }, {
-            fps: 10,
-            qrbox: 250
-        },
-        qrCodeMessage => {
-            console.log(`QRコードが読み取られました: ${qrCodeMessage}`);
-
-            // カメラを停止し、QRリーダーを非表示にする
-            qrCodeReader.stop().then(() => {
-                document.getElementById('qr-reader').style.display = 'none'; // QRリーダーを隠す
-
-                // サーバーにQRコードの情報を送信して、ビンゴシートを更新
-                fetch(`/stamp/${qrCodeMessage}`)
-                    .then(response => {
-                        console.log("レスポンスステータス:", response.status);
-                        return response.text();  // JSONではなく、まずテキストとしてレスポンスを取得
-                    })
-                    .then(text => {
-                        console.log("サーバーからのレスポンス:", text);  // レスポンスをログに表示
-                        try {
-                            const data = JSON.parse(text);  // テキストをJSONとしてパース
-                            if (data.success) {
-                                const cellId = data.cell_id;
-                                document.getElementById(`cell-${cellId}`).textContent = 'チェック済み';
-
-                                // 豆知識情報をオーバーレイに表示
-                                showOverlay(data.spot_name, data.spot_trivia);
-                            } else {
-                                alert('無効なQRコードです');
-                            }
-                        } catch (error) {
-                            console.error("JSONパースエラー:", error);
-                            console.error("レスポンス内容:", text);
-                            alert("サーバーからの不正なレスポンスが返されました。");
-                        }
-                    })
-                    .catch(error => console.error('エラー:', error));
-            }).catch(err => {
-                console.error("カメラ停止エラー:", err);
-            });
-        },
-        errorMessage => {
-            console.warn(`QRコード読み取りエラー: ${errorMessage}`);
-        });
-    });
-
-    // オーバーレイを表示する関数
-    function showOverlay(spotName, trivia) {
-        document.getElementById('spot-name').textContent = spotName + ' のスタンプが押されました！';
-        document.getElementById('spot-trivia').textContent = trivia;
-
-        // オーバーレイを最前面に表示
-        const overlayElement = document.getElementById('overlay');
-        overlayElement.style.display = 'flex';  // flexboxで中央揃え
-        overlayElement.style.zIndex = 9999;  // 念のため最前面に持ってくる
-    }
-
-    // オーバーレイを閉じる関数
-    function closeOverlay() {
-        const overlayElement = document.getElementById('overlay');
-        overlayElement.style.display = 'none';  // オーバーレイを非表示にする
-        document.getElementById('qr-reader').style.display = 'block';  // カメラを再度表示可能にする場合
-    }
-</script>
-
-<style>
-    .overlay {
-        display: none; /* 初期状態は非表示 */
-        position: fixed; /* 画面全体をカバー */
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.8); /* 半透明の黒背景 */
-        color: white;
-        justify-content: center; /* 水平方向に中央揃え */
-        align-items: center; /* 垂直方向に中央揃え */
-        text-align: center;
-        z-index: 9999; /* 最前面に表示 */
-    }
-
-    .overlay-content {
-        background-color: #333;
-        padding: 20px;
-        border-radius: 10px;
-        max-width: 400px; /* コンテンツの最大幅 */
-        box-sizing: border-box;
-    }
-
-    .close-overlay {
-        background-color: #e67e22;
-        padding: 10px 20px;
-        border: none;
-        color: white;
-        cursor: pointer;
-    }
-</style>
+<script src="{{ url_for('static', filename='js/bingo.js') }}"></script>
 {% endblock %}

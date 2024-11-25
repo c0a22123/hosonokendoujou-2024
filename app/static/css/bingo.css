@@ -1,79 +1,111 @@
 /* 全体のスタイル設定 */
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
+    margin: 60px 0 0;
     padding: 0;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    align-items: center;  /* 水平方向の中央寄せ */
-    justify-content: flex-start;  /* 垂直方向の開始位置からレイアウト */
-    min-height: 100vh; /* 全体の高さを画面いっぱいに */
-    background-color: #fffaf0; /* 背景色を柔らかいオレンジ色に変更 */
-    padding-bottom: 50px; /* ページ全体に余白を追加 */
+    justify-content: flex-start;
+    min-height: 100vh;
+    background-color: #fffaf0;
+    padding-bottom: 50px;
 }
 
-/* スクロールに余裕を持たせるための調整 */
 html {
-    scroll-padding-bottom: 50px;  /* フッターやコンテンツとの間に余裕を持たせる */
+    scroll-padding-bottom: 50px;
+}
+h1 {
+    text-align: center;
+}
+
+
+strong {
+    color: red;
+    font-weight: bold;
 }
 
 /* カメラを起動するボタンのスタイル */
 #start-camera {
-    background-color: #ff8c00; /* オレンジ色 */
+    background-color: #ff8c00;
     color: white;
     font-size: 1.5rem;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    display: block;
+    margin: 20px auto;
+    width: 80%;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    margin: 20px 0;
-    width: 80%; /* 幅を広げて大きく */
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #start-camera:hover {
-    background-color: #e67600; /* ホバー時の色 */
-}
-
-/* ビンゴシートの全体のスタイル */
-#bingo-wrapper {
-    border: 5px solid orange; /* 大枠の色をオレンジに設定 */
-    border-radius: 20px; /* 大枠の角を丸める */
-    padding: 5px; /* 大枠とビンゴシートの間に5pxの余白を追加 */
-    margin-top: 20px;
-    display: inline-block; /* ビンゴシート全体を囲む */
-    background-color: white; /* 大枠の背景色を白に */
-    margin-bottom: 50px; /* ビンゴシートの下に余裕を追加 */
+    background-color: #e67600;
 }
 
 /* ビンゴシートのスタイル */
+#bingo-wrapper {
+    border: 5px solid orange;
+    border-radius: 20px;
+    padding: 5px;
+    margin-top: 20px;
+    background-color: white;
+    margin-bottom: 50px;
+    text-align: center;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
 #bingo-table {
-    border-collapse: separate; /* セルを分離 */
-    border-spacing: 5px; /* セル間のスペースを5pxに設定 */
-    text-align: center; /* テーブルのセル内テキストを中央寄せ */
-    width: 100%; /* スマートフォンで幅いっぱいに表示 */
-    max-width: 350px; /* 最大幅を300pxから350pxに拡大 */
+    border-collapse: separate;
+    border-spacing: 5px;
+    text-align: center;
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #bingo-table td {
-    border: 2px solid orange; /* 枠線の色をオレンジに */
-    width: 33%;
-    height: 110px; /* 高さを100pxから110pxに拡大 */
+    border: 2px solid orange;
+    width: 100px;
+    height: 100px;
     font-size: 1.2rem;
-    background-color: transparent; /* 中は透明 */
+    background-color: transparent;
     color: black;
     vertical-align: middle;
-    text-align: center; /* セル内のテキストを中央寄せ */
-    border-radius: 10px; /* セルに角丸を適用 */
-    padding: 10px; /* 内側に少し余白を追加 */
+    text-align: center;
+    border-radius: 10px;
+    padding: 5px;
+    position: relative;
 }
 
-@media (max-width: 600px) {
-    #bingo-table td {
-        height: 90px; /* スマートフォン向けに少し小さく */
-    }
+#bingo-table td img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#bingo-table .circle {
+    font-size: 1.5rem;
+    border: 2px solid orange;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    background-color: orange;
+    color: white;
+    font-weight: bold;
 }
 
 /* QRコードリーダーのスタイル */
@@ -81,44 +113,43 @@ html {
     margin-top: 20px;
     width: 100%;
     max-width: 500px;
-    text-align: center; /* QRコードリーダー全体を中央寄せ */
-    margin-bottom: 50px; /* QRリーダーの下に余裕を追加 */
+    text-align: center;
+    margin-bottom: 50px;
 }
 
 /* ポップアップのオーバーレイ部分 */
-.exchange-popup-overlay {
-    display: none; /* 初期状態では非表示 */
+.exchange-popup-overlay, .overlay {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8); /* 半透明の黒背景 */
-    justify-content: center; /* 水平方向に中央揃え */
-    align-items: center; /* 垂直方向に中央揃え */
-    z-index: 10000; /* ポップアップが他の要素の上に表示されるようにする */
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
 }
 
-.exchange-popup-content {
+.exchange-popup-content, .overlay-content {
     background-color: white;
     padding: 20px;
     border-radius: 10px;
     text-align: center;
-    width: 300px; /* ポップアップの横幅 */
-    margin-bottom: 30px; /* 下に余白を追加 */
+    max-width: 400px;
 }
 
-.popup-button {
-    margin: 10px;
+.close-overlay, .popup-button {
+    background-color: #e67e22;
     padding: 10px 20px;
     border: none;
-    border-radius: 5px;
-    background-color: #ff8c00;
     color: white;
     cursor: pointer;
+    border-radius: 5px;
+    margin: 10px;
 }
 
-.popup-button:hover {
+.popup-button:hover, .close-overlay:hover {
     background-color: #e67e22;
 }
 
@@ -131,12 +162,195 @@ html {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    display: block;
-    margin: 30px auto; /* 中央寄せ */
-    width: 80%; /* 幅を広げてボタンを目立たせる */
-    margin-bottom: 30px; /* ボタンの下に余白を追加 */
+    margin: 30px auto;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .exchange-button:hover {
-    background-color: #e67600; /* ホバー時の色 */
+    background-color: #e67600;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 9999;
+}
+
+.overlay-content {
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    box-sizing: border-box;
+}
+
+.close-overlay {
+    background-color: #e67e22;
+    padding: 10px 20px;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.checked {
+    background-color: #ffc107;
+    color: white;
+    font-weight: bold;
+}
+.stamp-animation {
+    width: 100px;
+    margin: 10px auto;
+    display: block;
+    position: relative;
+    animation: dropDown 1s ease-out forwards; /* Adjusted to 1s */
+    opacity: 0;
+}
+@keyframes dropDown {
+    0% {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+/* Confetti Animation */
+.confetti {
+    position: fixed;
+    top: -10vh; /* 画面上部外からスタート */
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    animation: confettiFall 3s linear forwards;
+    z-index: 10001; /* 前面に出すために追加 */
+}
+@keyframes confettiFall {
+    0% { transform: translateY(0) rotate(0); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+/* Falling leaves style */
+
+
+
+/* 景品セクションのスタイル */
+.prize-details {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-top: 2px solid #ff8c00;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.prize-details h3 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.prize-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 20px;
+    flex-direction: column;
+}
+
+.prize-image {
+    width: 200px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.prize-description {
+    color: #555;
+}
+
+.prize-description h4 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.prize-description p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+}
+.prize-exchange-button {
+    padding: 5px 10px;
+    background-color: #ff8c00;
+    color: white;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.prize-exchange-button:hover {
+    background-color: #e67600;
+}
+
+.prize-item {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    text-align: right;
+    margin-bottom: 20px;
+    flex-direction: column;
+}
+
+.prize-description {
+    color: #555;
+}
+
+.prize-exchange-button {
+    padding: 5px 10px;
+    background-color: #ff8c00;
+    color: white;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.prize-exchange-button:hover {
+    background-color: #e67600;
+}
+
+
+/* Responsive design for mobile */
+@media (max-width: 600px) {
+    .prize-item {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .prize-image {
+        margin: 0 auto 10px;
+    }
+
+    .prize-description h4 {
+        font-size: 1.1rem;
+    }
+
+    .prize-description p {
+        font-size: 0.85rem;
+    }
 }
